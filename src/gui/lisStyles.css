@@ -1,0 +1,91 @@
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color: linear-gradient(#3b3b3b 0%, #4b4b4b 100%);
+    -fx-text-fill: #9b9b9b;
+
+}
+
+.list-cell {
+    -fx-background-color: #2b2b2b;
+    -fx-text-fill: #9b9b9b;
+    -fx-border-color: #3b3b3b;
+    -fx-border-width: 2;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #3b3b3b;
+    -fx-text-fill: #9b9b9b;
+}
+
+.list .scroll-bar:vertical .thumb {
+    -fx-background-color:#2b2b2b;
+}
+
+.list-view {
+   -fx-background-color:#2b2b2b;
+}
+
+.scroll-bar{
+ -fx-background-color: #3b3b3b;
+}
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track {
+ -fx-background-color: transparent;
+ -fx-border-color:transparent;
+}
+.scroll-bar:vertical .track-background,
+.scroll-bar:horizontal .track-background {
+ -fx-background-color: transparent;
+ -fx-background-insets: 0;
+}
+.scroll-bar:horizontal .thumb {
+ -fx-background-color: #9b9b9b;
+ -fx-background-insets: 4 0 4 0;
+}
+.scroll-bar:vertical .thumb {
+ -fx-background-color: #9b9b9b;
+ -fx-background-insets: 0 4 0 4;
+}
+.scroll-bar:horizontal .thumb:hover,
+.scroll-bar:vertical .thumb:hover {
+ -fx-background-color: #9a9a9a;
+}
+.scroll-bar:horizontal .thumb:pressed,
+.scroll-bar:vertical .thumb:pressed {
+ -fx-background-color: rgb(255,255,255);
+}
+.scroll-bar:vertical .increment-button, .scroll-bar:vertical .decrement-button {
+ -fx-background-color:transparent;
+ -fx-padding: 5;
+}
+.scroll-bar:horizontal .increment-button, .scroll-bar:horizontal .decrement-button {
+ -fx-background-color:transparent;
+ -fx-padding: 5;
+}
+.scroll-bar:horizontal .increment-arrow {
+ -fx-shape: "M 0 0 L 4 8 L 8 0 Z";
+ -fx-background-color: rgb(211,211,211);
+ -fx-padding: 0.25em;
+ -fx-rotate: -90;
+}
+.scroll-bar:vertical .increment-arrow {
+ -fx-background-color: rgb(211,211,211);
+ -fx-shape: "M 0 0 L 4 8 L 8 0 Z";
+ -fx-padding: 0.25em;
+ -fx-rotate: 0;
+}
+.scroll-bar:horizontal .decrement-arrow {
+ -fx-background-color: rgb(211,211,211);
+ -fx-shape: "M 0 0 L 4 8 L 8 0 Z";
+ -fx-padding: 0.25em;
+ -fx-rotate: 90;
+}
+.scroll-bar:vertical .decrement-arrow {
+ -fx-background-color: rgb(211,211,211);
+ -fx-shape: "M 0 0 L 4 8 L 8 0 Z";
+ -fx-padding: 0.25em;
+ -fx-rotate: -180;
+}
+.scroll-bar:vertical:focused,
+.scroll-bar:horizontal:focused {
+ -fx-background-color: transparent,rgb(96,96,96),rgb(96,96,96);
+}
