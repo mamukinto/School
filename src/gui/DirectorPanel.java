@@ -149,17 +149,11 @@ class DirectorPanel {
     }
 
     private static void manageStudents(Scene scene,Stage stage) {
-        ListView<String> list = new ListView<String>();
-        ObservableList<String> items = FXCollections.observableArrayList();
-        updateStudentsListViewItems(items);
-        list.setStyle("-fx-font-size:22px;");
-        scene.getStylesheets().add(DirectorPanel.class.getResource("lisStyles.css").toExternalForm());
-        list.setPrefWidth(400);
-        list.setPrefHeight(600);
-        list.setItems(items);
+        TableView<Student> table = StudentsTableGenerator.getStudentTableView();
+        scene.getStylesheets().add(DirectorPanel.class.getResource("tableStyle.css").toExternalForm());
 
         BorderPane root = new BorderPane();
-        root.setCenter(list);
+        root.setCenter(table);
 
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.CENTER);
@@ -190,10 +184,10 @@ class DirectorPanel {
             directorPanel(scene,stage);
         });
         b1.setOnAction(click -> {
-            addStudent(stage,items);
+            addStudent(stage,table.getItems());
         });
         b2.setOnAction(click -> {
-            removeStudent(items,list);
+            removeStudent(table);
         });
 
 
@@ -201,8 +195,17 @@ class DirectorPanel {
         scene.setRoot(root);
     }
 
+    private static void removeStudent(TableView<Student> tableView) {
+        try {
+            studentService.removeStudent(tableView.getSelectionModel().getSelectedItem());
+            tableView.getItems().setAll(studentService.getStudents());
+        } catch (SchoolException e) {
+            alert("Exceptioin","Can't remove student","Press ok to try again..");
+        }
+    }
+
     @SuppressWarnings("unchecked")
-    private static void addStudent(Stage stage,ObservableList items) {
+    private static void addStudent(Stage stage,ObservableList<Student> items) {
         Stage addStudentStage = new Stage();
         addStudentStage.setWidth(500);
         addStudentStage.setHeight(400);
@@ -281,44 +284,9 @@ class DirectorPanel {
         ComboBox<String> comboBox = new ComboBox<>();
         comboBox.setStyle("-fx-background-color: " + Colors.SECONDARY + "; -fx-mark-color: " + Colors.SECONDARY + ";");
 
-//        comboBox.setCellFactory(new Callback<>() {
-//            public ListCell<String> call(ListView<String> param) {
-//                return new ListCell<>() {
-//                    protected void updateItem(String item, boolean empty) {
-//                        super.updateItem(item, empty);
-//                        setText(item);
-//                        setBackground(new Background(new BackgroundFill(Color.web(Colors.SECONDARY.toString()), CornerRadii.EMPTY, Insets.EMPTY)));
-//                        setTextFill(Color.web(Colors.TEXT.toString()));
-//                    }
-//                };
-//            }
-//        });
 
         comboBox.setPromptText("Click to select");
         comboBox.setEditable(false);
-
-
-//        comboBox.setButtonCell(new ListCell() {
-//
-//            @Override
-//            protected void updateItem(Object item, boolean empty) {
-//                super.updateItem(item, empty);
-//                if (empty || item == null) {
-//                    // styled like -fx-prompt-text-fill:
-//                    setStyle("-fx-text-fill: " + Colors.TEXT + ";");
-//                } else {
-//                    setStyle("-fx-text-fill: " + Colors.TEXT + ";");
-//                    setText(item.toString());
-//                }
-//            }
-//
-//        });
-
-//        TextField classroom = new TextField();
-//        classroom.setStyle("-fx-background-color: " + Colors.SECONDARY + "; -fx-text-inner-color: " + Colors.TEXT + ";");
-//        classroom.setFont(Font.font("Tahoma", FontWeight.NORMAL, 14));
-//        grid.add(classroom, 1, 5);
-
 
         updateClassroomsToChoiceBox(comboBox);
 
@@ -347,24 +315,13 @@ class DirectorPanel {
             } catch (SchoolException e) {
                 alert("Unexpected exception","Can't add student",e.getMessage());
             }
-            updateStudentsListViewItems(items);
             addStudentStage.close();
+            updateTableItems(items);
         });
 
 
         addStudentStage.setScene(scene);
         addStudentStage.show();
-    }
-
-
-
-    private static void removeStudent(ObservableList items,ListView listView) {
-        try {
-            studentService.removeStudent(studentService.getStudentById(listView.getSelectionModel().getSelectedItem().toString().split(" ")[2]));
-        } catch (SchoolException e) {
-            alert("Unexpected exception","Can't remove student",e.getMessage());
-        }
-        updateStudentsListViewItems(items);
     }
 
 
@@ -379,12 +336,8 @@ class DirectorPanel {
     }
     
     
-    private static void updateStudentsListViewItems(ObservableList<String> items) {
-        ObservableList<String> items1 = FXCollections.observableArrayList();
-        studentService.getStudents().forEach(student -> {
-            items1.add(student.getFirstName() + " " + student.getLastName() + " " + student.getPersonalId());
-        });
-        items.setAll(items1);
+    private static void updateTableItems(ObservableList<Student> items) {
+       items.setAll(studentService.getStudents());
     }
 
 

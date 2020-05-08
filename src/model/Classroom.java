@@ -49,10 +49,7 @@ public class Classroom extends DBObject {
 
     @Override
     public String toString() {
-        return "Classroom{" +
-                "name='" + name + '\'' +
-                ", id=" + id +
-                '}';
+        return name;
     }
 
     @Override

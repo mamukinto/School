@@ -53,39 +53,10 @@ public class Login {
 
         ComboBox<String> cb = new ComboBox<>();
         cb.setStyle("-fx-background-color: " + Colors.SECONDARY + "; -fx-mark-color: " + Colors.SECONDARY + ";");
-//
-//        cb.setCellFactory(new Callback<>() {
-//            public ListCell<String> call(ListView<String> param) {
-//                return new ListCell<>() {
-//                    protected void updateItem(String item, boolean empty) {
-//                        super.updateItem(item, empty);
-//                        setText(item);
-//                        setBackground(new Background(new BackgroundFill(Color.web(Colors.SECONDARY.toString()), CornerRadii.EMPTY, Insets.EMPTY)));
-//                        setTextFill(Color.web(Colors.TEXT.toString()));
-//                    }
-//                };
-//            }
-//        });
+
 
         cb.setPromptText("Click to select");
         cb.setEditable(false);
-
-//
-//        cb.setButtonCell(new ListCell() {
-//
-//            @Override
-//            protected void updateItem(Object item, boolean empty) {
-//                super.updateItem(item, empty);
-//                if (empty || item == null) {
-//                    // styled like -fx-prompt-text-fill:
-//                    setStyle("-fx-text-fill: " + Colors.TEXT + ";");
-//                } else {
-//                    setStyle("-fx-text-fill: " + Colors.TEXT + ";");
-//                    setText(item.toString());
-//                }
-//            }
-//
-//        });
 
 
         cb.getItems().add("Director");
