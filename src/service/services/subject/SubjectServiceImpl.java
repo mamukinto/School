@@ -35,6 +35,11 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
+    public void addSubject(Subject subject) throws SchoolException {
+        daoService.write(subject);
+    }
+
+    @Override
     public void addStandartSubjects() throws SchoolException {
         daoService.writeAll(getStandartSubjects());
     }

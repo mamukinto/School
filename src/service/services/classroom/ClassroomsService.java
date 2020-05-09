@@ -15,6 +15,8 @@ public interface ClassroomsService {
 
     void addStandartClassrooms() throws SchoolException;
 
+    void addClassroom(Classroom classroom) throws SchoolException;
+
     void removeClassroom(Classroom classroom) throws SchoolException;
 
     void updateClassrooms() throws SchoolException;

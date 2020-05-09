@@ -305,13 +305,12 @@ class UserInterface {
 
                 Classroom classroom = new Classroom(name, id);
 
-                //TODO[MS]
-//                try {
-//                    DAOClassroom.write(classroom);
-//                } catch (SchoolException ex) {
-//                    System.out.println("Unexpected exception : " + ex.getMessage() + System.lineSeparator() + "Try again");
-//                    addClassroom();
-//                }
+                try {
+                    classroomsService.addClassroom(classroom);
+                } catch (SchoolException ex) {
+                    System.out.println("Unexpected exception : " + ex.getMessage() + System.lineSeparator() + "Try again");
+                    addClassroom();
+                }
                 System.out.println("Classroom " + classroom.getName() + " successfully added!");
                 try {
                     classroomsService.updateClassrooms();
@@ -331,13 +330,13 @@ class UserInterface {
 
             Classroom classroom = new Classroom(name, id);
 
-            //TODO[MS]
-//            try {
-//                DAOClassroom.write(classroom);
-//            } catch (SchoolException ex) {
-//                System.out.println("Unexpected exception : " + ex.getMessage() + System.lineSeparator() + "Try again");
-//                addClassroom();
-//            }
+
+            try {
+                classroomsService.addClassroom(classroom);
+            } catch (SchoolException ex) {
+                System.out.println("Unexpected exception : " + ex.getMessage() + System.lineSeparator() + "Try again");
+                addClassroom();
+            }
             System.out.println("Classroom " + classroom.getName() + " successfully added!");
             directorPanel();
         }
@@ -387,13 +386,13 @@ class UserInterface {
                 double costPerHour = Double.parseDouble(scanner.nextLine());
                 Subject subject = new Subject(name,costPerHour);
 
-                //TODO[MS]
-//                try {
-//                    DAOSubject.write(subject);
-//                } catch (SchoolException ex) {
-//                    System.out.println("Unexpected exception : " + ex.getMessage() + System.lineSeparator() + "Try again");
-//                    addSubject();
-//                }
+
+                try {
+                    subjectService.addSubject(subject);
+                } catch (SchoolException ex) {
+                    System.out.println("Unexpected exception : " + ex.getMessage() + System.lineSeparator() + "Try again");
+                    addSubject();
+                }
                 System.out.println("Subject " + subject.getName() + " successfully added!");
                 try {
                     subjectService.updateSubjects();
@@ -411,13 +410,13 @@ class UserInterface {
         double costPerHour = Double.parseDouble(scanner.nextLine());
         Subject subject = new Subject(name,costPerHour);
 
-        //TODO[MS]
-//        try {
-//            DAOSubject.write(subject);
-//        } catch (SchoolException ex) {
-//            System.out.println("Unexpected exception : " + ex.getMessage() + System.lineSeparator() + "Try again");
-//            addSubject();
-//        }
+
+        try {
+            subjectService.addSubject(subject);
+        } catch (SchoolException ex) {
+            System.out.println("Unexpected exception : " + ex.getMessage() + System.lineSeparator() + "Try again");
+            addSubject();
+        }
         System.out.println("Subject " + subject.getName() + " successfully added!");
         directorPanel();
 

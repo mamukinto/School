@@ -40,6 +40,11 @@ public class ClassroomsServiceImpl implements ClassroomsService {
     }
 
     @Override
+    public void addClassroom(Classroom classroom) throws SchoolException {
+        daoService.write(classroom);
+    }
+
+    @Override
     public void removeClassroom(Classroom classroom) throws SchoolException {
         classroom.setActive(false);
         daoService.write(classroom);
