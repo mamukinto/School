@@ -209,8 +209,10 @@ class DirectorPanel {
         Stage addStudentStage = new Stage();
         addStudentStage.setWidth(500);
         addStudentStage.setHeight(400);
+
         GridPane grid = new GridPane();
         Scene scene = new Scene(grid,500,400);
+        scene.getStylesheets().add(DirectorPanel.class.getResource("login.css").toExternalForm());
         addStudentStage.initOwner(stage);
         addStudentStage.initModality(Modality.WINDOW_MODAL);
         grid.setAlignment(Pos.CENTER);
