@@ -1,5 +1,6 @@
 package service.services.student;
 
+import dao.DAOService;
 import dao.DAOStudent;
 import model.Student;
 import model.exception.SchoolException;
@@ -17,11 +18,13 @@ public class StudentServiceImpl implements StudentService {
 
     private static final String WELCOME_EMAIL_SUBJECT = "System Registration";
 
+    private final DAOService<Student> daoService = new DAOStudent();
+
     @Override
     public void addStudent(Student student) throws SchoolException {
         String password = PasswordGenerator.generatePassword(INITIAL_PASSWORD_LENGTH);
         student.setPassword("" + password.hashCode());
-        DAOStudent.write(student);
+        daoService.write(student);
         EmailSender.sendEmail(WELCOME_EMAIL_FROM_ADDRESS, student.getEmail(), WELCOME_EMAIL_SUBJECT, getEmailMessage(student.getFirstName(), password));
         updateStudents();
     }
@@ -29,7 +32,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student getStudentById(String personalId) throws SchoolException {
         final Student[] student = {new Student()};
-        DAOStudent.readAll().forEach(s -> {
+        daoService.readAll().forEach(s -> {
             if (s.getPersonalId().equals(personalId)) {
                 student[0] = s;
             }
@@ -44,13 +47,13 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void updateStudents() throws SchoolException {
-        Storage.students = DAOStudent.readAll();
+        Storage.students = daoService.readAll();
     }
 
     @Override
     public void removeStudent(Student student) throws SchoolException {
         student.setActive(false);
-        DAOStudent.write(student);
+        daoService.write(student);
         updateStudents();
     }
 

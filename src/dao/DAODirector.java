@@ -3,16 +3,14 @@ package dao;
 import model.exception.SchoolException;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class DAODirector {
-    public static void write(String login,String password) throws SchoolException {
 
+    public static void write(String login,String password) throws SchoolException {
         File file = new File("database/director/Director.txt");
         String loginAndPassword = login + System.lineSeparator() + password.hashCode();
-
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
             bw.write(loginAndPassword);
@@ -20,12 +18,11 @@ public class DAODirector {
         catch (IOException ex) {
             throw new SchoolException(ex.getMessage());
         }
-
     }
 
     public static List<String> read() throws SchoolException {
         File file = new File("database/director/Director.txt");
-        List<String> stringList = new ArrayList<>();
+        List<String> stringList;
         try(BufferedReader br = new BufferedReader(new FileReader(file))) {
             String strCurrentLine;
             StringBuilder classroomStringFromFile = new StringBuilder();
@@ -38,7 +35,6 @@ public class DAODirector {
         catch (IOException ex) {
             throw new SchoolException(ex.getMessage());
         }
-
 
         return stringList;
     }

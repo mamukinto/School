@@ -13,7 +13,7 @@ public interface ClassroomsService {
 
     Classroom getClassroomByName(String classroomName);
 
-    void addStandartClassrooms();
+    void addStandartClassrooms() throws SchoolException;
 
     void removeClassroom(Classroom classroom) throws SchoolException;
 

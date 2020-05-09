@@ -1,18 +1,19 @@
 package dao;
 
-import model.DBObject;
 import model.Teacher;
 import model.exception.SchoolException;
 import service.helpers.teacher.TeacherFormatHelper;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DAOTeacher implements DAOService {
-    public static String write(DBObject dbObject) throws SchoolException {
-        Teacher teacher = (Teacher) dbObject;
+public class DAOTeacher implements DAOService<Teacher> {
+
+    @Override
+    public String write(Teacher teacher) throws SchoolException {
         TeacherFormatHelper teacherHelper = new TeacherFormatHelper();
         String formattedTeacher = teacherHelper.format(teacher);
         File file = new File("database/teachers/" + teacher.getPersonalId() + ".txt");
@@ -27,7 +28,13 @@ public class DAOTeacher implements DAOService {
         return "Succesfully writed teacher to " + file.getPath();
     }
 
-    private static DBObject read(String src) throws SchoolException {
+    @Override
+    public void writeAll(List<Teacher> dbObjects) throws SchoolException {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public Teacher read(String src) throws SchoolException {
         Teacher teacher = new Teacher();
         TeacherFormatHelper teacherHelper = new TeacherFormatHelper();
         File teacherFile = new File("database/teachers/" + src);
@@ -48,7 +55,8 @@ public class DAOTeacher implements DAOService {
         return teacher;
     }
 
-    public static List<Teacher> readAll() throws SchoolException {
+    @Override
+    public List<Teacher> readAll() throws SchoolException {
         List<Teacher> allTeachers = new ArrayList<>();
         File folder = new File("database/teachers/");
         File[] arrayOfFiles = folder.listFiles();
@@ -68,11 +76,6 @@ public class DAOTeacher implements DAOService {
         else {
             throw new SchoolException("No Teachers saved :(");
         }
-
-
     }
-
-
-
 }
 

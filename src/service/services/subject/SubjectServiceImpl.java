@@ -1,15 +1,17 @@
 package service.services.subject;
 
-import dao.DAOStudent;
+import dao.DAOService;
 import dao.DAOSubject;
 import model.Subject;
 import model.exception.SchoolException;
-import service.services.StorageService;
 import storage.Storage;
 
 import java.util.List;
 
 public class SubjectServiceImpl implements SubjectService {
+
+    private final DAOService<Subject> daoService = new DAOSubject();
+
     @Override
     public List<Subject> getStandartSubjects() {
         return Storage.standartSubjects;
@@ -33,18 +35,18 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public void addStandartSubjects() {
-        DAOSubject.writeAll(getStandartSubjects());
+    public void addStandartSubjects() throws SchoolException {
+        daoService.writeAll(getStandartSubjects());
     }
 
     @Override
     public void removeSubject(Subject subject) throws SchoolException {
         subject.setActive(false);
-        DAOSubject.write(subject);
+        daoService.write(subject);
     }
 
     @Override
     public void updateSubjects() throws SchoolException {
-        Storage.subjects = DAOSubject.readAll();
+        Storage.subjects = daoService.readAll();
     }
 }

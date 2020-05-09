@@ -1,6 +1,6 @@
 package service.services.teacher;
 
-import dao.DAOStudent;
+import dao.DAOService;
 import dao.DAOTeacher;
 import model.Classroom;
 import model.Mark;
@@ -11,16 +11,12 @@ import service.email.EmailSender;
 import service.helpers.auth.PasswordGenerator;
 import service.services.mark.MarkService;
 import service.services.mark.MarkServiceImpl;
-import service.services.student.StudentService;
-import service.services.student.StudentServiceImpl;
 import storage.Storage;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TeacherServiceImpl implements TeacherService {
-
-    private static final StudentService studentService = new StudentServiceImpl();
 
     private static final MarkService markService = new MarkServiceImpl();
 
@@ -30,12 +26,13 @@ public class TeacherServiceImpl implements TeacherService {
 
     private static final String WELCOME_EMAIL_SUBJECT = "System Registration";
 
+    private DAOService<Teacher> daoService = new DAOTeacher();
 
     @Override
     public void addTeacher(Teacher teacher) throws SchoolException {
         String password = PasswordGenerator.generatePassword(INITIAL_PASSWORD_LENGTH);
         teacher.setPassword("" + password.hashCode());
-        DAOTeacher.write(teacher);
+        daoService.write(teacher);
         EmailSender.sendEmail(WELCOME_EMAIL_FROM_ADDRESS, teacher.getEmail(), WELCOME_EMAIL_SUBJECT, getEmailMessage(teacher.getFirstName(), password));
     }
 
@@ -66,12 +63,12 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public void removeTeacher(Teacher teacher) throws SchoolException {
         teacher.setActive(false);
-        DAOTeacher.write(teacher);
+        daoService.write(teacher);
     }
 
     @Override
     public void updateTeachers() throws SchoolException {
-        Storage.teachers = DAOTeacher.readAll();
+        Storage.teachers = daoService.readAll();
     }
 
     private String getEmailMessage(String firstName, String password) {

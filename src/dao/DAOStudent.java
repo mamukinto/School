@@ -1,19 +1,19 @@
 package dao;
 
-import model.DBObject;
 import model.Student;
 import model.exception.SchoolException;
 import service.helpers.student.StudentFormatHelper;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DAOStudent implements DAOService {
+public class DAOStudent implements DAOService<Student> {
 
-    public static String write(DBObject dbObject) throws SchoolException {
-        Student student = (Student) dbObject;
+    @Override
+    public String write(Student student) throws SchoolException {
         StudentFormatHelper studentHelper = new StudentFormatHelper();
         String formattedStudent = studentHelper.format(student);
         File file = new File("database/students/" + student.getPersonalId() + "/" +  student.getPersonalId() + ".txt");
@@ -29,8 +29,14 @@ public class DAOStudent implements DAOService {
         return "Succesfully writed student to " + file.getPath();
     }
 
-    private static DBObject read(String src) throws SchoolException {
-        DBObject student = new Student();
+    @Override
+    public void writeAll(List<Student> dbObjects) throws SchoolException {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public Student read(String src) throws SchoolException {
+        Student student = new Student();
         StudentFormatHelper studentHelper = new StudentFormatHelper();
         File studentFile = new File("database/students/" + src);
 
@@ -41,18 +47,17 @@ public class DAOStudent implements DAOService {
                 studentStringFromFile.append(strCurrentLine).append(System.lineSeparator());
             }
 
-            student = studentHelper.parse(studentStringFromFile.toString());
+            student = (Student) studentHelper.parse(studentStringFromFile.toString());
         }
         catch (IOException ex) {
             throw new SchoolException(ex.getMessage());
         }
 
-
-
         return student;
     }
 
-    public static List<Student> readAll() throws SchoolException {
+    @Override
+    public List<Student> readAll() throws SchoolException {
         List<Student> allStudents = new ArrayList<>();
         File folder = new File("database/students/");
         File[] arrayOfFiles = folder.listFiles();
@@ -72,5 +77,4 @@ public class DAOStudent implements DAOService {
             throw new SchoolException("No students saved :(");
         }
     }
-
 }

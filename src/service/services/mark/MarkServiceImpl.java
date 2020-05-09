@@ -13,7 +13,9 @@ import java.util.Date;
 import java.util.List;
 
 public class MarkServiceImpl implements MarkService {
+
     private static final TeacherService teacherService = new TeacherServiceImpl();
+
     @Override
     public List<Mark> getMarksOfStudent(Student student, Teacher teacher) throws SchoolException {
         List<Mark> marks;
@@ -37,5 +39,4 @@ public class MarkServiceImpl implements MarkService {
     public void updateJournal(Student student) {
         student.setJournal(DAOMark.readJournal(student));
     }
-
 }
