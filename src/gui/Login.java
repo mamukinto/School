@@ -1,20 +1,19 @@
 package gui;
 
-import javafx.collections.FXCollections;
+import gui.common.Colors;
+import gui.director.DirectorPanel;
+import gui.student.StudentPanel;
+import gui.teacher.TeacherPanel;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import model.Human;
 import model.Student;
 import model.Teacher;
@@ -23,14 +22,12 @@ import model.exception.SchoolException;
 import service.services.auth.AuthService;
 import service.services.auth.AuthServiceImpl;
 
-import javax.swing.text.Style;
-
 public class Login {
     private static AuthService auth = new AuthServiceImpl();
 
     @SuppressWarnings("unchecked")
     public static void login(Scene scene, Stage stage) {
-        scene.getStylesheets().add(DirectorPanel.class.getResource("login.css").toExternalForm());
+        scene.getStylesheets().add(GraphicUserInterface.class.getResource("static/css/login.css").toExternalForm());
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);

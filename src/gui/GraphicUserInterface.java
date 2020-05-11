@@ -1,5 +1,6 @@
 package gui;
 
+import gui.common.Colors;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -19,8 +20,6 @@ import model.exception.SchoolException;
 import service.Startup;
 import service.services.director.DirectorService;
 import service.services.director.DirectorServiceImpl;
-
-import javax.swing.text.Style;
 
 public class GraphicUserInterface extends Application {
     private static Scene scene = new Scene(new Parent() {

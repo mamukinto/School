@@ -1,4 +1,4 @@
-package gui;
+package gui.common;
 
 public enum Colors {
     MAIN("#2b2b2b"),

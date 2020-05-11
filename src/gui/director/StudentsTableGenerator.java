@@ -1,4 +1,4 @@
-package gui;
+package gui.director;
 
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;

@@ -1,19 +1,21 @@
-package gui;
+package gui.student;
 
+import gui.Login;
+import gui.common.StyleButton;
+import gui.common.Colors;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Student;
 
-class StudentPanel {
-    static void studentPanel(Scene scene, Student student, Stage stage) {
+public class StudentPanel {
+    public static void studentPanel(Scene scene, Student student, Stage stage) {
         stage.setMaximized(true);
         GridPane grid = new GridPane();
         grid.setPrefSize(800,600);

@@ -1,5 +1,6 @@
-package gui;
+package gui.common;
 
+import gui.common.Colors;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
