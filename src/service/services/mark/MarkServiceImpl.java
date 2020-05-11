@@ -14,12 +14,12 @@ import java.util.List;
 
 public class MarkServiceImpl implements MarkService {
 
-    private static final TeacherService teacherService = new TeacherServiceImpl();
+    private static final DAOMark daoService = new DAOMark();
 
     @Override
     public List<Mark> getMarksOfStudent(Student student, Teacher teacher) throws SchoolException {
         List<Mark> marks;
-        marks = DAOMark.readAll(student, teacher);
+        marks = daoService.readByStudentAndTeacher(student, teacher);
         return marks;
     }
 
@@ -27,16 +27,20 @@ public class MarkServiceImpl implements MarkService {
     public void addMarkToStudent(Student student, Teacher teacher, Mark mark) throws SchoolException {
         Date writingDate = new Date();
         mark.setDate(writingDate);
-        DAOMark.write(mark,student,teacher);
+        mark.setTeacher(teacher);
+        mark.setStudent(student);
+        daoService.write(mark);
     }
 
     @Override
     public void removeMark(Mark mark,Student student,Teacher teacher) throws SchoolException {
         mark.setActive(false);
-        DAOMark.write(mark,student,teacher);
+        mark.setStudent(student);
+        mark.setTeacher(teacher);
+        daoService.write(mark);
     }
 
     public void updateJournal(Student student) {
-        student.setJournal(DAOMark.readJournal(student));
+        student.setJournal(daoService.readJournal(student));
     }
 }
