@@ -20,6 +20,8 @@ import service.Startup;
 import service.services.director.DirectorService;
 import service.services.director.DirectorServiceImpl;
 
+import javax.swing.text.Style;
+
 public class GraphicUserInterface extends Application {
     private static Scene scene = new Scene(new Parent() {
         @Override

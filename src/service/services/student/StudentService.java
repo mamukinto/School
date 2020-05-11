@@ -9,6 +9,8 @@ public interface StudentService {
 
     void addStudent(Student student) throws SchoolException;
 
+    void editStudent(Student student) throws SchoolException;
+
     Student getStudentById(String personalId) throws SchoolException;
 
     List<Student> getStudents();

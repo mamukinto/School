@@ -23,6 +23,8 @@ import model.exception.SchoolException;
 import service.services.auth.AuthService;
 import service.services.auth.AuthServiceImpl;
 
+import javax.swing.text.Style;
+
 public class Login {
     private static AuthService auth = new AuthServiceImpl();
 
@@ -168,7 +170,7 @@ public class Login {
             String password = pwBox.getText();
             Student student = (Student) auth.auth(personalId, password, UserType.STUDENT);
             if (student != null) {
-                StudentPanel.studentPanel(scene, student);
+                StudentPanel.studentPanel(scene, student , stage);
             } else {
                 scenetitle.setFill(Color.web(Colors.WARNING_TEXT.toString()));
                 scenetitle.setText("Wrong user id or password");

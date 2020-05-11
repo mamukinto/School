@@ -30,6 +30,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public void editStudent(Student student) throws SchoolException {
+        daoService.write(student);
+    }
+
+    @Override
     public Student getStudentById(String personalId) throws SchoolException {
         final Student[] student = {new Student()};
         daoService.readAll().forEach(s -> {
