@@ -14,8 +14,7 @@ import model.Student;
 
 class StudentPanel {
     static void studentPanel(Scene scene, Student student, Stage stage) {
-        stage.setWidth(800);
-        stage.setHeight(400);
+        stage.setMaximized(true);
         GridPane grid = new GridPane();
         grid.setPrefSize(800,600);
         grid.setStyle("-fx-background-color:" + Colors.MAIN + ";");

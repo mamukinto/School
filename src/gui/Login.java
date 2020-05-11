@@ -39,8 +39,8 @@ public class Login {
         grid.setStyle("-fx-background-color: " + Colors.MAIN + ";");
         grid.setPrefSize(500, 300);
 //        stage.setResizable(false);
-        stage.setHeight(300);
-        stage.setWidth(500);
+        stage.setMaximized(true);
+
 
         Text scenetitle = new Text("Welcome");
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));

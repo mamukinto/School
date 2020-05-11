@@ -55,8 +55,8 @@ class DirectorPanel {
 
 
     static void directorPanel(Scene scene, Stage stage) {
-        stage.setWidth(800);
-        stage.setHeight(600);
+        stage.setMaximized(true);
+
 
         GridPane grid = new GridPane();
         grid.setPrefSize(800,600);
@@ -380,7 +380,7 @@ class DirectorPanel {
         personalId.setStyle("-fx-background-color: " + Colors.SECONDARY + "; -fx-text-inner-color: " + Colors.TEXT + ";");
         personalId.setFont(Font.font("Tahoma", FontWeight.NORMAL, 14));
         personalId.setText(student.getPersonalId());
-        personalId.setEditable(false);
+        personalId.setDisable(true);
         grid.add(personalId, 1, 3);
 
 
