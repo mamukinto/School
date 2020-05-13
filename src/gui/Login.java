@@ -132,7 +132,7 @@ public class Login {
             String password = pwBox.getText();
             Human director = auth.auth(personalId, password, UserType.DIRECTOR);
             if (director == AuthServiceImpl.director) {
-                DirectorPanel.directorPanel(scene,stage);
+                DirectorPanel.show(scene,stage);
             } else {
                 scenetitle.setFill(Color.web(Colors.WARNING_TEXT.toString()));
                 scenetitle.setText("Wrong user id or password");

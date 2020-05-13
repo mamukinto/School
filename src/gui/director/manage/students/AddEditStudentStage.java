@@ -1,4 +1,4 @@
-package gui.director;
+package gui.director.manage.students;
 
 import gui.GraphicUserInterface;
 import gui.common.*;

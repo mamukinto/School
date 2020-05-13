@@ -1,4 +1,4 @@
-package gui.director;
+package gui.director.manage.students;
 
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
