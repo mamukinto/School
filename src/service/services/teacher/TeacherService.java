@@ -11,6 +11,8 @@ public interface TeacherService {
 
     void addTeacher(Teacher teacher) throws SchoolException;
 
+    void editTeacher(Teacher teacher) throws SchoolException;
+
     List<Teacher> getTeachers();
 
     void addMarkToStudent(Teacher teacher, Mark mark, Student student) throws SchoolException;

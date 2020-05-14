@@ -37,7 +37,7 @@ public class Login {
         grid.setPrefSize(500, 300);
 //        stage.setResizable(false);
         stage.setMaximized(true);
-
+ 
 
         Text scenetitle = new Text("Welcome");
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));

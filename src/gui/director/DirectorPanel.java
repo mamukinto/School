@@ -6,6 +6,7 @@ import gui.common.Colors;
 import gui.director.manage.classrooms.ManageClassroomsPanel;
 import gui.director.manage.students.ManageStudentsPanel;
 import gui.director.manage.subjects.ManageSubjectsPanel;
+import gui.director.manage.teachers.ManageTeachersPanel;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -64,7 +65,7 @@ public class DirectorPanel {
         GridPane.setHalignment(back, HPos.RIGHT);
 
         bt1.setOnAction(click -> ManageStudentsPanel.show(scene,stage));
-//        bt2.setOnAction(click -> ManageTeachersPanel.show(scene, stage));
+        bt2.setOnAction(click -> ManageTeachersPanel.show(scene, stage));
         bt3.setOnAction(click -> ManageClassroomsPanel.show(scene, stage));
         bt4.setOnAction(click -> ManageSubjectsPanel.show(scene, stage));
 

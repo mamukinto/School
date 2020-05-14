@@ -34,6 +34,13 @@ public class TeacherServiceImpl implements TeacherService {
         teacher.setPassword("" + password.hashCode());
         daoService.write(teacher);
         EmailSender.sendEmail(WELCOME_EMAIL_FROM_ADDRESS, teacher.getEmail(), WELCOME_EMAIL_SUBJECT, getEmailMessage(teacher.getFirstName(), password));
+        updateTeachers();
+    }
+
+    @Override
+    public void editTeacher(Teacher teacher) throws SchoolException {
+        daoService.write(teacher);
+        updateTeachers();
     }
 
     @Override
@@ -64,6 +71,7 @@ public class TeacherServiceImpl implements TeacherService {
     public void removeTeacher(Teacher teacher) throws SchoolException {
         teacher.setActive(false);
         daoService.write(teacher);
+        updateTeachers();
     }
 
     @Override

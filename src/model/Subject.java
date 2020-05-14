@@ -48,10 +48,7 @@ public class Subject extends DBObject {
 
     @Override
     public String toString() {
-        return "Subject{" +
-                "name='" + name + '\'' +
-                ", costPerHour=" + costPerHour +
-                '}';
+        return name + "(" + costPerHour +"$)";
     }
 
     @Override
