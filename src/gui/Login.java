@@ -1,6 +1,7 @@
 package gui;
 
 import gui.common.Colors;
+import gui.common.StyleButton;
 import gui.director.DirectorPanel;
 import gui.student.StudentPanel;
 import gui.teacher.TeacherPanel;
@@ -23,9 +24,8 @@ import service.services.auth.AuthService;
 import service.services.auth.AuthServiceImpl;
 
 public class Login {
-    private static AuthService auth = new AuthServiceImpl();
+    private static final AuthService auth = new AuthServiceImpl();
 
-    @SuppressWarnings("unchecked")
     public static void login(Scene scene, Stage stage) {
         scene.getStylesheets().add(GraphicUserInterface.class.getResource("static/css/login.css").toExternalForm());
         GridPane grid = new GridPane();

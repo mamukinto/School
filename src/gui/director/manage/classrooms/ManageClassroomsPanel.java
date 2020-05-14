@@ -1,4 +1,4 @@
-package gui.director.manage.students;
+package gui.director.manage.classrooms;
 
 import gui.GraphicUserInterface;
 import gui.common.AlertUtil;
@@ -14,18 +14,17 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.Student;
+import model.Classroom;
 import model.exception.SchoolException;
-import service.services.student.StudentService;
-import service.services.student.StudentServiceImpl;
+import service.services.classroom.ClassroomsService;
+import service.services.classroom.ClassroomsServiceImpl;
 
+public class ManageClassroomsPanel {
 
-public class ManageStudentsPanel {
-
-    private static final StudentService studentService = new StudentServiceImpl();
+    private static final ClassroomsService classroomsService = new ClassroomsServiceImpl();
 
     public static void show(Scene scene, Stage stage) {
-        TableView<Student> table = StudentsTableGenerator.getTableView();
+        TableView<Classroom> table = ClassroomsTableGenerator.getTableView();
         scene.getStylesheets().add(GraphicUserInterface.class.getResource("static/css/tableStyle.css").toExternalForm());
 
         BorderPane root = new BorderPane();
@@ -58,13 +57,13 @@ public class ManageStudentsPanel {
 
         back.setOnAction(click -> DirectorPanel.show(scene,stage));
         b1.setOnAction(click -> {
-            AddEditStudentStage addEditStudentStage = new AddEditStudentStage(stage,table, ModalMode.ADD);
-            addEditStudentStage.show();
+            AddEditClassroomStage addEditClassroomStage = new AddEditClassroomStage(stage,table, ModalMode.ADD);
+            addEditClassroomStage.show();
         });
-        b2.setOnAction(click -> removeStudent(table));
+        b2.setOnAction(click -> removeClassroom(table));
         b3.setOnAction(click -> {
-            AddEditStudentStage addEditStudentStage = new AddEditStudentStage(stage,table, ModalMode.EDIT);
-            addEditStudentStage.show();
+            AddEditClassroomStage addEditClassroomStage = new AddEditClassroomStage(stage,table, ModalMode.EDIT);
+            addEditClassroomStage.show();
         });
 
 
@@ -72,12 +71,13 @@ public class ManageStudentsPanel {
         scene.setRoot(root);
     }
 
-    private static void removeStudent(TableView<Student> tableView) {
+    private static void removeClassroom(TableView<Classroom> tableView) {
         try {
-            studentService.removeStudent(tableView.getSelectionModel().getSelectedItem());
-            tableView.getItems().setAll(studentService.getStudents());
+            classroomsService.removeClassroom(tableView.getSelectionModel().getSelectedItem());
+            tableView.getItems().setAll(classroomsService.getClassrooms());
+            System.out.println(tableView.getItems().toArray().toString());
         } catch (SchoolException e) {
-            AlertUtil.alert("Exception","Can't remove student",e.getMessage());
+            AlertUtil.alert("Exception","Can't remove Classroom",e.getMessage());
         }
     }
 }

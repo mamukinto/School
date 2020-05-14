@@ -13,6 +13,8 @@ public interface ClassroomsService {
 
     Classroom getClassroomByName(String classroomName);
 
+    void editClassroom(Classroom classroom) throws SchoolException;
+
     void addStandartClassrooms() throws SchoolException;
 
     void addClassroom(Classroom classroom) throws SchoolException;

@@ -13,6 +13,8 @@ public interface SubjectService {
 
     Subject getSubjectByName(String subjectName);
 
+    void editSubject(Subject subject) throws SchoolException;
+
     void addSubject(Subject subject) throws SchoolException;
 
     void addStandartSubjects() throws SchoolException;

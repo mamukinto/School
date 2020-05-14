@@ -35,19 +35,27 @@ public class ClassroomsServiceImpl implements ClassroomsService {
     }
 
     @Override
+    public void editClassroom(Classroom classroom) throws SchoolException {
+        daoService.write(classroom);
+    }
+
+    @Override
     public void addStandartClassrooms() throws SchoolException {
         daoService.writeAll(getStandartClassrooms());
+        updateClassrooms();
     }
 
     @Override
     public void addClassroom(Classroom classroom) throws SchoolException {
         daoService.write(classroom);
+        updateClassrooms();
     }
 
     @Override
     public void removeClassroom(Classroom classroom) throws SchoolException {
         classroom.setActive(false);
         daoService.write(classroom);
+        updateClassrooms();
     }
 
     @Override

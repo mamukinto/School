@@ -1,13 +1,11 @@
 package gui.director.manage.students;
 
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
 import model.Student;
 import service.services.student.StudentService;
 import service.services.student.StudentServiceImpl;
@@ -15,7 +13,7 @@ import service.services.student.StudentServiceImpl;
 
 public class StudentsTableGenerator {
 
-    public static TableView<Student> getStudentTableView() {
+    public static TableView<Student> getTableView() {
         TableView<Student> studentTableView = new TableView<>();
         studentTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         studentTableView.setPlaceholder(new Label("No Students in this school yet."));

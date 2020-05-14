@@ -110,12 +110,15 @@ public class AddEditStudentStage extends Stage {
         grid.add(hbBtn, 1, 6);
 
         if (modalMode == ModalMode.EDIT) {
+            scenetitle.setText("Edit student:");
             student = table.getSelectionModel().getSelectedItem();
             firstName.setText(student.getFirstName());
             lastName.setText(student.getLastName());
             personalId.setText(student.getPersonalId());
+            personalId.setDisable(true);
             email.setText(student.getEmail());
             comboBox.setValue(student.getClassroom().getName());
+            button.setText("Edit");
         }
 
 
@@ -134,7 +137,6 @@ public class AddEditStudentStage extends Stage {
                     alert("Unexpected exception", "Can't add student", e.getMessage());
                 }
                 this.close();
-                table.getItems().setAll(studentService.getStudents());
             }
             else if (modalMode == ModalMode.EDIT) {
                 student.setFirstName(firstName.getText());
@@ -148,6 +150,7 @@ public class AddEditStudentStage extends Stage {
                     alert("Unexpected exception","Can't edit student",e.getMessage());
                 }
             }
+            table.getItems().setAll(studentService.getStudents());
         });
     }
 

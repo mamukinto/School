@@ -2,10 +2,10 @@ package service.services.teacher;
 
 import dao.DAOService;
 import dao.DAOTeacher;
-import model.Classroom;
 import model.Mark;
 import model.Student;
 import model.Teacher;
+import model.Classroom;
 import model.exception.SchoolException;
 import service.email.EmailSender;
 import service.helpers.auth.PasswordGenerator;

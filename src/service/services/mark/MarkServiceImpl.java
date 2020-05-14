@@ -1,13 +1,10 @@
 package service.services.mark;
 
 import dao.DAOMark;
-import dao.DAOService;
 import model.Mark;
 import model.Student;
 import model.Teacher;
 import model.exception.SchoolException;
-import service.services.teacher.TeacherService;
-import service.services.teacher.TeacherServiceImpl;
 
 import java.util.Date;
 import java.util.List;

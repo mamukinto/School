@@ -35,8 +35,14 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
+    public void editSubject(Subject subject) throws SchoolException {
+        daoService.write(subject);
+    }
+
+    @Override
     public void addSubject(Subject subject) throws SchoolException {
         daoService.write(subject);
+        updateSubjects();
     }
 
     @Override
@@ -48,6 +54,7 @@ public class SubjectServiceImpl implements SubjectService {
     public void removeSubject(Subject subject) throws SchoolException {
         subject.setActive(false);
         daoService.write(subject);
+        updateSubjects();
     }
 
     @Override
