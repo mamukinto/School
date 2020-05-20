@@ -53,7 +53,7 @@ public class Runner {
         } catch (SchoolException e) {
             e.printStackTrace();
         }
-        
+
     }
 }
 

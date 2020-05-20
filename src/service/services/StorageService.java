@@ -20,9 +20,9 @@ public class StorageService {
     private static final DAOService<Teacher> teacherDAO = new DAOTeacher();
 
     public static void updateStorage() throws SchoolException {
-        Storage.classrooms = classroomDAO.readAll();
         Storage.subjects = subjectDAO.readAll();
-        Storage.students = studentDAO.readAll();
         Storage.teachers = teacherDAO.readAll();
+        Storage.classrooms = classroomDAO.readAll();
+        Storage.students = studentDAO.readAll();
     }
 }
