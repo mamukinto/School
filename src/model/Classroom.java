@@ -1,8 +1,13 @@
 package model;
 
+import java.util.HashMap;
+
+import service.helpers.DBObjectFormatHelper;
+
 public class Classroom extends DBObject {
     private String name;
     private int id;
+    private HashMap<Subject, Teacher> teachers;
 
     public Classroom() {
     }
@@ -28,6 +33,13 @@ public class Classroom extends DBObject {
         this.id = id;
     }
 
+    public HashMap<Subject, Teacher> getTeachers() {
+        return teachers;
+    }
+
+    public void setTeachers(HashMap<Subject, Teacher> teachers) {
+        this.teachers = teachers;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -57,7 +69,19 @@ public class Classroom extends DBObject {
         StringBuilder info = new StringBuilder();
         info.append("Name:").append(getName()).append(System.lineSeparator());
         info.append("Id:").append(getId()).append(System.lineSeparator());
-        info.append("Active:").append(isActive());
+        info.append("Active:").append(isActive()).append(System.lineSeparator());
+        info.append(getTeachersString(teachers));
         return info.toString();
+    }
+
+    private String getTeachersString(HashMap<Subject, Teacher> teachers) {
+        StringBuilder teachersStringBuilder = new StringBuilder();
+        teachers.forEach((subject, teacher) -> {
+            teachersStringBuilder.append(subject.getName())
+                    .append(DBObjectFormatHelper.MAP_EQUALLY)
+                    .append(teacher.getPersonalId())
+                    .append(DBObjectFormatHelper.MAP_SPLITTER);
+        });
+       return teachersStringBuilder.substring(0,teachersStringBuilder.length() - 1);
     }
 }

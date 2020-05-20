@@ -3,14 +3,21 @@ package service.services.classroom;
 import dao.DAOClassroom;
 import dao.DAOService;
 import model.Classroom;
+import model.Subject;
+import model.Teacher;
 import model.exception.SchoolException;
+import service.services.teacher.TeacherService;
+import service.services.teacher.TeacherServiceImpl;
 import storage.Storage;
 
 import java.util.List;
+import java.util.Map;
 
 public class ClassroomsServiceImpl implements ClassroomsService {
 
     private final DAOService<Classroom> daoService = new DAOClassroom();
+
+    private final TeacherService teacherService = new TeacherServiceImpl();
 
     @Override
     public List<Classroom> getStandartClassrooms() {
@@ -48,6 +55,11 @@ public class ClassroomsServiceImpl implements ClassroomsService {
     @Override
     public void addClassroom(Classroom classroom) throws SchoolException {
         daoService.write(classroom);
+        for (Map.Entry<Subject, Teacher> entry : classroom.getTeachers().entrySet()) {
+            Teacher teacher = entry.getValue();
+            teacher.getClassrooms().add(classroom);
+            teacherService.addTeacher(teacher);
+        }
         updateClassrooms();
     }
 

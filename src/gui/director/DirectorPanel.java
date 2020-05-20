@@ -1,8 +1,8 @@
 package gui.director;
 
 import gui.Login;
-import gui.common.StyleButton;
 import gui.common.Colors;
+import gui.common.StyleButton;
 import gui.director.manage.classrooms.ManageClassroomsPanel;
 import gui.director.manage.students.ManageStudentsPanel;
 import gui.director.manage.subjects.ManageSubjectsPanel;
@@ -10,15 +10,23 @@ import gui.director.manage.teachers.ManageTeachersPanel;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import service.services.classroom.ClassroomsService;
+import service.services.classroom.ClassroomsServiceImpl;
+import service.services.subject.SubjectService;
+import service.services.subject.SubjectServiceImpl;
 
 
 public class DirectorPanel {
+
+    private final static ClassroomsService classroomsService = new ClassroomsServiceImpl();
+
+    private final static SubjectService subjectService = new SubjectServiceImpl();
 
     public static void show(Scene scene, Stage stage) {
         stage.setMaximized(true);
@@ -54,6 +62,14 @@ public class DirectorPanel {
         bt2.setPrefSize(300,200);
         bt3.setPrefSize(300,200);
         bt4.setPrefSize(300,200);
+
+//        if  (classroomsService.getClassrooms().size() == 0) {
+//            bt1.setDisable(true);
+//        }
+//        if (classroomsService.getClassrooms().size() == 0 || subjectService.getSubjects().size() == 0) {
+//            bt2.setDisable(true);
+//        }
+
 
 
         grid.add(welcome,0,0,3,1);

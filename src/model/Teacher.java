@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Teacher extends Human {
@@ -8,10 +9,12 @@ public class Teacher extends Human {
     private List<Classroom> classrooms;
 
     public Teacher() {
+        classrooms = new ArrayList<>();
     }
 
     public Teacher(String firstName, String lastName, String personalId) {
         super(firstName, lastName, personalId);
+        classrooms = new ArrayList<>();
     }
 
     public Subject getSubject() {

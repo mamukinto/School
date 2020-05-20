@@ -6,7 +6,8 @@ public interface DBObjectFormatHelper {
 
     String LINE_SPLITTER = System.lineSeparator();
     String INFO_SPLITTER = ":";
-    String INTEGER_LIST_SPLITTER = ",";
+    String MAP_SPLITTER = ",";
+    String MAP_EQUALLY = "=";
 
     DBObject parse(String dBObjectString);
 

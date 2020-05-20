@@ -15,6 +15,10 @@ public interface TeacherService {
 
     List<Teacher> getTeachers();
 
+    Teacher getTeacherByPersonalId(String personalId);
+
+    List<Teacher> getTeachersBySubject(String subjectName);
+
     void addMarkToStudent(Teacher teacher, Mark mark, Student student) throws SchoolException;
 
     List<Student> getTeacherStudents(Teacher teacher);

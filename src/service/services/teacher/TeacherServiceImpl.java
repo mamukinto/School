@@ -49,6 +49,27 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    public Teacher getTeacherByPersonalId(String personalId) {
+        for (Teacher teacher : Storage.teachers) {
+            if (teacher.getPersonalId().equals(personalId)) {
+                return teacher;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<Teacher> getTeachersBySubject(String subjectName) {
+        List<Teacher> teachersOfThisSubject = new ArrayList<>();
+        getTeachers().forEach(teacher -> {
+            if (teacher.getSubject().getName().equals(subjectName)) {
+                teachersOfThisSubject.add(teacher);
+            }
+        });
+        return teachersOfThisSubject;
+    }
+
+    @Override
     public void addMarkToStudent(Teacher teacher, Mark mark, Student student) throws SchoolException {
         markService.addMarkToStudent(student, teacher, mark);
     }
