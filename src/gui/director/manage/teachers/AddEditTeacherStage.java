@@ -95,17 +95,9 @@ public class AddEditTeacherStage extends Stage {
         TextField email = TextFieldUtil.getTextField();
         grid.add(email, 1, 4);
 
-        Label classroomLabel = LabelUtil.getLabel("Classroom ");
-        grid.add(classroomLabel, 0, 5);
-
-        ComboBox<String> classroomComboBox = new ComboBox<>();
-        classroomComboBox.setStyle("-fx-background-color: " + Colors.SECONDARY + "; -fx-mark-color: " + Colors.SECONDARY + ";");
-
-        classroomComboBox.setPromptText("Click to select");
-        classroomComboBox.setEditable(false);
 
         Label subjectLabel = LabelUtil.getLabel("Subject ");
-        grid.add(subjectLabel, 0, 6);
+        grid.add(subjectLabel, 0, 5);
 
         ComboBox<String> subjectComboBox = new ComboBox<>();
         subjectComboBox.setStyle("-fx-background-color: " + Colors.SECONDARY + "; -fx-mark-color: " + Colors.SECONDARY + ";");
@@ -114,11 +106,9 @@ public class AddEditTeacherStage extends Stage {
         subjectComboBox.setEditable(false);
 
 
-        updateClassroomsToChoiceBox(classroomComboBox);
         updateSubjectsToChoiceBox(subjectComboBox);
 
-        grid.add(classroomComboBox, 1,5);
-        grid.add(subjectComboBox,1,6);
+        grid.add(subjectComboBox,1,5);
 
 
         Button button = new Button("Add");
@@ -128,7 +118,7 @@ public class AddEditTeacherStage extends Stage {
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(button);
-        grid.add(hbBtn, 1, 7);
+        grid.add(hbBtn, 1, 6);
 
         if (modalMode == ModalMode.EDIT) {
             scenetitle.setText("Edit teacher:");
@@ -139,7 +129,6 @@ public class AddEditTeacherStage extends Stage {
             personalId.setDisable(true);
             email.setText(teacher.getEmail());
             subjectComboBox.setValue(teacher.getSubject().getName());
-            classroomComboBox.setValue(teacher.getClassrooms().get(0).getName());
             button.setText("Edit");
         }
 
@@ -152,7 +141,6 @@ public class AddEditTeacherStage extends Stage {
                 teacher.setLastName(lastName.getText());
                 teacher.setPersonalId(personalId.getText());
                 teacher.setEmail(email.getText());
-                teacher.setClassrooms(new ArrayList<Classroom>(Arrays.asList(classroomsService.getClassroomByName(classroomComboBox.getValue()))));
                 teacher.setSubject(subjectService.getSubjectByName(subjectComboBox.getValue()));
                 try {
                     teacherService.addTeacher(teacher);
@@ -165,7 +153,6 @@ public class AddEditTeacherStage extends Stage {
                 teacher.setFirstName(firstName.getText());
                 teacher.setLastName(lastName.getText());
                 teacher.setEmail(email.getText());
-                teacher.setClassrooms(new ArrayList<Classroom>(Arrays.asList(classroomsService.getClassroomByName(classroomComboBox.getValue()))));
                 teacher.setSubject(subjectService.getSubjectByName(subjectComboBox.getValue()));
                 close();
                 try {

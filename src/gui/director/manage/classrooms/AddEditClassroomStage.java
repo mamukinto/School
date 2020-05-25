@@ -69,7 +69,6 @@ public class AddEditClassroomStage extends Stage {
     }
 
 
-
     private void fillGrid(GridPane grid,TableView<Classroom> table, ModalMode modalMode) {
         Text scenetitle = new Text("To add classroom enter next information");
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 18));

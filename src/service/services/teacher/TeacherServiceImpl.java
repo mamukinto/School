@@ -33,7 +33,11 @@ public class TeacherServiceImpl implements TeacherService {
         String password = PasswordGenerator.generatePassword(INITIAL_PASSWORD_LENGTH);
         teacher.setPassword("" + password.hashCode());
         daoService.write(teacher);
-        EmailSender.sendEmail(WELCOME_EMAIL_FROM_ADDRESS, teacher.getEmail(), WELCOME_EMAIL_SUBJECT, getEmailMessage(teacher.getFirstName(), password));
+        try {
+            EmailSender.sendEmail(WELCOME_EMAIL_FROM_ADDRESS, teacher.getEmail(), WELCOME_EMAIL_SUBJECT, getEmailMessage(teacher.getFirstName(), password));
+        } catch (SchoolException e) {
+            System.out.println("Cant send email -> " + e.getMessage());
+        }
         updateTeachers();
     }
 

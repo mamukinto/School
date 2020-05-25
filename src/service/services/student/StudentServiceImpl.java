@@ -8,6 +8,7 @@ import service.email.EmailSender;
 import service.helpers.auth.PasswordGenerator;
 import storage.Storage;
 
+import javax.crypto.ShortBufferException;
 import java.util.List;
 
 public class StudentServiceImpl implements StudentService {
@@ -25,7 +26,11 @@ public class StudentServiceImpl implements StudentService {
         String password = PasswordGenerator.generatePassword(INITIAL_PASSWORD_LENGTH);
         student.setPassword("" + password.hashCode());
         daoService.write(student);
-        EmailSender.sendEmail(WELCOME_EMAIL_FROM_ADDRESS, student.getEmail(), WELCOME_EMAIL_SUBJECT, getEmailMessage(student.getFirstName(), password));
+        try {
+            EmailSender.sendEmail(WELCOME_EMAIL_FROM_ADDRESS, student.getEmail(), WELCOME_EMAIL_SUBJECT, getEmailMessage(student.getFirstName(), password));
+        } catch (SchoolException e) {
+            System.out.println(e.getMessage());
+        }
         updateStudents();
     }
 

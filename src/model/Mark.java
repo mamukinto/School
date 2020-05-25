@@ -3,7 +3,7 @@ package model;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Mark extends DBObject implements Comparable{
+public class Mark extends DBObject implements Comparable<Mark>{
 
     private int value;
 
@@ -79,8 +79,7 @@ public class Mark extends DBObject implements Comparable{
     }
 
     @Override
-    public int compareTo(Object o) {
-        Mark mark = (Mark) o;
+    public int compareTo(Mark mark) {
         return Double.compare(this.getValue(),mark.getValue());
     }
 
