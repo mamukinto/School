@@ -8,12 +8,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Classroom;
+import model.StudentWeekView;
 import model.Teacher;
 import service.services.classroom.ClassroomsService;
 import service.services.classroom.ClassroomsServiceImpl;
 import service.services.teacher.TeacherService;
 import service.services.teacher.TeacherServiceImpl;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -81,27 +84,45 @@ public class TeacherPanel {
             tabClassroomMap.put(tempTab,classroom);
         });
         tabPane.getTabs().addAll(tabs);
-        tabClassroomMap.forEach((tab, classroom) -> mainPage(classroom,tab));
+        tabClassroomMap.forEach((tab, classroom) -> mainPage(tab, classroom, teacher));
     }
 
-    private static void mainPage(Classroom classroom, Tab tab) {
+    private static void mainPage(Tab tab, Classroom classroom,Teacher teacher) {
         VBox vBox = new VBox();
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.BASELINE_LEFT);
-        TableView<String> table = new TableView<>();
-        vBox.getChildren().add(hBox);
-        vBox.getChildren().add(table);
 
-        ComboBox<String> weeksCB = new ComboBox<>();
-        weeksCB.setPromptText("Week");
+
+
+        DatePicker datePicker = new DatePicker();
+
 
         TextField searchTF = new TextField();
         searchTF.setPromptText("Search...");
 
-        hBox.getChildren().add(weeksCB);
+        vBox.getChildren().add(hBox);
+        TableView<StudentWeekView> table = TableGenerator.getTableView(teacher, classroom,searchTF.getText(),getFirstMondayFromDate(datePicker.getValue()));
+        vBox.getChildren().add(table);
+
+
+        hBox.getChildren().add(datePicker);
         hBox.getChildren().add(searchTF);
 
+
+
+
         tab.setContent(vBox);
+    }
+
+    private static LocalDate getFirstMondayFromDate(LocalDate date) {
+        if (date == null) {
+            date = LocalDate.now();
+        }
+        for (LocalDate dmb = date; ;dmb = dmb.minusDays(1)) {
+            if (dmb.getDayOfWeek().equals(DayOfWeek.MONDAY)) {
+                return dmb;
+            }
+        }
     }
 
 }

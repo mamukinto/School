@@ -6,6 +6,7 @@ import model.Student;
 import model.Teacher;
 import model.exception.SchoolException;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -22,8 +23,7 @@ public class MarkServiceImpl implements MarkService {
 
     @Override
     public void addMarkToStudent(Student student, Teacher teacher, Mark mark) throws SchoolException {
-        Date writingDate = new Date();
-        mark.setDate(writingDate);
+        mark.setDate(LocalDate.now());
         mark.setTeacher(teacher);
         mark.setStudent(student);
         daoService.write(mark);

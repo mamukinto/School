@@ -2,18 +2,19 @@ package service.services.teacher;
 
 import dao.DAOService;
 import dao.DAOTeacher;
-import model.Mark;
-import model.Student;
-import model.Teacher;
-import model.Classroom;
+import model.*;
 import model.exception.SchoolException;
 import service.email.EmailSender;
 import service.helpers.auth.PasswordGenerator;
+import service.services.classroom.ClassroomsService;
+import service.services.classroom.ClassroomsServiceImpl;
 import service.services.mark.MarkService;
 import service.services.mark.MarkServiceImpl;
 import storage.Storage;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TeacherServiceImpl implements TeacherService {
@@ -27,6 +28,9 @@ public class TeacherServiceImpl implements TeacherService {
     private static final String WELCOME_EMAIL_SUBJECT = "System Registration";
 
     private DAOService<Teacher> daoService = new DAOTeacher();
+
+    private ClassroomsService classroomsService = new ClassroomsServiceImpl();
+
 
     @Override
     public void addTeacher(Teacher teacher) throws SchoolException {
@@ -74,6 +78,23 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    public List<StudentWeekView> getTeachersStudentWeekViews(Teacher teacher, Classroom classroom, String searchName,  LocalDate from) {
+        List<StudentWeekView> studentWeekViewList = new ArrayList<>();
+        List<Student> students = classroomsService.getStudentsFromClassroom(classroom);
+        students.forEach(student -> {
+            StudentWeekView tempStudentWeekView = new StudentWeekView();
+            tempStudentWeekView.setName(student.getFirstName() + " " + student.getLastName());
+            tempStudentWeekView.setMondayMark(getMarkValueByDate(student.getJournal().get(teacher.getSubject()), from));
+            tempStudentWeekView.setTuesdayMark(getMarkValueByDate(student.getJournal().get(teacher.getSubject()), from.plusDays(1)));
+            tempStudentWeekView.setWednesdayark(getMarkValueByDate(student.getJournal().get(teacher.getSubject()), from.plusDays(2)));
+            tempStudentWeekView.setThursdayMark(getMarkValueByDate(student.getJournal().get(teacher.getSubject()), from.plusDays(3)));
+            tempStudentWeekView.setFridayMark(getMarkValueByDate(student.getJournal().get(teacher.getSubject()), from.plusDays(4)));
+            studentWeekViewList.add(tempStudentWeekView);
+        });
+        return studentWeekViewList;
+    }
+
+    @Override
     public void addMarkToStudent(Teacher teacher, Mark mark, Student student) throws SchoolException {
         markService.addMarkToStudent(student, teacher, mark);
     }
@@ -94,4 +115,19 @@ public class TeacherServiceImpl implements TeacherService {
     private String getEmailMessage(String firstName, String password) {
         return firstName + ", your temporary password is " + password;
     }
+
+    private Integer getMarkValueByDate(List<Mark> marks,LocalDate date) {
+        for (Mark mark : marks) {
+            if (mark.getDate().equals(date)) {
+                return mark.getValue();
+            }
+        }
+        return null;
+    }
+//
+//    private Date addDaysToDate(Date date,int days) {
+//        Date tempDate = new Date();
+//        tempDate.
+//        return tempDate;
+//    }
 }

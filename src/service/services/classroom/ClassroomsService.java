@@ -1,6 +1,7 @@
 package service.services.classroom;
 
 import model.Classroom;
+import model.Student;
 import model.Teacher;
 import model.exception.SchoolException;
 
@@ -15,6 +16,8 @@ public interface ClassroomsService {
     List<Classroom> getClassroomsByTeacher(Teacher teacher);
 
     Classroom getClassroomByName(String classroomName);
+
+    List<Student> getStudentsFromClassroom(Classroom classroom);
 
     void editClassroom(Classroom classroom) throws SchoolException;
 

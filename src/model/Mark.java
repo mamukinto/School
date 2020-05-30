@@ -1,13 +1,14 @@
 package model;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Mark extends DBObject implements Comparable<Mark>{
 
     private int value;
 
-    private Date date;
+    private LocalDate date;
 
     private String note;
 
@@ -23,7 +24,7 @@ public class Mark extends DBObject implements Comparable<Mark>{
         this.value = value;
     }
 
-    public Mark(int value, Date date, String note) {
+    public Mark(int value, LocalDate date, String note) {
         this.value = value;
         this.date = date;
         this.note = note;
@@ -37,11 +38,11 @@ public class Mark extends DBObject implements Comparable<Mark>{
         this.value = value;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

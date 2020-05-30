@@ -3,9 +3,12 @@ package service.services.classroom;
 import dao.DAOClassroom;
 import dao.DAOService;
 import model.Classroom;
+import model.Student;
 import model.Subject;
 import model.Teacher;
 import model.exception.SchoolException;
+import service.services.student.StudentService;
+import service.services.student.StudentServiceImpl;
 import service.services.teacher.TeacherService;
 import service.services.teacher.TeacherServiceImpl;
 import storage.Storage;
@@ -18,8 +21,7 @@ public class ClassroomsServiceImpl implements ClassroomsService {
 
     private final DAOService<Classroom> daoService = new DAOClassroom();
 
-    private final TeacherService teacherService = new TeacherServiceImpl();
-
+    private final StudentService studentService = new StudentServiceImpl();
     @Override
     public List<Classroom> getStandartClassrooms() {
         return Storage.standartClassrooms;
@@ -41,7 +43,6 @@ public class ClassroomsServiceImpl implements ClassroomsService {
         return classrooms;
     }
 
-
     @Override
     public Classroom getClassroomByName(String classroomName) {
         Classroom classroom = new Classroom();
@@ -52,6 +53,17 @@ public class ClassroomsServiceImpl implements ClassroomsService {
             }
         }
         return classroom;
+    }
+
+    @Override
+    public List<Student> getStudentsFromClassroom(Classroom classroom) {
+        List<Student> students = new ArrayList<>();
+        studentService.getStudents().forEach(student -> {
+            if (student.getClassroom().equals(classroom)) {
+                students.add(student);
+            }
+        });
+        return students;
     }
 
     @Override
