@@ -6,15 +6,12 @@ import java.util.List;
 public class Teacher extends Human {
     private Subject subject;
     private double salary;
-    private List<Classroom> classrooms;
 
     public Teacher() {
-        classrooms = new ArrayList<>();
     }
 
     public Teacher(String firstName, String lastName, String personalId) {
         super(firstName, lastName, personalId);
-        classrooms = new ArrayList<>();
     }
 
     public Subject getSubject() {
@@ -26,20 +23,12 @@ public class Teacher extends Human {
     }
 
     public double getSalary() {
-        salary = classrooms.size()*subject.getCostPerHour()*3;
+        salary = subject.getCostPerHour()*12;
         return salary;
     }
 
     public void setSalary(double salary) {
         this.salary = salary;
-    }
-
-    public List<Classroom> getClassrooms() {
-        return classrooms;
-    }
-
-    public void setClassrooms(List<Classroom> classrooms) {
-        this.classrooms = classrooms;
     }
 
     @Override
@@ -55,18 +44,6 @@ public class Teacher extends Human {
 
         info.append("Salary:").append(getSalary()).append(System.lineSeparator());
         info.append("Active:").append(isActive()).append(System.lineSeparator());
-
-        if(getClassrooms() != null) {
-            info.append("Classrooms:");
-            for (int i = 0; i < getClassrooms().size(); i++) {
-                if (i + 1 == getClassrooms().size()) {
-                    info.append(getClassrooms().get(i).getName());
-                } else {
-                    info.append(getClassrooms().get(i).getName()).append(",");
-                }
-            }
-        }
-        info.append(System.lineSeparator());
         info.append("Email:").append(getEmail()).append(System.lineSeparator());
         info.append("Password:").append(getPassword()).append(System.lineSeparator());
       return info.toString();

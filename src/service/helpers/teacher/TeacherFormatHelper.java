@@ -1,5 +1,6 @@
 package service.helpers.teacher;
 
+import model.Classroom;
 import model.DBObject;
 import model.Teacher;
 import service.helpers.DBObjectFormatHelper;
@@ -7,6 +8,10 @@ import service.services.classroom.ClassroomsService;
 import service.services.classroom.ClassroomsServiceImpl;
 import service.services.subject.SubjectService;
 import service.services.subject.SubjectServiceImpl;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class TeacherFormatHelper implements DBObjectFormatHelper {
 
@@ -24,11 +29,11 @@ public class TeacherFormatHelper implements DBObjectFormatHelper {
         teacher.setPersonalId(teacherLines[2].split(INFO_SPLITTER)[1].trim());
         teacher.setSubject(subjectService.getSubjectByName(teacherLines[3].split(INFO_SPLITTER)[1].trim()));
         teacher.setSalary(Double.parseDouble(teacherLines[4].split(INFO_SPLITTER)[1].trim()));
-
         teacher.setActive(Boolean.parseBoolean(teacherLines[5].split(INFO_SPLITTER)[1].trim()));
+        teacher.setEmail(teacherLines[6].split(INFO_SPLITTER)[1].trim());
+        teacher.setPassword(teacherLines[7].split(INFO_SPLITTER)[1].trim());
 
-        teacher.setEmail(teacherLines[7].split(INFO_SPLITTER)[1].trim());
-        teacher.setPassword(teacherLines[8].split(INFO_SPLITTER)[1].trim());
+
         return teacher;
     }
 
@@ -37,4 +42,5 @@ public class TeacherFormatHelper implements DBObjectFormatHelper {
         Teacher teacher = (Teacher) dbObject;
         return teacher.getInfo();
     }
+
 }

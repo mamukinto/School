@@ -78,19 +78,6 @@ public class TeacherServiceImpl implements TeacherService {
         markService.addMarkToStudent(student, teacher, mark);
     }
 
-    @Override
-    public List<Student> getTeacherStudents(Teacher teacher) {
-        List<Student> result = new ArrayList<>();
-        List<Classroom> classrooms = teacher.getClassrooms();
-        for (Student student : Storage.students) {
-            for (Classroom classroom : classrooms) {
-                if (student.getClassroom().equals(classroom)) {
-                    result.add(student);
-                }
-            }
-        }
-        return result;
-    }
 
     @Override
     public void removeTeacher(Teacher teacher) throws SchoolException {

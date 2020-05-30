@@ -149,7 +149,7 @@ public class Login {
             String password = pwBox.getText();
             Teacher teacher = (Teacher) auth.auth(personalId, password, UserType.TEACHER);
             if (teacher != null) {
-                TeacherPanel.teacherPanel(scene, teacher);
+                TeacherPanel.teacherPanel(scene,stage,teacher);
             } else {
                 scenetitle.setFill(Color.web(Colors.WARNING_TEXT.toString()));
                 scenetitle.setText("Wrong user id or password");

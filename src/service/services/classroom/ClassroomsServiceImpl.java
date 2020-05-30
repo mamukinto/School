@@ -10,6 +10,7 @@ import service.services.teacher.TeacherService;
 import service.services.teacher.TeacherServiceImpl;
 import storage.Storage;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +29,18 @@ public class ClassroomsServiceImpl implements ClassroomsService {
     public List<Classroom> getClassrooms() {
         return Storage.classrooms;
     }
+
+    @Override
+    public List<Classroom> getClassroomsByTeacher(Teacher teacher) {
+        List<Classroom> classrooms = new ArrayList<>();
+        getClassrooms().forEach(classroom -> {
+            if (classroom.getTeachers().containsValue(teacher)) {
+                classrooms.add(classroom);
+            }
+        });
+        return classrooms;
+    }
+
 
     @Override
     public Classroom getClassroomByName(String classroomName) {
@@ -55,11 +68,6 @@ public class ClassroomsServiceImpl implements ClassroomsService {
     @Override
     public void addClassroom(Classroom classroom) throws SchoolException {
         daoService.write(classroom);
-        for (Map.Entry<Subject, Teacher> entry : classroom.getTeachers().entrySet()) {
-            Teacher teacher = entry.getValue();
-            teacher.getClassrooms().add(classroom);
-            teacherService.addTeacher(teacher);
-        }
         updateClassrooms();
     }
 

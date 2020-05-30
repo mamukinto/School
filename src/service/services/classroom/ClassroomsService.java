@@ -1,6 +1,7 @@
 package service.services.classroom;
 
 import model.Classroom;
+import model.Teacher;
 import model.exception.SchoolException;
 
 import java.util.List;
@@ -10,6 +11,8 @@ public interface ClassroomsService {
     List<Classroom> getStandartClassrooms();
 
     List<Classroom> getClassrooms();
+
+    List<Classroom> getClassroomsByTeacher(Teacher teacher);
 
     Classroom getClassroomByName(String classroomName);
 
