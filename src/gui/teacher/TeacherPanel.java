@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Classroom;
@@ -52,9 +53,11 @@ public class TeacherPanel {
         scene.getStylesheets().add(GraphicUserInterface.class.getResource("static/css/teacherPanel.css").toExternalForm());
         HBox header = new HBox();
         header.setAlignment(Pos.BASELINE_RIGHT);
+        header.getStyleClass().add("header");
 
-        Label userNameLabel = new Label(teacher.getFirstName() + " " + teacher.getLastName());
-
+        Text userNameLabel = new Text(teacher.getFirstName() + " " + teacher.getLastName());
+        userNameLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 16));
+        userNameLabel.setFill(Color.web(Colors.TEXT.toString()));
         MenuBar menuBar = new MenuBar();
         Menu optionsButton = new Menu("Options");
 
@@ -103,31 +106,26 @@ public class TeacherPanel {
     private static void mainPage(Tab tab, Classroom classroom,Teacher teacher, Stage stage) {
         BorderPane borderPane = new BorderPane();
         HBox hBox = new HBox();
-        hBox.setAlignment(Pos.BASELINE_LEFT);
-
-
+        hBox.setAlignment(Pos.BASELINE_CENTER);
+        hBox.getStyleClass().add("hbox");
 
         DatePicker datePicker = new DatePicker();
-
-
-        TextField searchTF = new TextField();
-        searchTF.setPromptText("Search...");
-
+        datePicker.setPromptText("Choose date");
+        datePicker.getStyleClass().add("datepicker");
 
         borderPane.setTop(hBox);
-        TableView<StudentWeekView> table = TableGenerator.getTableView(teacher, classroom, searchTF.getText(), getFirstMondayFromDate(LocalDate.now()));
+        TableView<StudentWeekView> table = TableGenerator.getTableView(teacher, classroom, getFirstMondayFromDate(LocalDate.now()));
         table.prefHeightProperty().bind(stage.heightProperty());
         table.prefWidthProperty().bind(stage.widthProperty());
 
         borderPane.setCenter(table);
         datePicker.setOnAction(action -> {
-            borderPane.setCenter(TableGenerator.getTableView(teacher, classroom, searchTF.getText(), getFirstMondayFromDate(datePicker.getValue())));
+            borderPane.setCenter(TableGenerator.getTableView(teacher, classroom, getFirstMondayFromDate(datePicker.getValue())));
             markService.updateAllJournals();
         });
 
 
         hBox.getChildren().add(datePicker);
-        hBox.getChildren().add(searchTF);
 
 
 

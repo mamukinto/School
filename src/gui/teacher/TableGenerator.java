@@ -27,7 +27,7 @@ public class TableGenerator {
 
     private final static StudentService studentService = new StudentServiceImpl();
 
-    public static TableView<StudentWeekView> getTableView(Teacher teacher, Classroom classroom, String searchName, LocalDate from) {
+    public static TableView<StudentWeekView> getTableView(Teacher teacher, Classroom classroom, LocalDate from) {
         TableView<StudentWeekView> studentWeekViewTableView = new TableView<>();
         studentWeekViewTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         studentWeekViewTableView.setPlaceholder(new Label("No Students in this classroom yet."));
@@ -127,16 +127,16 @@ public class TableGenerator {
         studentWeekViewTableView.getColumns().add(fridayColumn);
 
 
-        studentWeekViewTableView.setItems(getStudentWeekViews(teacher, classroom, searchName, from));
+        studentWeekViewTableView.setItems(getStudentWeekViews(teacher, classroom, from));
 
 
 
         return studentWeekViewTableView;
     }
 
-    private static ObservableList<StudentWeekView> getStudentWeekViews(Teacher teacher, Classroom classroom, String searchName, LocalDate from) {
+    private static ObservableList<StudentWeekView> getStudentWeekViews(Teacher teacher, Classroom classroom, LocalDate from) {
         ObservableList<StudentWeekView> studentWeekViewObservableList = FXCollections.observableArrayList();
-        studentWeekViewObservableList.addAll(teacherService.getTeachersStudentWeekViews(teacher, classroom, searchName, from));
+        studentWeekViewObservableList.addAll(teacherService.getTeachersStudentWeekViews(teacher, classroom, from));
         return studentWeekViewObservableList;
     }
 

@@ -18,7 +18,7 @@ public interface TeacherService {
 
     List<Teacher> getTeachersBySubject(String subjectName);
 
-    List<StudentWeekView>   getTeachersStudentWeekViews(Teacher teacher, Classroom classroom, String searchName, LocalDate from);
+    List<StudentWeekView>   getTeachersStudentWeekViews(Teacher teacher, Classroom classroom, LocalDate from);
 
     void addMarkToStudent(Teacher teacher, Mark mark, Student student, LocalDate date) throws SchoolException;
 

@@ -13,7 +13,6 @@ import service.services.mark.MarkServiceImpl;
 import storage.Storage;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +77,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<StudentWeekView> getTeachersStudentWeekViews(Teacher teacher, Classroom classroom, String searchName, LocalDate from) {
+    public List<StudentWeekView> getTeachersStudentWeekViews(Teacher teacher, Classroom classroom, LocalDate from) {
         List<StudentWeekView> studentWeekViewList = new ArrayList<>();
         List<Student> students = classroomsService.getStudentsFromClassroom(classroom);
         students.forEach(student -> {
