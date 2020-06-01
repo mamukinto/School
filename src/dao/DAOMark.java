@@ -9,6 +9,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class DAOMark implements DAOService<Mark> {
@@ -17,7 +18,7 @@ public class DAOMark implements DAOService<Mark> {
     public String write(Mark mark) throws SchoolException {
         MarkFormatHelper markFormatHelperHelper = new MarkFormatHelper();
         String formattedMark = markFormatHelperHelper.format(mark);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyyMMdd");
         String formattedDate = dateFormat.format(mark.getDate());
         File file = new File("database/students/" + mark.getStudent().getPersonalId() + "/" + mark.getTeacher().getSubject().getName() + "/" + formattedDate + ".txt");
         file.getParentFile().mkdirs();

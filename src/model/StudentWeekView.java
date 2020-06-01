@@ -4,27 +4,38 @@ package model;
 public class StudentWeekView {
     private String name;
 
-    private Integer mondayMark;
+    private String mondayMark;
 
-    private Integer tuesdayMark;
+    private String tuesdayMark;
 
-    private Integer wednesdayark;
+    private String wednesdayMark;
 
-    private Integer thursdayMark;
+    private String thursdayMark;
 
-    private Integer fridayMark;
+    private String fridayMark;
+
+    private String personalId;
 
     public StudentWeekView() {
 
     }
 
-    public StudentWeekView(String name, Integer mondayMark, Integer tuesdayMark, Integer wednesdayark, Integer thursdayMark, Integer fridayMark) {
+    public StudentWeekView(String name, String mondayMark, String tuesdayMark, String wednesdayMark, String thursdayMark, String fridayMark, String personalId) {
         this.name = name;
         this.mondayMark = mondayMark;
         this.tuesdayMark = tuesdayMark;
-        this.wednesdayark = wednesdayark;
+        this.wednesdayMark = wednesdayMark;
         this.thursdayMark = thursdayMark;
         this.fridayMark = fridayMark;
+        this.personalId = personalId;
+    }
+
+    public String getPersonalId() {
+        return personalId;
+    }
+
+    public void setPersonalId(String personalId) {
+        this.personalId = personalId;
     }
 
     public String getName() {
@@ -35,43 +46,43 @@ public class StudentWeekView {
         this.name = name;
     }
 
-    public int getMondayMark() {
+    public String getMondayMark() {
         return mondayMark;
     }
 
-    public void setMondayMark(Integer mondayMark) {
+    public void setMondayMark(String mondayMark) {
         this.mondayMark = mondayMark;
     }
 
-    public int getTuesdayMark() {
+    public String getTuesdayMark() {
         return tuesdayMark;
     }
 
-    public void setTuesdayMark(Integer tuesdayMark) {
+    public void setTuesdayMark(String tuesdayMark) {
         this.tuesdayMark = tuesdayMark;
     }
 
-    public int getWednesdayark() {
-        return wednesdayark;
+    public String getWednesdayMark() {
+        return wednesdayMark;
     }
 
-    public void setWednesdayark(Integer wednesdayark) {
-        this.wednesdayark = wednesdayark;
+    public void setWednesdayMark(String wednesdayMark) {
+        this.wednesdayMark = wednesdayMark;
     }
 
-    public int getThursdayMark() {
+    public String getThursdayMark() {
         return thursdayMark;
     }
 
-    public void setThursdayMark(Integer thursdayMark) {
+    public void setThursdayMark(String thursdayMark) {
         this.thursdayMark = thursdayMark;
     }
 
-    public int getFridayMark() {
+    public String getFridayMark() {
         return fridayMark;
     }
 
-    public void setFridayMark(Integer fridayMark) {
+    public void setFridayMark(String fridayMark) {
         this.fridayMark = fridayMark;
     }
 }

@@ -1,22 +1,38 @@
 package gui.teacher;
 
+import com.sun.security.sasl.ntlm.FactoryImpl;
+import gui.GraphicUserInterface;
 import gui.Login;
+import gui.common.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Classroom;
 import model.StudentWeekView;
 import model.Teacher;
+import model.exception.SchoolException;
 import service.services.classroom.ClassroomsService;
 import service.services.classroom.ClassroomsServiceImpl;
+import service.services.mark.MarkService;
+import service.services.mark.MarkServiceImpl;
 import service.services.teacher.TeacherService;
 import service.services.teacher.TeacherServiceImpl;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,23 +44,31 @@ public class TeacherPanel {
 
     private static final ClassroomsService classroomsService = new ClassroomsServiceImpl();
 
+    private static final MarkService markService = new MarkServiceImpl();
+
     public static void teacherPanel(Scene scene, Stage stage, Teacher teacher) {
         VBox root = new VBox();
         scene.setRoot(root);
-
+        scene.getStylesheets().add(GraphicUserInterface.class.getResource("static/css/teacherPanel.css").toExternalForm());
         HBox header = new HBox();
         header.setAlignment(Pos.BASELINE_RIGHT);
 
         Label userNameLabel = new Label(teacher.getFirstName() + " " + teacher.getLastName());
 
-        ComboBox<String> menu = new ComboBox<>();
-        menu.setValue("*");
-        menu.getItems().add("Change password");
-        menu.getItems().add("My info");
-        menu.getItems().add("Log out");
+        MenuBar menuBar = new MenuBar();
+        Menu optionsButton = new Menu("Options");
+
+        MenuItem changePassword = new MenuItem("Change Password");
+        MenuItem myInformation = new MenuItem("My information");
+        MenuItem logOut = new MenuItem("Log out");
+        optionsButton.getItems().add(changePassword);
+        optionsButton.getItems().add(myInformation);
+        optionsButton.getItems().add(logOut);
+
+        menuBar.getMenus().add(optionsButton);
 
         header.getChildren().add(userNameLabel);
-        header.getChildren().add(menu);
+        header.getChildren().add(menuBar);
 
         root.getChildren().add(header);
 
@@ -52,29 +76,18 @@ public class TeacherPanel {
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         tabPane.setTabMinWidth(50);
 
-        addClassroomTabs(tabPane, teacher);
+        addClassroomTabs(tabPane, teacher, stage);
 
         root.getChildren().add(tabPane);
 
-        menu.setOnAction(click -> {
-            switch(menu.getValue()) {
-                case "Log out":
-                    Login.login(scene,stage);
-                    break;
-                case "My info":
-                    // code block
-                    break;
-                case "Change password":
-                    //code block
-                    break;
-                default:
-                    // code block
-            }
-        });
+        changePassword.setOnAction(click -> changePassword(stage,teacher));
+//        myInformation.setOnAction(click -> myInformation());
+        logOut.setOnAction(click -> Login.login(scene,stage));
+
 
     }
 
-    private static void addClassroomTabs(TabPane tabPane, Teacher teacher) {
+    private static void addClassroomTabs(TabPane tabPane, Teacher teacher, Stage stage) {
         List<Classroom> classrooms = classroomsService.getClassroomsByTeacher(teacher);
         List<Tab> tabs = new ArrayList<>();
         Map<Tab, Classroom> tabClassroomMap = new HashMap<>();
@@ -84,11 +97,11 @@ public class TeacherPanel {
             tabClassroomMap.put(tempTab,classroom);
         });
         tabPane.getTabs().addAll(tabs);
-        tabClassroomMap.forEach((tab, classroom) -> mainPage(tab, classroom, teacher));
+        tabClassroomMap.forEach((tab, classroom) -> mainPage(tab, classroom, teacher, stage));
     }
 
-    private static void mainPage(Tab tab, Classroom classroom,Teacher teacher) {
-        VBox vBox = new VBox();
+    private static void mainPage(Tab tab, Classroom classroom,Teacher teacher, Stage stage) {
+        BorderPane borderPane = new BorderPane();
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.BASELINE_LEFT);
 
@@ -100,9 +113,17 @@ public class TeacherPanel {
         TextField searchTF = new TextField();
         searchTF.setPromptText("Search...");
 
-        vBox.getChildren().add(hBox);
-        TableView<StudentWeekView> table = TableGenerator.getTableView(teacher, classroom,searchTF.getText(),getFirstMondayFromDate(datePicker.getValue()));
-        vBox.getChildren().add(table);
+
+        borderPane.setTop(hBox);
+        TableView<StudentWeekView> table = TableGenerator.getTableView(teacher, classroom, searchTF.getText(), getFirstMondayFromDate(LocalDate.now()));
+        table.prefHeightProperty().bind(stage.heightProperty());
+        table.prefWidthProperty().bind(stage.widthProperty());
+
+        borderPane.setCenter(table);
+        datePicker.setOnAction(action -> {
+            borderPane.setCenter(TableGenerator.getTableView(teacher, classroom, searchTF.getText(), getFirstMondayFromDate(datePicker.getValue())));
+            markService.updateAllJournals();
+        });
 
 
         hBox.getChildren().add(datePicker);
@@ -111,18 +132,94 @@ public class TeacherPanel {
 
 
 
-        tab.setContent(vBox);
+
+
+        tab.setContent(borderPane);
     }
 
     private static LocalDate getFirstMondayFromDate(LocalDate date) {
-        if (date == null) {
-            date = LocalDate.now();
-        }
         for (LocalDate dmb = date; ;dmb = dmb.minusDays(1)) {
             if (dmb.getDayOfWeek().equals(DayOfWeek.MONDAY)) {
                 return dmb;
             }
         }
+    }
+
+    private static void changePassword(Stage stage, Teacher teacher) {
+        Stage modal = new Stage();
+        modal.setWidth(500);
+        modal.setHeight(300);
+        modal.initOwner(stage);
+        modal.initModality(Modality.WINDOW_MODAL);
+        GridPane grid = new GridPane();
+        Scene scene = new Scene(grid);
+        scene.getStylesheets().add(GraphicUserInterface.class.getResource("static/css/login.css").toExternalForm());
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(50, 50, 50, 50));
+        grid.setStyle("-fx-background-color: " + Colors.MAIN + ";");
+        grid.setPrefSize(500, 300);
+
+
+        Label sceneTitle = new Label("Change password:");
+        sceneTitle.setTextFill(Color.web(Colors.TEXT.toString()));
+        sceneTitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 22));
+
+        grid.add(sceneTitle,0,0,2,1);
+
+        Label oldPasswordLabel = LabelUtil.getLabel("Old password:");
+        TextField oldPassword = TextFieldUtil.getTextField();
+        grid.add(oldPasswordLabel,0,1);
+        grid.add(oldPassword,1,1);
+
+        Label newPasswordLabel = LabelUtil.getLabel("New password:");
+        TextField newPassword = TextFieldUtil.getTextField();
+        grid.add(newPasswordLabel,0,2);
+        grid.add(newPassword,1,2);
+
+        Label newPasswordLabel2 = LabelUtil.getLabel("Repear new password:");
+        TextField newPassword2 = TextFieldUtil.getTextField();
+        grid.add(newPasswordLabel2,0,3);
+        grid.add(newPassword2,1,3);
+
+        HBox buttonHbox = new HBox();
+        Button submit = new Button("Submit");
+        buttonHbox.getChildren().add(submit);
+        buttonHbox.setAlignment(Pos.BASELINE_RIGHT);
+        StyleButton.style(submit);
+        submit.setPrefSize(60,20);
+        submit.setFont(new Font(12));
+        grid.add(buttonHbox,0,4,2,1);
+
+
+
+        submit.setOnAction(click -> {
+            if (Integer.parseInt(teacher.getPassword()) == oldPassword.getText().hashCode()) {
+                if (newPassword.getText().equals(newPassword2.getText())) {
+                    teacher.setPassword("" + newPassword.getText().hashCode());
+                    try {
+                        teacherService.editTeacher(teacher);
+                    } catch (SchoolException e) {
+                        AlertUtil.alert("Unexpected exception", "Cant edit teacher", e.getMessage());
+                    }
+                    modal.close();
+                } else {
+                    sceneTitle.setText("New passwords doesn't match");
+                    sceneTitle.setTextFill(Color.web(Colors.WARNING_TEXT.toString()));
+                }
+            } else if (oldPassword.getText().equals("")){
+                sceneTitle.setText("Enter old password");
+                sceneTitle.setTextFill(Color.web(Colors.WARNING_TEXT.toString()));
+            } else if (Integer.parseInt(teacher.getPassword()) != oldPassword.getText().hashCode()) {
+                sceneTitle.setText("Old Password is incorrect");
+                sceneTitle.setTextFill(Color.web(Colors.WARNING_TEXT.toString()));
+            }
+        });
+
+
+        modal.setScene(scene);
+        modal.show();
     }
 
 }

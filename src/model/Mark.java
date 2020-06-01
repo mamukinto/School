@@ -1,8 +1,8 @@
 package model;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Mark extends DBObject implements Comparable<Mark>{
 
@@ -89,11 +89,10 @@ public class Mark extends DBObject implements Comparable<Mark>{
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Value:").append(getValue()).append(System.lineSeparator());
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH-mm-ss");
-        String date = dateFormat.format(getDate());
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String date = getDate().format(dateFormat);
         stringBuilder.append("Date:").append(date).append(System.lineSeparator());
-        stringBuilder.append("Note:").append(getNote());
-        stringBuilder.append("Active:").append(isActive());
+        stringBuilder.append("Note:").append(getNote()).append(System.lineSeparator());
         return stringBuilder.toString();
     }
 
