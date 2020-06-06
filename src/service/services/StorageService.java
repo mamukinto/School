@@ -30,6 +30,6 @@ public class StorageService {
         Storage.teachers = teacherDAO.readAll();
         Storage.classrooms = classroomDAO.readAll();
         Storage.students = studentDAO.readAll();
-        Storage.students.forEach(markService::updateJournal);
+        markService.updateAllJournals();
     }
 }

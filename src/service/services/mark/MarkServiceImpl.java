@@ -3,13 +3,16 @@ package service.services.mark;
 import dao.DAOMark;
 import model.Mark;
 import model.Student;
+import model.Subject;
 import model.Teacher;
 import model.exception.SchoolException;
 import service.services.student.StudentService;
 import service.services.student.StudentServiceImpl;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MarkServiceImpl implements MarkService {
 
@@ -42,7 +45,8 @@ public class MarkServiceImpl implements MarkService {
     }
 
     public void updateJournal(Student student) {
-        student.setJournal(daoService.readJournal(student));
+        Map<Subject, ArrayList<Mark>> journal = daoService.readJournal(student);
+        student.setJournal(journal);
     }
 
     @Override

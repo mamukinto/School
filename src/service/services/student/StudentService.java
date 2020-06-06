@@ -1,6 +1,8 @@
 package service.services.student;
 
+import model.Mark;
 import model.Student;
+import model.Subject;
 import model.exception.SchoolException;
 
 import java.util.List;
@@ -18,5 +20,7 @@ public interface StudentService {
     void updateStudents() throws SchoolException;
 
     void removeStudent(Student student) throws SchoolException;
+
+    List<Mark> getMarksBySubject(Subject subject, Student student);
 
 }

@@ -51,9 +51,9 @@ public class TeacherPanel {
         VBox root = new VBox();
         scene.setRoot(root);
         scene.getStylesheets().add(GraphicUserInterface.class.getResource("static/css/teacherPanel.css").toExternalForm());
-        HBox header = new HBox();
-        header.setAlignment(Pos.BASELINE_RIGHT);
+        GridPane header = new GridPane();
         header.getStyleClass().add("header");
+        header.setAlignment(Pos.CENTER);
 
         Text userNameLabel = new Text(teacher.getFirstName() + " " + teacher.getLastName());
         userNameLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 16));
@@ -69,9 +69,11 @@ public class TeacherPanel {
         optionsButton.getItems().add(logOut);
 
         menuBar.getMenus().add(optionsButton);
+        menuBar.setPadding(new Insets(5,5,5,5));
 
-        header.getChildren().add(userNameLabel);
-        header.getChildren().add(menuBar);
+        header.add(menuBar,0,0);
+        header.add(userNameLabel,1,0);
+
 
         root.getChildren().add(header);
 
@@ -106,21 +108,22 @@ public class TeacherPanel {
     private static void mainPage(Tab tab, Classroom classroom,Teacher teacher, Stage stage) {
         BorderPane borderPane = new BorderPane();
         HBox hBox = new HBox();
-        hBox.setAlignment(Pos.BASELINE_CENTER);
+        hBox.setAlignment(Pos.BASELINE_RIGHT);
         hBox.getStyleClass().add("hbox");
 
         DatePicker datePicker = new DatePicker();
-        datePicker.setPromptText("Choose date");
+        datePicker.setValue(LocalDate.now());
         datePicker.getStyleClass().add("datepicker");
+        datePicker.setPadding(new Insets(5,5,5,5));
 
         borderPane.setTop(hBox);
-        TableView<StudentWeekView> table = TableGenerator.getTableView(teacher, classroom, getFirstMondayFromDate(LocalDate.now()));
+        TableView<StudentWeekView> table = TableGenerator.getTableView(teacher, classroom, getFirstMondayFromDate(datePicker.getValue()),stage);
         table.prefHeightProperty().bind(stage.heightProperty());
         table.prefWidthProperty().bind(stage.widthProperty());
 
         borderPane.setCenter(table);
         datePicker.setOnAction(action -> {
-            borderPane.setCenter(TableGenerator.getTableView(teacher, classroom, getFirstMondayFromDate(datePicker.getValue())));
+            borderPane.setCenter(TableGenerator.getTableView(teacher, classroom, getFirstMondayFromDate(datePicker.getValue()), stage));
             markService.updateAllJournals();
         });
 

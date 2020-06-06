@@ -2,7 +2,9 @@ package service.services.student;
 
 import dao.DAOService;
 import dao.DAOStudent;
+import model.Mark;
 import model.Student;
+import model.Subject;
 import model.exception.SchoolException;
 import service.email.EmailSender;
 import service.helpers.auth.PasswordGenerator;
@@ -65,6 +67,11 @@ public class StudentServiceImpl implements StudentService {
         student.setActive(false);
         daoService.write(student);
         updateStudents();
+    }
+
+    @Override
+    public List<Mark> getMarksBySubject(Subject subject, Student student) {
+        return student.getJournal().get(subject);
     }
 
     private String getEmailMessage(String firstName, String password) {

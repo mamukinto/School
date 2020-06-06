@@ -97,6 +97,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public void addMarkToStudent(Teacher teacher, Mark mark, Student student, LocalDate date) throws SchoolException {
         markService.addMarkToStudent(student, teacher, mark, date);
+        markService.updateJournal(student);
     }
 
 

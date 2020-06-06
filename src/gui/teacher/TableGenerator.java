@@ -8,11 +8,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import model.Classroom;
-import model.Mark;
-import model.StudentWeekView;
-import model.Teacher;
+import javafx.stage.Stage;
+import model.*;
 import model.exception.SchoolException;
+import service.services.mark.MarkService;
+import service.services.mark.MarkServiceImpl;
 import service.services.student.StudentService;
 import service.services.student.StudentServiceImpl;
 import service.services.teacher.TeacherService;
@@ -27,7 +27,9 @@ public class TableGenerator {
 
     private final static StudentService studentService = new StudentServiceImpl();
 
-    public static TableView<StudentWeekView> getTableView(Teacher teacher, Classroom classroom, LocalDate from) {
+    private final static MarkService markService = new MarkServiceImpl();
+
+    public static TableView<StudentWeekView> getTableView(Teacher teacher, Classroom classroom, LocalDate from, Stage stage) {
         TableView<StudentWeekView> studentWeekViewTableView = new TableView<>();
         studentWeekViewTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         studentWeekViewTableView.setPlaceholder(new Label("No Students in this classroom yet."));
@@ -39,7 +41,15 @@ public class TableGenerator {
         nameColumn.setStyle("-fx-font-size:15; -fx-alignment:CENTER;");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         nameColumn.prefWidthProperty().bind(studentWeekViewTableView.widthProperty().multiply(0.25));
-
+        nameColumn.setOnEditStart(t -> {
+            try {
+                Student student = studentService.getStudentById(studentWeekViewTableView.getSelectionModel().getSelectedItem().getPersonalId());
+                markService.updateJournal(student);
+                StudentInfoModal.show(stage, student, teacher);
+            } catch (SchoolException e) {
+                AlertUtil.alert("Unexpected Exception", "Can't find this student" , e.getMessage());
+            }
+        } );
 
         TableColumn<StudentWeekView, String> mondayColumn = new TableColumn<>("Monday" + "(" + from + ")");
         mondayColumn.setStyle("-fx-font-size:15; -fx-alignment:CENTER;");
@@ -51,14 +61,13 @@ public class TableGenerator {
             studentWeekViewTableView.getSelectionModel().getSelectedItem().setMondayMark(t.getNewValue());
             try {
                 teacherService.addMarkToStudent(teacher,  new Mark(Integer.parseInt(t.getNewValue())), studentService.getStudentById(studentWeekViewTableView.getSelectionModel().getSelectedItem().getPersonalId()), from);
-
             } catch (SchoolException e) {
                 AlertUtil.alert("Unexpected Exception", " Can't update student marks", e.getMessage());
             }
         });
 
 
-        TableColumn<StudentWeekView, String> tuesdayColumn = new TableColumn<>("Tuesday");
+        TableColumn<StudentWeekView, String> tuesdayColumn = new TableColumn<>("Tuesday" + "(" + from.plusDays(1) + ")");
         tuesdayColumn.setStyle("-fx-font-size:15; -fx-alignment:CENTER;");
         tuesdayColumn.setCellValueFactory(new PropertyValueFactory<>("tuesdayMark"));
         tuesdayColumn.prefWidthProperty().bind(studentWeekViewTableView.widthProperty().multiply(0.15));
@@ -73,7 +82,7 @@ public class TableGenerator {
             }
         });
 
-        TableColumn<StudentWeekView, String> wednesdayColumn = new TableColumn<>("Wednesday");
+        TableColumn<StudentWeekView, String> wednesdayColumn = new TableColumn<>("Wednesday" + "(" + from.plusDays(2) + ")");
         wednesdayColumn.setStyle("-fx-font-size:15; -fx-alignment:CENTER;");
         wednesdayColumn.setCellValueFactory(new PropertyValueFactory<>("wednesdayMark"));
         wednesdayColumn.prefWidthProperty().bind(studentWeekViewTableView.widthProperty().multiply(0.15));
@@ -89,7 +98,7 @@ public class TableGenerator {
         });
 
 
-        TableColumn<StudentWeekView, String> thursdayColumn = new TableColumn<>("Thursday");
+        TableColumn<StudentWeekView, String> thursdayColumn = new TableColumn<>("Thursday" + "(" + from.plusDays(3) + ")");
         thursdayColumn.setStyle("-fx-font-size:15; -fx-alignment:CENTER;");
         thursdayColumn.setCellValueFactory(new PropertyValueFactory<>("thursdayMark"));
         thursdayColumn.prefWidthProperty().bind(studentWeekViewTableView.widthProperty().multiply(0.15));
@@ -104,7 +113,7 @@ public class TableGenerator {
             }
         });
 
-        TableColumn<StudentWeekView, String> fridayColumn = new TableColumn<>("Friday");
+        TableColumn<StudentWeekView, String> fridayColumn = new TableColumn<>("Friday" + "(" + from.plusDays(4) + ")");
         fridayColumn.setStyle("-fx-font-size:15; -fx-alignment:CENTER;");
         fridayColumn.setCellValueFactory(new PropertyValueFactory<>("fridayMark"));
         fridayColumn.prefWidthProperty().bind(studentWeekViewTableView.widthProperty().multiply(0.15));

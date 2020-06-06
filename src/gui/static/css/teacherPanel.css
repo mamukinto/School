@@ -126,3 +126,11 @@
     -fx-border-color: #9b9b9b;
     -fx-text-fill: #9b9b9b;
 }
+
+.menu-item:focused .label {
+    -fx-background-color: #2b2b2b;
+}
+
+.menu-item:focused {
+    -fx-background-color: #2b2b2b  ;
+}
