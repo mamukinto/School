@@ -43,7 +43,7 @@ public class StudentInfoModal {
         Label firstNameLabel = LabelUtil.getLabel("First name: " + student.getFirstName());
         Label lastNameLabel = LabelUtil.getLabel("Last Name: " + student.getLastName());
         Label email = LabelUtil.getLabel("Email: " + student.getEmail());
-        Label averageMark = LabelUtil.getLabel("Average mark: " + getAverageMarkOfStudentOfTeacher(student,teacher));
+        Label averageMark = LabelUtil.getLabel("Average mark: " + studentService.getAverageMarkOfStudentBySubject(student,teacher.getSubject()));
 
         grid.add(personalIdLabel,0,0);
         grid.add(firstNameLabel,0,1);
@@ -53,22 +53,6 @@ public class StudentInfoModal {
 
         modal.setScene(scene);
         modal.show();
-    }
-
-    private static double getAverageMarkOfStudentOfTeacher(Student student, Teacher teacher) {
-        List<Integer> values = new ArrayList<>();
-        if (student.getJournal().size() != 0) {
-            studentService.getMarksBySubject(teacher.getSubject(), student).forEach(mark -> {
-                values.add(mark.getValue());
-            });
-        } else {
-            return 0;
-        }
-        double sum = 0;
-        for (Integer value : values) {
-            sum += value;
-        }
-        return sum/values.size();
     }
 
 }

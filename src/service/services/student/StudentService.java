@@ -23,4 +23,6 @@ public interface StudentService {
 
     List<Mark> getMarksBySubject(Subject subject, Student student);
 
+    double getAverageMarkOfStudentBySubject(Student student, Subject subject);
+
 }

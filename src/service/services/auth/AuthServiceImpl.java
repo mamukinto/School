@@ -9,6 +9,8 @@ import model.user.student.Student;
 import model.user.teacher.Teacher;
 import model.user.UserType;
 import model.exception.SchoolException;
+import service.services.student.StudentService;
+import service.services.student.StudentServiceImpl;
 
 import java.util.List;
 
@@ -20,20 +22,19 @@ public class AuthServiceImpl implements AuthService {
 
     private final DAOService<Teacher> daoTeacher = new DAOTeacher();
 
+    private final StudentService studentService = new StudentServiceImpl();
+
     private User user;
 
     @Override
     public User auth(String personalId, String password, UserType userType) throws SchoolException {
         director.setFirstName("Director");
         if (userType.equals(UserType.STUDENT)) {
-            daoStudent.readAll().forEach((student -> {
-                if (student.getPersonalId().equals(personalId)) {
-                    if (student.getPassword().equals("" + password.hashCode())) {
-                        user = student;
-                    }
+                if (studentService.getStudentById(personalId).getPassword().equals("" + password.hashCode())) {
+                    user = studentService.getStudentById(personalId);
                 }
-            }));
-        } else if (userType.equals(UserType.TEACHER)) {
+            }
+         else if (userType.equals(UserType.TEACHER)) {
             daoTeacher.readAll().forEach((teacher -> {
                 if (teacher.getPersonalId().equals(personalId)) {
                     if (teacher.getPassword().equals("" + password.hashCode())) {

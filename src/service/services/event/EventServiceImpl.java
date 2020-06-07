@@ -24,7 +24,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public void updateAllEvents() throws SchoolException {
         for (Student student : Storage.students) {
-            student.setEvents(daoService.readAllByStudent(student.getPersonalId()));
+            updateEventsOfStudent(student);
         }
     }
 

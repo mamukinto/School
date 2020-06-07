@@ -21,9 +21,13 @@ import model.user.UserType;
 import model.exception.SchoolException;
 import service.services.auth.AuthService;
 import service.services.auth.AuthServiceImpl;
+import service.services.student.StudentService;
+import service.services.student.StudentServiceImpl;
 
 public class Login {
     private static final AuthService auth = new AuthServiceImpl();
+
+    private static final StudentService studentService = new StudentServiceImpl();
 
     public static void login(Scene scene, Stage stage) {
         scene.getStylesheets().add(GraphicUserInterface.class.getResource("static/css/login.css").toExternalForm());

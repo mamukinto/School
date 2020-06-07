@@ -10,6 +10,7 @@ import service.email.EmailSender;
 import service.helpers.auth.PasswordGenerator;
 import storage.Storage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StudentServiceImpl implements StudentService {
@@ -42,13 +43,12 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student getStudentById(String personalId) throws SchoolException {
-        final Student[] student = {new Student()};
-        daoService.readAll().forEach(s -> {
-            if (s.getPersonalId().equals(personalId)) {
-                student[0] = s;
+        for (Student student : Storage.students) {
+            if (student.getPersonalId().equals(personalId)) {
+                return student;
             }
-        });
-        return student[0];
+        }
+        return null;
     }
 
     @Override
@@ -71,6 +71,18 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<Mark> getMarksBySubject(Subject subject, Student student) {
         return student.getJournal().get(subject);
+    }
+
+    @Override
+    public double getAverageMarkOfStudentBySubject(Student student, Subject subject) {
+        List<Mark> marks = getMarksBySubject(subject, student);
+        List<Integer> values = new ArrayList<>();
+        marks.forEach(mark -> values.add(mark.getValue()));
+        double sum = 0;
+        for (Integer value : values) {
+           sum += value;
+        }
+        return sum/values.size();
     }
 
     private String getEmailMessage(String firstName, String password) {
