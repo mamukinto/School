@@ -2,7 +2,7 @@ package ui;
 
 import model.Classroom;
 import model.Subject;
-import model.Teacher;
+import model.user.teacher.Teacher;
 import model.exception.SchoolException;
 import service.Startup;
 import service.services.classroom.ClassroomsService;

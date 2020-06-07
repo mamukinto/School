@@ -1,9 +1,9 @@
 package service.services.auth;
 
-import model.Human;
-import model.UserType;
+import model.user.User;
+import model.user.UserType;
 import model.exception.SchoolException;
 
 public interface AuthService {
-    Human auth(String personalId, String password, UserType userType) throws SchoolException;
+    User auth(String personalId, String password, UserType userType) throws SchoolException;
 }

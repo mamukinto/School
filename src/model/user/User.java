@@ -1,6 +1,8 @@
-package model;
+package model.user;
 
-public abstract class Human extends DBObject {
+import model.DBObject;
+
+public abstract class User extends DBObject {
     private String firstName;
     private String lastName;
     private String personalId;
@@ -8,10 +10,10 @@ public abstract class Human extends DBObject {
     private String password;
 
 
-    public Human() {
+    public User() {
     }
 
-    public Human(String firstName, String lastName, String personalId) {
+    public User(String firstName, String lastName, String personalId) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.personalId = personalId;
@@ -62,11 +64,11 @@ public abstract class Human extends DBObject {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Human human = (Human) o;
+        User user = (User) o;
 
-        if (!personalId.equals(human.personalId)) return false;
-        if (!firstName.equals(human.firstName)) return false;
-        return lastName.equals(human.lastName);
+        if (!personalId.equals(user.personalId)) return false;
+        if (!firstName.equals(user.firstName)) return false;
+        return lastName.equals(user.lastName);
     }
 
     @Override

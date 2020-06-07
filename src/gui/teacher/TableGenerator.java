@@ -11,6 +11,11 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 import model.*;
 import model.exception.SchoolException;
+import model.user.student.Student;
+import model.user.student.StudentWeekView;
+import model.user.teacher.Teacher;
+import service.services.event.EventService;
+import service.services.event.EventServiceImpl;
 import service.services.mark.MarkService;
 import service.services.mark.MarkServiceImpl;
 import service.services.student.StudentService;
@@ -28,6 +33,8 @@ public class TableGenerator {
     private final static StudentService studentService = new StudentServiceImpl();
 
     private final static MarkService markService = new MarkServiceImpl();
+
+    private final static EventService eventService = new EventServiceImpl();
 
     public static TableView<StudentWeekView> getTableView(Teacher teacher, Classroom classroom, LocalDate from, Stage stage) {
         TableView<StudentWeekView> studentWeekViewTableView = new TableView<>();
@@ -60,6 +67,7 @@ public class TableGenerator {
         mondayColumn.setOnEditCommit(t -> {
             studentWeekViewTableView.getSelectionModel().getSelectedItem().setMondayMark(t.getNewValue());
             try {
+                createAndAddEvent(studentService.getStudentById(studentWeekViewTableView.getSelectionModel().getSelectedItem().getPersonalId()), teacher, t.getNewValue() );
                 teacherService.addMarkToStudent(teacher,  new Mark(Integer.parseInt(t.getNewValue())), studentService.getStudentById(studentWeekViewTableView.getSelectionModel().getSelectedItem().getPersonalId()), from);
             } catch (SchoolException e) {
                 AlertUtil.alert("Unexpected Exception", " Can't update student marks", e.getMessage());
@@ -76,6 +84,7 @@ public class TableGenerator {
         tuesdayColumn.setOnEditCommit(t -> {
             studentWeekViewTableView.getSelectionModel().getSelectedItem().setTuesdayMark(t.getNewValue());
             try {
+                createAndAddEvent(studentService.getStudentById(studentWeekViewTableView.getSelectionModel().getSelectedItem().getPersonalId()), teacher, t.getNewValue() );
                 teacherService.addMarkToStudent(teacher,  new Mark(Integer.parseInt(t.getNewValue())), studentService.getStudentById(studentWeekViewTableView.getSelectionModel().getSelectedItem().getPersonalId()), from.plusDays(1));
             } catch (SchoolException e) {
                 AlertUtil.alert("Unexpected Exception", " Can't update student marks", e.getMessage());
@@ -91,6 +100,7 @@ public class TableGenerator {
         wednesdayColumn.setOnEditCommit(t -> {
             studentWeekViewTableView.getSelectionModel().getSelectedItem().setWednesdayMark(t.getNewValue());
             try {
+                createAndAddEvent(studentService.getStudentById(studentWeekViewTableView.getSelectionModel().getSelectedItem().getPersonalId()), teacher, t.getNewValue() );
                 teacherService.addMarkToStudent(teacher,  new Mark(Integer.parseInt(t.getNewValue())), studentService.getStudentById(studentWeekViewTableView.getSelectionModel().getSelectedItem().getPersonalId()), from.plusDays(2));
             } catch (SchoolException e) {
                 AlertUtil.alert("Unexpected Exception", " Can't update student marks", e.getMessage());
@@ -107,6 +117,7 @@ public class TableGenerator {
         thursdayColumn.setOnEditCommit(t -> {
             studentWeekViewTableView.getSelectionModel().getSelectedItem().setThursdayMark(t.getNewValue());
             try {
+                createAndAddEvent(studentService.getStudentById(studentWeekViewTableView.getSelectionModel().getSelectedItem().getPersonalId()), teacher, t.getNewValue() );
                 teacherService.addMarkToStudent(teacher,  new Mark(Integer.parseInt(t.getNewValue())), studentService.getStudentById(studentWeekViewTableView.getSelectionModel().getSelectedItem().getPersonalId()), from.plusDays(3));
             } catch (SchoolException e) {
                 AlertUtil.alert("Unexpected Exception", " Can't update student marks", e.getMessage());
@@ -122,6 +133,7 @@ public class TableGenerator {
         fridayColumn.setOnEditCommit(t -> {
             studentWeekViewTableView.getSelectionModel().getSelectedItem().setFridayMark(t.getNewValue());
             try {
+                createAndAddEvent(studentService.getStudentById(studentWeekViewTableView.getSelectionModel().getSelectedItem().getPersonalId()), teacher, t.getNewValue() );
                 teacherService.addMarkToStudent(teacher,  new Mark(Integer.parseInt(t.getNewValue())), studentService.getStudentById(studentWeekViewTableView.getSelectionModel().getSelectedItem().getPersonalId()), from.plusDays(4));
             } catch (SchoolException e) {
                 AlertUtil.alert("Unexpected Exception", " Can't update student marks", e.getMessage());
@@ -147,6 +159,18 @@ public class TableGenerator {
         ObservableList<StudentWeekView> studentWeekViewObservableList = FXCollections.observableArrayList();
         studentWeekViewObservableList.addAll(teacherService.getTeachersStudentWeekViews(teacher, classroom, from));
         return studentWeekViewObservableList;
+    }
+
+    private static void createAndAddEvent(Student student, Teacher teacher, String markValue) {
+        Event event = new Event();
+        event.setContent(teacher.getFirstName() + " " + teacher.getLastName() + " wrote mark to you (" + markValue + ")");
+        event.setDate(LocalDateTime.now());
+        event.setStudentPersonalId(student.getPersonalId());
+        try {
+            eventService.addEvent(event,student);
+        } catch (SchoolException e) {
+            AlertUtil.alert("Unexpected Exception","Can't add event",e.getMessage());
+        }
     }
 
 }

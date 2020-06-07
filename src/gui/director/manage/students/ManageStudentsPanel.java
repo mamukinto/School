@@ -14,7 +14,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.Student;
+import model.user.student.Student;
 import model.exception.SchoolException;
 import service.services.student.StudentService;
 import service.services.student.StudentServiceImpl;

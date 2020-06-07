@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model.Student;
+import model.user.student.Student;
 
 public class StudentPanel {
     public static void studentPanel(Scene scene, Student student, Stage stage) {

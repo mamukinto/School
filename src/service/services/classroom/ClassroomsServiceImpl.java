@@ -3,19 +3,15 @@ package service.services.classroom;
 import dao.DAOClassroom;
 import dao.DAOService;
 import model.Classroom;
-import model.Student;
-import model.Subject;
-import model.Teacher;
+import model.user.student.Student;
+import model.user.teacher.Teacher;
 import model.exception.SchoolException;
 import service.services.student.StudentService;
 import service.services.student.StudentServiceImpl;
-import service.services.teacher.TeacherService;
-import service.services.teacher.TeacherServiceImpl;
 import storage.Storage;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class ClassroomsServiceImpl implements ClassroomsService {
 

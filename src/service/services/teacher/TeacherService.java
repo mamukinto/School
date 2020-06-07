@@ -2,6 +2,9 @@ package service.services.teacher;
 
 import model.*;
 import model.exception.SchoolException;
+import model.user.student.Student;
+import model.user.student.StudentWeekView;
+import model.user.teacher.Teacher;
 
 import java.time.LocalDate;
 import java.util.List;

@@ -1,6 +1,6 @@
 package dao;
 
-import model.Student;
+import model.user.student.Student;
 import model.exception.SchoolException;
 import service.helpers.student.StudentFormatHelper;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;

@@ -13,8 +13,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.Classroom;
-import model.Teacher;
+import model.user.teacher.Teacher;
 import model.exception.SchoolException;
 import service.services.classroom.ClassroomsService;
 import service.services.classroom.ClassroomsServiceImpl;
@@ -22,9 +21,6 @@ import service.services.subject.SubjectService;
 import service.services.subject.SubjectServiceImpl;
 import service.services.teacher.TeacherService;
 import service.services.teacher.TeacherServiceImpl;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import static gui.common.AlertUtil.alert;
 

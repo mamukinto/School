@@ -13,7 +13,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.Student;
+import model.user.student.Student;
 import model.exception.SchoolException;
 import service.services.classroom.ClassroomsService;
 import service.services.classroom.ClassroomsServiceImpl;

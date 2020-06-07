@@ -17,6 +17,6 @@ public abstract class DBObject {
         this.active = active;
     }
 
-    abstract String getInfo();
+    public abstract String getInfo();
 
 }

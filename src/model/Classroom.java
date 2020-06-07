@@ -2,6 +2,7 @@ package model;
 
 import java.util.HashMap;
 
+import model.user.teacher.Teacher;
 import service.helpers.DBObjectFormatHelper;
 
 public class Classroom extends DBObject {

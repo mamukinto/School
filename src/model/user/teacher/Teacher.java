@@ -1,9 +1,9 @@
-package model;
+package model.user.teacher;
 
-import java.util.ArrayList;
-import java.util.List;
+import model.Subject;
+import model.user.User;
 
-public class Teacher extends Human {
+public class Teacher extends User {
     private Subject subject;
     private double salary;
 

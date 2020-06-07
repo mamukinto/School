@@ -1,7 +1,9 @@
 package model;
 
+import model.user.student.Student;
+import model.user.teacher.Teacher;
+
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Mark extends DBObject implements Comparable<Mark>{

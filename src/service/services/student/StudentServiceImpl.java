@@ -3,14 +3,13 @@ package service.services.student;
 import dao.DAOService;
 import dao.DAOStudent;
 import model.Mark;
-import model.Student;
+import model.user.student.Student;
 import model.Subject;
 import model.exception.SchoolException;
 import service.email.EmailSender;
 import service.helpers.auth.PasswordGenerator;
 import storage.Storage;
 
-import javax.crypto.ShortBufferException;
 import java.util.List;
 
 public class StudentServiceImpl implements StudentService {

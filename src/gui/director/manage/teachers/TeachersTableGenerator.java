@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Teacher;
+import model.user.teacher.Teacher;
 import service.services.teacher.TeacherService;
 import service.services.teacher.TeacherServiceImpl;
 

@@ -10,8 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.Student;
-import model.Teacher;
+import model.user.student.Student;
+import model.user.teacher.Teacher;
 import service.services.student.StudentService;
 import service.services.student.StudentServiceImpl;
 

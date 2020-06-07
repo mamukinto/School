@@ -2,7 +2,7 @@ package service.helpers.student;
 
 import model.DBObject;
 import model.Mark;
-import model.Student;
+import model.user.student.Student;
 import service.helpers.DBObjectFormatHelper;
 import service.services.classroom.ClassroomsService;
 import service.services.classroom.ClassroomsServiceImpl;

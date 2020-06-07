@@ -1,7 +1,6 @@
 package gui;
 
 import gui.common.Colors;
-import gui.common.StyleButton;
 import gui.director.DirectorPanel;
 import gui.student.StudentPanel;
 import gui.teacher.TeacherPanel;
@@ -15,10 +14,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model.Human;
-import model.Student;
-import model.Teacher;
-import model.UserType;
+import model.user.User;
+import model.user.student.Student;
+import model.user.teacher.Teacher;
+import model.user.UserType;
 import model.exception.SchoolException;
 import service.services.auth.AuthService;
 import service.services.auth.AuthServiceImpl;
@@ -130,7 +129,7 @@ public class Login {
         try {
             String personalId = userTextField.getText();
             String password = pwBox.getText();
-            Human director = auth.auth(personalId, password, UserType.DIRECTOR);
+            User director = auth.auth(personalId, password, UserType.DIRECTOR);
             if (director == AuthServiceImpl.director) {
                 DirectorPanel.show(scene,stage);
             } else {

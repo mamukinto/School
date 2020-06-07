@@ -1,4 +1,4 @@
-package model;
+package model.user.student;
 
 
 public class StudentWeekView {

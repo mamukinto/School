@@ -1,17 +1,12 @@
 package service.helpers.teacher;
 
-import model.Classroom;
 import model.DBObject;
-import model.Teacher;
+import model.user.teacher.Teacher;
 import service.helpers.DBObjectFormatHelper;
 import service.services.classroom.ClassroomsService;
 import service.services.classroom.ClassroomsServiceImpl;
 import service.services.subject.SubjectService;
 import service.services.subject.SubjectServiceImpl;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class TeacherFormatHelper implements DBObjectFormatHelper {
 

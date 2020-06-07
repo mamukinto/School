@@ -1,12 +1,20 @@
-package model;
+package model.user.student;
+
+import model.Classroom;
+import model.Event;
+import model.Mark;
+import model.Subject;
+import model.user.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class Student extends Human {
+public class Student extends User {
 
     private Map<Subject, ArrayList<Mark>> journal;
+    private List<Event> events;
     private Classroom classroom;
 
 
@@ -17,6 +25,7 @@ public class Student extends Human {
     public Student(String firstName, String lastName, String personalId) {
         super(firstName, lastName, personalId);
         journal = new HashMap<>();
+        events = new ArrayList<>();
     }
 
     public Map<Subject, ArrayList<Mark>> getJournal() {
@@ -33,6 +42,14 @@ public class Student extends Human {
 
     public void setClassroom(Classroom classroom) {
         this.classroom = classroom;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 
     @Override

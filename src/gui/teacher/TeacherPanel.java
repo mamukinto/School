@@ -1,11 +1,8 @@
 package gui.teacher;
 
-import com.sun.security.sasl.ntlm.FactoryImpl;
 import gui.GraphicUserInterface;
 import gui.Login;
 import gui.common.*;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -21,8 +18,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Classroom;
-import model.StudentWeekView;
-import model.Teacher;
+import model.user.student.StudentWeekView;
+import model.user.teacher.Teacher;
 import model.exception.SchoolException;
 import service.services.classroom.ClassroomsService;
 import service.services.classroom.ClassroomsServiceImpl;
@@ -33,7 +30,6 @@ import service.services.teacher.TeacherServiceImpl;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

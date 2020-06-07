@@ -1,7 +1,7 @@
 package service.services.student;
 
 import model.Mark;
-import model.Student;
+import model.user.student.Student;
 import model.Subject;
 import model.exception.SchoolException;
 

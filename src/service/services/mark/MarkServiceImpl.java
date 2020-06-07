@@ -2,9 +2,9 @@ package service.services.mark;
 
 import dao.DAOMark;
 import model.Mark;
-import model.Student;
+import model.user.student.Student;
 import model.Subject;
-import model.Teacher;
+import model.user.teacher.Teacher;
 import model.exception.SchoolException;
 import service.services.student.StudentService;
 import service.services.student.StudentServiceImpl;
@@ -20,12 +20,6 @@ public class MarkServiceImpl implements MarkService {
 
     private static final StudentService studentService = new StudentServiceImpl();
 
-    @Override
-    public List<Mark> getMarksOfStudent(Student student, Teacher teacher) throws SchoolException {
-        List<Mark> marks;
-        marks = daoService.readByStudentAndTeacher(student, teacher);
-        return marks;
-    }
 
     @Override
     public void addMarkToStudent(Student student, Teacher teacher, Mark mark, LocalDate date) throws SchoolException {
@@ -34,14 +28,6 @@ public class MarkServiceImpl implements MarkService {
         mark.setStudent(student);
         daoService.write(mark);
         updateJournal(student);
-    }
-
-    @Override
-    public void removeMark(Mark mark,Student student,Teacher teacher) throws SchoolException {
-        mark.setActive(false);
-        mark.setStudent(student);
-        mark.setTeacher(teacher);
-        daoService.write(mark);
     }
 
     public void updateJournal(Student student) {

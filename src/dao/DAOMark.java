@@ -2,13 +2,14 @@ package dao;
 
 import model.*;
 import model.exception.SchoolException;
+import model.user.student.Student;
+import model.user.teacher.Teacher;
 import service.helpers.mark.MarkFormatHelper;
 import service.services.subject.SubjectService;
 import service.services.subject.SubjectServiceImpl;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.*;
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -20,7 +21,7 @@ public class DAOMark implements DAOService<Mark> {
         String formattedMark = markFormatHelperHelper.format(mark);
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyyMMdd");
         String formattedDate = dateFormat.format(mark.getDate());
-        File file = new File("database/students/" + mark.getStudent().getPersonalId() + "/" + mark.getTeacher().getSubject().getName() + "/" + formattedDate + ".txt");
+        File file = new File("database/students/" + mark.getStudent().getPersonalId() + "/marks/" + mark.getTeacher().getSubject().getName() + "/" + formattedDate + ".txt");
         file.getParentFile().mkdirs();
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
@@ -64,14 +65,14 @@ public class DAOMark implements DAOService<Mark> {
 
     public List<Mark> readByStudentAndTeacher(Student student, Teacher teacher) throws SchoolException {
         List<Mark> allMarks = new ArrayList<>();
-        File folder = new File("database/students/" + student.getPersonalId() + "/" + teacher.getSubject().getName() + "/");
+        File folder = new File("database/students/" + student.getPersonalId() + "/marks/" + teacher.getSubject().getName() + "/");
         File[] arrayOfFiles = folder.listFiles();
         if (arrayOfFiles != null) {
             List<File> listOfFiles = new ArrayList<>(Arrays.asList(arrayOfFiles));
             List<String> namesOfFiles = new ArrayList<>();
             listOfFiles.forEach((f) -> namesOfFiles.add(f.getName()));
             for (String nameOfFile : namesOfFiles) {
-                allMarks.add((Mark) read(student.getPersonalId() + "/" + teacher.getSubject().getName() + "/" + nameOfFile));
+                allMarks.add((Mark) read(student.getPersonalId() + "/marks/" + teacher.getSubject().getName() + "/" + nameOfFile));
             }
             return allMarks;
         } else {
@@ -81,7 +82,7 @@ public class DAOMark implements DAOService<Mark> {
 
     public Map<Subject, ArrayList<Mark>> readJournal(Student student) {
         Map<Subject, ArrayList<Mark>> journal = new HashMap<>();
-        File file = new File("database/students/" + student.getPersonalId() + "/");
+        File file = new File("database/students/" + student.getPersonalId() + "/marks/");
         File[] arrayOfFolders = file.listFiles(File::isDirectory);
         SubjectService subjectService = new SubjectServiceImpl();
         if (arrayOfFolders != null) {
@@ -98,14 +99,14 @@ public class DAOMark implements DAOService<Mark> {
 
     private  List<Mark> readByStudentAndSubjectName(Student student, String subjectName) {
         List<Mark> allMarks = new ArrayList<>();
-        File folder = new File("database/students/" + student.getPersonalId() + "/" + subjectName + "/");
+        File folder = new File("database/students/" + student.getPersonalId() + "/marks/" + subjectName + "/");
         File[] arrayOfFiles = folder.listFiles();
         List<File> listOfFiles = new ArrayList<>(Arrays.asList(arrayOfFiles));
         List<String> namesOfFiles = new ArrayList<>();
         listOfFiles.forEach((f) -> namesOfFiles.add(f.getName()));
         for (String nameOfFile : namesOfFiles) {
             try {
-                Mark mark = (Mark) read(student.getPersonalId() + "/" + subjectName + "/" + nameOfFile);
+                Mark mark = (Mark) read(student.getPersonalId() + "/marks/" + subjectName + "/" + nameOfFile);
                 if (mark.isActive()) {
                     allMarks.add(mark);
                 }
