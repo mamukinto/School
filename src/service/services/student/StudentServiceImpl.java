@@ -6,10 +6,14 @@ import model.Mark;
 import model.user.student.Student;
 import model.Subject;
 import model.exception.SchoolException;
+import model.user.student.SubjectWeekViewForStudent;
 import service.email.EmailSender;
 import service.helpers.auth.PasswordGenerator;
+import service.services.teacher.TeacherService;
+import service.services.teacher.TeacherServiceImpl;
 import storage.Storage;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +26,8 @@ public class StudentServiceImpl implements StudentService {
     private static final String WELCOME_EMAIL_SUBJECT = "System Registration";
 
     private final DAOService<Student> daoService = new DAOStudent();
+
+    private static TeacherServiceImpl teacherService = new TeacherServiceImpl();
 
     @Override
     public void addStudent(Student student) throws SchoolException {
@@ -74,15 +80,42 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public double getAverageMarkOfStudentBySubject(Student student, Subject subject) {
+    public float getAverageMarkOfStudentBySubject(Student student, Subject subject) {
         List<Mark> marks = getMarksBySubject(subject, student);
+        if (marks == null) {
+            return 0;
+        }
         List<Integer> values = new ArrayList<>();
         marks.forEach(mark -> values.add(mark.getValue()));
-        double sum = 0;
+        float sum = 0;
         for (Integer value : values) {
            sum += value;
         }
         return sum/values.size();
+    }
+
+    @Override
+    public List<SubjectWeekViewForStudent> getSubjectWeekViewForStudent(Student student, LocalDate from) {
+        List<SubjectWeekViewForStudent> swvfs = new ArrayList<>();
+        List<Subject> subjects = new ArrayList<>();
+        student.getClassroom().getTeachers().forEach((subject, teacher) -> {
+            subjects.add(subject);
+        });
+
+        subjects.forEach(subject -> {
+            SubjectWeekViewForStudent tempWeekView =  new SubjectWeekViewForStudent();
+            tempWeekView.setSubjectName(subject.getName());
+            tempWeekView.setMondayMark(teacherService.getMarkValueByDate(student.getJournal().get(subject), from));
+            tempWeekView.setTuesdayMark(teacherService.getMarkValueByDate(student.getJournal().get(subject), from.plusDays(1)));
+            tempWeekView.setWednesdayMark(teacherService.getMarkValueByDate(student.getJournal().get(subject), from.plusDays(2)));
+            tempWeekView.setThursdayMark(teacherService.getMarkValueByDate(student.getJournal().get(subject), from.plusDays(3)));
+            tempWeekView.setFridayMark(teacherService.getMarkValueByDate(student.getJournal().get(subject), from.plusDays(4)));
+            swvfs.add(tempWeekView);
+        });
+
+
+
+        return swvfs;
     }
 
     private String getEmailMessage(String firstName, String password) {

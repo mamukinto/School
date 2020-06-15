@@ -11,11 +11,16 @@ import service.email.EmailSender;
 import service.helpers.auth.PasswordGenerator;
 import service.services.classroom.ClassroomsService;
 import service.services.classroom.ClassroomsServiceImpl;
+import service.services.event.EventService;
+import service.services.event.EventServiceImpl;
 import service.services.mark.MarkService;
 import service.services.mark.MarkServiceImpl;
 import storage.Storage;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +37,8 @@ public class TeacherServiceImpl implements TeacherService {
     private final DAOService<Teacher> daoService = new DAOTeacher();
 
     private final ClassroomsService classroomsService = new ClassroomsServiceImpl();
+
+    private final EventService eventService = new EventServiceImpl();
 
 
     @Override
@@ -101,7 +108,10 @@ public class TeacherServiceImpl implements TeacherService {
     public void addMarkToStudent(Teacher teacher, Mark mark, Student student, LocalDate date) throws SchoolException {
         markService.addMarkToStudent(student, teacher, mark, date);
         markService.updateJournal(student);
+        addMarkEventForStudent(mark,student,teacher,date);
     }
+
+
 
 
     @Override
@@ -120,7 +130,7 @@ public class TeacherServiceImpl implements TeacherService {
         return firstName + ", your temporary password is " + password;
     }
 
-    private String getMarkValueByDate(List<Mark> marks,LocalDate date) {
+    public String getMarkValueByDate(List<Mark> marks,LocalDate date) {
         if  (marks != null) {
             for (Mark mark : marks) {
                 if (mark.getDate().equals(date)) {
@@ -129,6 +139,20 @@ public class TeacherServiceImpl implements TeacherService {
             }
         }
         return "";
+    }
+
+    private void addMarkEventForStudent(Mark mark, Student student, Teacher teacher, LocalDate date) throws SchoolException {
+        Event event = new Event();
+        event.setContent(getContentForEvent(teacher.getFirstName() + " " + teacher.getLastName(),teacher.getSubject().getName(),mark.getValue(),mark.getDate()));
+        event.setDate(LocalDateTime.now());
+        event.setStudentPersonalId(student.getPersonalId());
+        eventService.updateEventsOfStudent(student);
+        eventService.addEvent(event,student);
+    }
+
+    private String getContentForEvent(String teacherName, String subjectName, int markValue, LocalDate markDate) {
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return String.format("%s (%s) wrote mark %s to you for date %s",teacherName,subjectName,markValue,markDate.format(dateFormat));
     }
 
 }

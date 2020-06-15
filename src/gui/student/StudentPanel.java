@@ -1,19 +1,29 @@
 package gui.student;
 
-import gui.common.LabelUtil;
+import gui.GraphicUserInterface;
+import gui.Login;
+import gui.common.*;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import model.Event;
+import model.exception.SchoolException;
 import model.user.student.Student;
+import model.user.teacher.Teacher;
 import service.services.student.StudentService;
 import service.services.student.StudentServiceImpl;
 import service.services.subject.SubjectService;
@@ -31,12 +41,18 @@ public class StudentPanel {
 
     public static void studentPanel(Scene scene, Student student, Stage stage) {
         stage.setMaximized(true);
+        scene.getStylesheets().add(GraphicUserInterface.class.getResource("static/css/studentPanel.css").toExternalForm());
         BorderPane root = new BorderPane();
         scene.setRoot(root);
         VBox main = new VBox();
         VBox rightPanel = new VBox();
-        root.setCenter(main);
-        root.setRight(rightPanel);
+        ScrollPane mainScrollPane = new ScrollPane();
+        ScrollPane rightScrollPane = new ScrollPane();
+        rightScrollPane.setContent(rightPanel);
+        mainScrollPane.setContent(main);
+        root.setCenter(mainScrollPane);
+        root.setRight(rightScrollPane);
+        rightPanel.setPrefWidth(stage.getWidth() * 0.3);
 
         MenuBar menuBar = new MenuBar();
         Menu menu = new Menu("Options");
@@ -45,38 +61,140 @@ public class StudentPanel {
         MenuItem viewMyInfo = new MenuItem("View my information");
         MenuItem logOut = new MenuItem("Log out");
         menu.getItems().addAll(changePassword,viewMyInfo,logOut);
-        main.getChildren().add(menuBar);
-        Label sceneTitle = LabelUtil.getLabel("What's new?");
+        root.setTop(menuBar);
+        Label sceneTitle = new Label("What's new?");
+        sceneTitle.setPadding(new Insets(25,0,0,60));
+        sceneTitle.setFont(new Font(26));
         VBox feed = new VBox();
+        feed.setSpacing(20);
+        feed.setPadding(new Insets(20,100,20,20));
         main.getChildren().add(sceneTitle);
         main.getChildren().add(feed);
 
 
-        List<Text> feedEvents = new ArrayList<>();
+
+
+        List<EventContainer> feedEvents = new ArrayList<>();
         student.getEvents().forEach(event -> {
-            feedEvents.add(eventToText(event));
+            feedEvents.add(new EventContainer(event));
         });
         feed.getChildren().addAll(feedEvents);
 
-        Label rightPanelTitle = LabelUtil.getLabel(student.getFirstName() + " " + student.getLastName());
+        Text rightPanelTitle = new Text(student.getFirstName() + " " + student.getLastName());
+        rightPanelTitle.setFont(new Font(32));
+        rightPanel.setSpacing(50);
         rightPanel.getChildren().add(rightPanelTitle);
-
+        rightPanel.setPadding(new Insets(20,20,20,20));
+        rightPanel.setAlignment(Pos.TOP_CENTER);
 
         subjectService.getSubjects().forEach(subject -> {
-            rightPanel.getChildren().add(new Text(subject.getName() + " average mark: " + studentService.getAverageMarkOfStudentBySubject(student,subject)));
+            Label averageMarkText = new Label(subject.getName() + " average mark: " + studentService.getAverageMarkOfStudentBySubject(student,subject));
+            averageMarkText.setFont(new Font(22));
+            VBox vBox = new VBox();
+            vBox.getChildren().add(averageMarkText);
+            Separator separator = new Separator();
+            vBox.getChildren().add(separator);
+            vBox.setAlignment(Pos.TOP_CENTER);
+            rightPanel.getChildren().add(vBox);
+        });
+
+        Button journalButton = new Button("More");
+        rightPanel.getChildren().add(journalButton);
+
+
+        journalButton.setOnAction(click -> {
+            JournalPanel.journalPanel(student,stage,scene);
+        });
+
+        logOut.setOnAction(click -> {
+            Login.login(scene, stage);
+        });
+
+        changePassword.setOnAction(click -> {
+            changePassword(stage, student);
         });
 
     }
 
-    private static Text eventToText(Event event) {
-        Text eventText = new Text();
-        eventText.setFont(Font.font("Tahoma", FontWeight.NORMAL, 17));
 
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HH-mm-ss");
-        String date = event.getDate().format(dateFormat);
+    private static void changePassword(Stage stage, Student student) {
+        Stage modal = new Stage();
+        modal.setWidth(500);
+        modal.setHeight(300);
+        modal.initOwner(stage);
+        modal.initModality(Modality.WINDOW_MODAL);
+        GridPane grid = new GridPane();
+        Scene scene = new Scene(grid);
+        scene.getStylesheets().add(GraphicUserInterface.class.getResource("static/css/login.css").toExternalForm());
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(50, 50, 50, 50));
+        grid.setStyle("-fx-background-color: " + Colors.MAIN + ";");
+        grid.setPrefSize(500, 300);
 
-        eventText.setText(event.getContent() + "  " + date);
-        return eventText;
+
+        Label sceneTitle = new Label("Change password:");
+        sceneTitle.setTextFill(Color.web(Colors.TEXT.toString()));
+        sceneTitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 22));
+
+        grid.add(sceneTitle,0,0,2,1);
+
+        Label oldPasswordLabel = LabelUtil.getLabel("Old password:");
+        TextField oldPassword = TextFieldUtil.getTextField();
+        grid.add(oldPasswordLabel,0,1);
+        grid.add(oldPassword,1,1);
+
+        Label newPasswordLabel = LabelUtil.getLabel("New password:");
+        TextField newPassword = TextFieldUtil.getTextField();
+        grid.add(newPasswordLabel,0,2);
+        grid.add(newPassword,1,2);
+
+        Label newPasswordLabel2 = LabelUtil.getLabel("Repear new password:");
+        TextField newPassword2 = TextFieldUtil.getTextField();
+        grid.add(newPasswordLabel2,0,3);
+        grid.add(newPassword2,1,3);
+
+        HBox buttonHbox = new HBox();
+        Button submit = new Button("Submit");
+        buttonHbox.getChildren().add(submit);
+        buttonHbox.setAlignment(Pos.BASELINE_RIGHT);
+        StyleButton.style(submit);
+        submit.setPrefSize(60,20);
+        submit.setFont(new Font(12));
+        grid.add(buttonHbox,0,4,2,1);
+
+
+
+        submit.setOnAction(click -> {
+            if (Integer.parseInt(student.getPassword()) == oldPassword.getText().hashCode()) {
+                if (newPassword.getText().equals(newPassword2.getText())) {
+                    student.setPassword("" + newPassword.getText().hashCode());
+                    try {
+                        studentService.editStudent(student);
+                    } catch (SchoolException e) {
+                        AlertUtil.alert("Unexpected exception", "Cant edit teacher", e.getMessage());
+                    }
+                    modal.close();
+                } else {
+                    sceneTitle.setText("New passwords doesn't match");
+                    sceneTitle.setTextFill(Color.web(Colors.WARNING_TEXT.toString()));
+                }
+            } else if (oldPassword.getText().equals("")){
+                sceneTitle.setText("Enter old password");
+                sceneTitle.setTextFill(Color.web(Colors.WARNING_TEXT.toString()));
+            } else if (Integer.parseInt(student.getPassword()) != oldPassword.getText().hashCode()) {
+                sceneTitle.setText("Old Password is incorrect");
+                sceneTitle.setTextFill(Color.web(Colors.WARNING_TEXT.toString()));
+            }
+        });
+
+
+        modal.setScene(scene);
+        modal.show();
     }
+
+
+
 
 }

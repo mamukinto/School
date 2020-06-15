@@ -4,7 +4,7 @@ import model.Event;
 import model.exception.SchoolException;
 import model.user.student.Student;
 
-public interface EventService {
+public interface EventService{
 
     void addEvent(Event event,Student student) throws SchoolException;
 

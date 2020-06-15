@@ -6,6 +6,9 @@ import model.exception.SchoolException;
 import model.user.student.Student;
 import storage.Storage;
 
+import java.util.Collections;
+import java.util.List;
+
 public class EventServiceImpl implements EventService {
     DAOEvent daoService = new DAOEvent();
 
@@ -18,7 +21,9 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public void updateEventsOfStudent(Student student) throws SchoolException {
-        student.setEvents(daoService.readAllByStudent(student.getPersonalId()));
+        List<Event> eventList = daoService.readAllByStudent(student.getPersonalId());
+        Collections.sort(eventList);
+        student.setEvents(eventList);
     }
 
     @Override

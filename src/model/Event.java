@@ -4,7 +4,7 @@ package model;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Event extends DBObject {
+public class Event extends DBObject implements Comparable<Event> {
 
     private String content;
 
@@ -55,5 +55,11 @@ public class Event extends DBObject {
         stringBuilder.append("StudentPersonalId:").append(studentPersonalId).append(System.lineSeparator());
         stringBuilder.append("Content:").append(getContent()).append(System.lineSeparator());
         return stringBuilder.toString();
+    }
+
+
+    @Override
+    public int compareTo(Event event) {
+        return event.getDate().compareTo(date);
     }
 }

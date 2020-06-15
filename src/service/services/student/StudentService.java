@@ -4,7 +4,9 @@ import model.Mark;
 import model.user.student.Student;
 import model.Subject;
 import model.exception.SchoolException;
+import model.user.student.SubjectWeekViewForStudent;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface StudentService {
@@ -23,6 +25,8 @@ public interface StudentService {
 
     List<Mark> getMarksBySubject(Subject subject, Student student);
 
-    double getAverageMarkOfStudentBySubject(Student student, Subject subject);
+    float getAverageMarkOfStudentBySubject(Student student, Subject subject);
+
+    List<SubjectWeekViewForStudent> getSubjectWeekViewForStudent(Student student, LocalDate from);
 
 }
