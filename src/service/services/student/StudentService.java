@@ -1,8 +1,8 @@
 package service.services.student;
 
-import model.Mark;
+import model.mark.Mark;
 import model.user.student.Student;
-import model.Subject;
+import model.subject.Subject;
 import model.exception.SchoolException;
 import model.user.student.SubjectWeekViewForStudent;
 

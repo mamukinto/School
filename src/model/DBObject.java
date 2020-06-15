@@ -1,11 +1,6 @@
 package model;
 
 public abstract class DBObject {
-    //
-    //
-    // class that identifies if object is writable/readable or not
-    //
-    //
 
     private boolean active = true;
 
@@ -18,5 +13,4 @@ public abstract class DBObject {
     }
 
     public abstract String getInfo();
-
 }

@@ -2,7 +2,7 @@ package service.services.classroom;
 
 import dao.DAOClassroom;
 import dao.DAOService;
-import model.Classroom;
+import model.classrom.Classroom;
 import model.user.student.Student;
 import model.user.teacher.Teacher;
 import model.exception.SchoolException;

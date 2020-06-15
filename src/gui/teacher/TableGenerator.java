@@ -9,13 +9,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
-import model.*;
+import model.classrom.Classroom;
 import model.exception.SchoolException;
+import model.mark.Mark;
 import model.user.student.Student;
 import model.user.student.StudentWeekView;
 import model.user.teacher.Teacher;
-import service.services.event.EventService;
-import service.services.event.EventServiceImpl;
 import service.services.mark.MarkService;
 import service.services.mark.MarkServiceImpl;
 import service.services.student.StudentService;
@@ -24,7 +23,6 @@ import service.services.teacher.TeacherService;
 import service.services.teacher.TeacherServiceImpl;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class TableGenerator {
 

@@ -1,5 +1,7 @@
-package model;
+package model.event;
 
+import model.DBObject;
+import utils.DateFormatsUtils;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,14 +14,7 @@ public class Event extends DBObject implements Comparable<Event> {
 
     private String studentPersonalId;
 
-    public Event() {
-    }
-
-    public Event(String content, LocalDateTime date, String studentPersonalId) {
-        this.content = content;
-        this.date = date;
-        this.studentPersonalId = studentPersonalId;
-    }
+    public Event() {}
 
     public String getContent() {
         return content;
@@ -49,14 +44,13 @@ public class Event extends DBObject implements Comparable<Event> {
     public String getInfo() {
         StringBuilder stringBuilder = new StringBuilder();
 
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HH-mm-ss");
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(DateFormatsUtils.DATE_TIME_FORMAT_FOR_FILE_NAME);
         String date = getDate().format(dateFormat);
         stringBuilder.append("Date:").append(date).append(System.lineSeparator());
         stringBuilder.append("StudentPersonalId:").append(studentPersonalId).append(System.lineSeparator());
         stringBuilder.append("Content:").append(getContent()).append(System.lineSeparator());
         return stringBuilder.toString();
     }
-
 
     @Override
     public int compareTo(Event event) {

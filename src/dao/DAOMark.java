@@ -1,13 +1,14 @@
 package dao;
 
-import model.*;
+import model.mark.Mark;
+import model.subject.Subject;
 import model.exception.SchoolException;
 import model.user.student.Student;
-import model.user.teacher.Teacher;
 import service.helpers.mark.MarkFormatHelper;
 import service.services.subject.SubjectService;
 import service.services.subject.SubjectServiceImpl;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import utils.DateFormatsUtils;
 
 import java.io.*;
 import java.time.format.DateTimeFormatter;
@@ -19,7 +20,7 @@ public class DAOMark implements DAOService<Mark> {
     public String write(Mark mark) throws SchoolException {
         MarkFormatHelper markFormatHelperHelper = new MarkFormatHelper();
         String formattedMark = markFormatHelperHelper.format(mark);
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyyMMdd");
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(DateFormatsUtils.DATE_FORMAT_FOR_FILE_NAME);
         String formattedDate = dateFormat.format(mark.getDate());
         File file = new File("database/students/" + mark.getStudent().getPersonalId() + "/marks/" + mark.getTeacher().getSubject().getName() + "/" + formattedDate + ".txt");
         file.getParentFile().mkdirs();
@@ -30,11 +31,11 @@ public class DAOMark implements DAOService<Mark> {
             throw new SchoolException(ex.getMessage());
         }
 
-        return "Succesfully writed mark to " + file.getPath();
+        return "Successfully written mark to " + file.getPath();
     }
 
     @Override
-    public void writeAll(List<Mark> dbObjects) throws SchoolException {
+    public void writeAll(List<Mark> dbObjects) {
         throw new NotImplementedException();
     }
 
@@ -59,25 +60,8 @@ public class DAOMark implements DAOService<Mark> {
     }
 
     @Override
-    public List<Mark> readAll() throws SchoolException {
+    public List<Mark> readAll() {
         throw new NotImplementedException();
-    }
-
-    public List<Mark> readByStudentAndTeacher(Student student, Teacher teacher) throws SchoolException {
-        List<Mark> allMarks = new ArrayList<>();
-        File folder = new File("database/students/" + student.getPersonalId() + "/marks/" + teacher.getSubject().getName() + "/");
-        File[] arrayOfFiles = folder.listFiles();
-        if (arrayOfFiles != null) {
-            List<File> listOfFiles = new ArrayList<>(Arrays.asList(arrayOfFiles));
-            List<String> namesOfFiles = new ArrayList<>();
-            listOfFiles.forEach((f) -> namesOfFiles.add(f.getName()));
-            for (String nameOfFile : namesOfFiles) {
-                allMarks.add((Mark) read(student.getPersonalId() + "/marks/" + teacher.getSubject().getName() + "/" + nameOfFile));
-            }
-            return allMarks;
-        } else {
-            throw new SchoolException("No students saved :(");
-        }
     }
 
     public Map<Subject, ArrayList<Mark>> readJournal(Student student) {
@@ -89,9 +73,7 @@ public class DAOMark implements DAOService<Mark> {
             List<File> listOfFolders = new ArrayList<>(Arrays.asList(arrayOfFolders));
             List<String> namesOfFolders = new ArrayList<>();
             listOfFolders.forEach(folder -> namesOfFolders.add(folder.getName()));
-            namesOfFolders.forEach(nameOfFolder -> {
-                journal.computeIfAbsent(subjectService.getSubjectByName(nameOfFolder), k -> (ArrayList<Mark>) readByStudentAndSubjectName(student, nameOfFolder));
-            });
+            namesOfFolders.forEach(nameOfFolder -> journal.computeIfAbsent(subjectService.getSubjectByName(nameOfFolder), k -> (ArrayList<Mark>) readByStudentAndSubjectName(student, nameOfFolder)));
         }
 
         return journal;
@@ -106,7 +88,7 @@ public class DAOMark implements DAOService<Mark> {
         listOfFiles.forEach((f) -> namesOfFiles.add(f.getName()));
         for (String nameOfFile : namesOfFiles) {
             try {
-                Mark mark = (Mark) read(student.getPersonalId() + "/marks/" + subjectName + "/" + nameOfFile);
+                Mark mark = read(student.getPersonalId() + "/marks/" + subjectName + "/" + nameOfFile);
                 if (mark.isActive()) {
                     allMarks.add(mark);
                 }

@@ -1,10 +1,12 @@
 package model.user.teacher;
 
-import model.Subject;
+import model.subject.Subject;
 import model.user.User;
 
 public class Teacher extends User {
+
     private Subject subject;
+
     private double salary;
 
     public Teacher() {
@@ -23,7 +25,7 @@ public class Teacher extends User {
     }
 
     public double getSalary() {
-        salary = subject.getCostPerHour()*12;
+        salary = subject.getCostPerHour() * 12;
         return salary;
     }
 
@@ -38,7 +40,7 @@ public class Teacher extends User {
         info.append("LastName:").append(getLastName()).append(System.lineSeparator());
         info.append("PersonalId:").append(getPersonalId()).append(System.lineSeparator());
 
-        if  (getSubject() != null) {
+        if (getSubject() != null) {
             info.append("Subject:").append(getSubject().getName()).append(System.lineSeparator());
         }
 
@@ -46,6 +48,6 @@ public class Teacher extends User {
         info.append("Active:").append(isActive()).append(System.lineSeparator());
         info.append("Email:").append(getEmail()).append(System.lineSeparator());
         info.append("Password:").append(getPassword()).append(System.lineSeparator());
-      return info.toString();
+        return info.toString();
     }
 }

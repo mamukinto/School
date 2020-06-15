@@ -1,7 +1,7 @@
 package model.user.student;
 
-
 public class StudentWeekView {
+
     private String name;
 
     private String mondayMark;
@@ -16,19 +16,7 @@ public class StudentWeekView {
 
     private String personalId;
 
-    public StudentWeekView() {
-
-    }
-
-    public StudentWeekView(String name, String mondayMark, String tuesdayMark, String wednesdayMark, String thursdayMark, String fridayMark, String personalId) {
-        this.name = name;
-        this.mondayMark = mondayMark;
-        this.tuesdayMark = tuesdayMark;
-        this.wednesdayMark = wednesdayMark;
-        this.thursdayMark = thursdayMark;
-        this.fridayMark = fridayMark;
-        this.personalId = personalId;
-    }
+    public StudentWeekView() {}
 
     public String getPersonalId() {
         return personalId;

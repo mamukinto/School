@@ -3,15 +3,18 @@ package model.user;
 import model.DBObject;
 
 public abstract class User extends DBObject {
+
     private String firstName;
+
     private String lastName;
+
     private String personalId;
+
     private String email;
+
     private String password;
 
-
-    public User() {
-    }
+    public User() {}
 
     public User(String firstName, String lastName, String personalId) {
         this.firstName = firstName;

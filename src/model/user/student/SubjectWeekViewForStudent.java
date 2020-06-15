@@ -14,18 +14,7 @@ public class SubjectWeekViewForStudent {
 
     private String fridayMark;
 
-
-    public SubjectWeekViewForStudent() {
-    }
-
-    public SubjectWeekViewForStudent(String subjectName, String mondayMark, String tuesdayMark, String wednesdayMark, String thursdayMark, String fridayMark) {
-        this.subjectName = subjectName;
-        this.mondayMark = mondayMark;
-        this.tuesdayMark = tuesdayMark;
-        this.wednesdayMark = wednesdayMark;
-        this.thursdayMark = thursdayMark;
-        this.fridayMark = fridayMark;
-    }
+    public SubjectWeekViewForStudent() {}
 
     public String getSubjectName() {
         return subjectName;

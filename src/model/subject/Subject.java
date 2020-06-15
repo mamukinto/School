@@ -1,11 +1,12 @@
-package model;
+package model.subject;
+
+import model.DBObject;
 
 public class Subject extends DBObject {
     private String name;
     private double costPerHour;
 
-    public Subject() {
-    }
+    public Subject() {}
 
     public Subject(String name, double costPerHour) {
         this.name = name;
@@ -41,9 +42,7 @@ public class Subject extends DBObject {
 
     @Override
     public int hashCode() {
-        int result;
-        result = name.hashCode();
-        return result;
+        return name.hashCode();
     }
 
     @Override
@@ -53,10 +52,8 @@ public class Subject extends DBObject {
 
     @Override
     public String getInfo() {
-        StringBuilder info = new StringBuilder();
-        info.append("Name:").append(getName()).append(System.lineSeparator());
-        info.append("CostPerHour:").append(getCostPerHour()).append(System.lineSeparator());
-        info.append("Active:").append(isActive());
-        return info.toString();
+        return "Name:" + getName() + System.lineSeparator() +
+                "CostPerHour:" + getCostPerHour() + System.lineSeparator() +
+                "Active:" + isActive();
     }
 }

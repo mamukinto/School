@@ -1,7 +1,9 @@
-package model;
+package model.mark;
 
+import model.DBObject;
 import model.user.student.Student;
 import model.user.teacher.Teacher;
+import utils.DateFormatsUtils;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -18,9 +20,7 @@ public class Mark extends DBObject implements Comparable<Mark>{
 
     private Teacher teacher;
 
-    public Mark() {
-
-    }
+    public Mark() {}
 
     public Mark(int value) {
         this.value = value;
@@ -91,13 +91,12 @@ public class Mark extends DBObject implements Comparable<Mark>{
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Value:").append(getValue()).append(System.lineSeparator());
 
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(DateFormatsUtils.DATE_FORMAT);
         String date = getDate().format(dateFormat);
         stringBuilder.append("Date:").append(date).append(System.lineSeparator());
         stringBuilder.append("Note:").append(getNote()).append(System.lineSeparator());
         return stringBuilder.toString();
     }
-
 }
 
 

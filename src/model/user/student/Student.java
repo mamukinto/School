@@ -1,9 +1,9 @@
 package model.user.student;
 
-import model.Classroom;
-import model.Event;
-import model.Mark;
-import model.Subject;
+import model.classrom.Classroom;
+import model.event.Event;
+import model.mark.Mark;
+import model.subject.Subject;
 import model.user.User;
 
 import java.util.ArrayList;
@@ -14,9 +14,10 @@ import java.util.Map;
 public class Student extends User {
 
     private Map<Subject, ArrayList<Mark>> journal;
-    private List<Event> events;
-    private Classroom classroom;
 
+    private List<Event> events;
+
+    private Classroom classroom;
 
     public Student() {
         journal = new HashMap<>();
@@ -54,17 +55,13 @@ public class Student extends User {
 
     @Override
     public String getInfo() {
-        StringBuilder info = new StringBuilder();
-        info.append("Name:").append(getFirstName()).append(System.lineSeparator());
-        info.append("LastName:").append(getLastName()).append(System.lineSeparator());
-        info.append("PersonalId:").append(getPersonalId()).append(System.lineSeparator());
-        info.append("Classroom:").append(getClassroom().getName()).append(System.lineSeparator());
-        info.append("Email:").append(getEmail()).append(System.lineSeparator());
-        info.append("Password:").append(getPassword()).append(System.lineSeparator());
-        info.append("Active:").append(isActive());
-
-
-        return info.toString();
+        return "Name:" + getFirstName() + System.lineSeparator() +
+                "LastName:" + getLastName() + System.lineSeparator() +
+                "PersonalId:" + getPersonalId() + System.lineSeparator() +
+                "Classroom:" + getClassroom().getName() + System.lineSeparator() +
+                "Email:" + getEmail() + System.lineSeparator() +
+                "Password:" + getPassword() + System.lineSeparator() +
+                "Active:" + isActive();
     }
 
 

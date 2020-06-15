@@ -1,6 +1,6 @@
 package service.services.subject;
 
-import model.Subject;
+import model.subject.Subject;
 import model.exception.SchoolException;
 
 import java.util.List;

@@ -16,7 +16,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.Subject;
+import model.subject.Subject;
 import model.exception.SchoolException;
 import service.services.subject.SubjectService;
 import service.services.subject.SubjectServiceImpl;
@@ -42,7 +42,6 @@ public class AddEditSubjectStage extends Stage {
         initScene(table, modalMode);
     }
 
-
     private void initScene(TableView<Subject> table, ModalMode modalMode) {
         GridPane grid = GridUtil.initGrid();
         Scene scene = new Scene(grid);
@@ -51,15 +50,11 @@ public class AddEditSubjectStage extends Stage {
         this.setScene(scene);
     }
 
-
-
     private void fillGrid(GridPane grid,TableView<Subject> table, ModalMode modalMode) {
-        Text scenetitle = new Text("To add classroom enter next information");
-        scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 18));
-        scenetitle.setFill(Color.web(Colors.TEXT.toString()));
-        grid.add(scenetitle, 0, 0, 2, 1);
-
-
+        Text sceneTitle = new Text("To add subject enter next information");
+        sceneTitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 18));
+        sceneTitle.setFill(Color.web(Colors.TEXT.toString()));
+        grid.add(sceneTitle, 0, 0, 2, 1);
 
         Label nameLabel = LabelUtil.getLabel("Name: ");
         grid.add(nameLabel, 0, 1);
@@ -82,16 +77,13 @@ public class AddEditSubjectStage extends Stage {
         grid.add(hbBtn, 1, 3);
 
         if (modalMode == ModalMode.EDIT) {
-            scenetitle.setText("Edit subject:");
+            sceneTitle.setText("Edit subject:");
             subject = table.getSelectionModel().getSelectedItem();
             name.setText(subject.getName());
             name.setDisable(true);
             cost.setText("" + subject.getCostPerHour());
             button.setText("Edit");
         }
-
-
-
 
         button.setOnAction(click -> {
             if (modalMode == ModalMode.ADD) {
@@ -118,5 +110,4 @@ public class AddEditSubjectStage extends Stage {
             }
         });
     }
-
 }

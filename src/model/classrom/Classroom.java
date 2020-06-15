@@ -1,20 +1,32 @@
-package model;
+package model.classrom;
 
 import java.util.HashMap;
 
+import model.DBObject;
+import model.subject.Subject;
 import model.user.teacher.Teacher;
 import service.helpers.DBObjectFormatHelper;
 
 public class Classroom extends DBObject {
-    private String name;
+
     private int id;
+
+    private String name;
+
     private HashMap<Subject, Teacher> teachers;
 
-    public Classroom() {
-    }
+    public Classroom() {}
 
     public Classroom(String name, int id) {
         this.name = name;
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -24,14 +36,6 @@ public class Classroom extends DBObject {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public HashMap<Subject, Teacher> getTeachers() {
@@ -67,22 +71,18 @@ public class Classroom extends DBObject {
 
     @Override
     public String getInfo() {
-        StringBuilder info = new StringBuilder();
-        info.append("Name:").append(getName()).append(System.lineSeparator());
-        info.append("Id:").append(getId()).append(System.lineSeparator());
-        info.append("Active:").append(isActive()).append(System.lineSeparator());
-        info.append(getTeachersString(teachers));
-        return info.toString();
+        return "Name:" + getName() + System.lineSeparator() +
+                "Id:" + getId() + System.lineSeparator() +
+                "Active:" + isActive() + System.lineSeparator() +
+                getTeachersString(teachers);
     }
 
     private String getTeachersString(HashMap<Subject, Teacher> teachers) {
         StringBuilder teachersStringBuilder = new StringBuilder();
-        teachers.forEach((subject, teacher) -> {
-            teachersStringBuilder.append(subject.getName())
-                    .append(DBObjectFormatHelper.MAP_EQUALLY)
-                    .append(teacher.getPersonalId())
-                    .append(DBObjectFormatHelper.MAP_SPLITTER);
-        });
+        teachers.forEach((subject, teacher) -> teachersStringBuilder.append(subject.getName())
+                .append(DBObjectFormatHelper.MAP_EQUALLY)
+                .append(teacher.getPersonalId())
+                .append(DBObjectFormatHelper.MAP_SPLITTER));
        return teachersStringBuilder.substring(0,teachersStringBuilder.length() - 1);
     }
 }

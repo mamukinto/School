@@ -47,6 +47,6 @@ public class Startup {
     public static void checkDirector(Scene scene, Stage stage) {
         if (Objects.requireNonNull(new File("database/director").listFiles()).length == 0) {
             GraphicUserInterface.registerDirector(scene,stage);
-        };
+        }
     }
 }

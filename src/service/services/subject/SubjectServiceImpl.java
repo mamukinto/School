@@ -2,7 +2,7 @@ package service.services.subject;
 
 import dao.DAOService;
 import dao.DAOSubject;
-import model.Subject;
+import model.subject.Subject;
 import model.exception.SchoolException;
 import storage.Storage;
 

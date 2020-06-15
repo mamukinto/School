@@ -1,6 +1,6 @@
 package dao;
 
-import model.Subject;
+import model.subject.Subject;
 import model.exception.SchoolException;
 import service.helpers.subject.SubjectFormatHelper;
 

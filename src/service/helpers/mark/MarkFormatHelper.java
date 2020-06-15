@@ -1,11 +1,11 @@
 package service.helpers.mark;
 
 import model.DBObject;
-import model.Mark;
+import model.mark.Mark;
 import service.helpers.DBObjectFormatHelper;
+import utils.DateFormatsUtils;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class MarkFormatHelper implements DBObjectFormatHelper {
@@ -16,7 +16,7 @@ public class MarkFormatHelper implements DBObjectFormatHelper {
         String[] markLines = dBObjectString.split(LINE_SPLITTER);
         mark.setValue(Integer.parseInt(markLines[0].split(INFO_SPLITTER)[1].trim()));
 
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(DateFormatsUtils.DATE_FORMAT);
         mark.setDate(LocalDate.parse(markLines[1].split(INFO_SPLITTER)[1], dateFormat));
 
         mark.setNote(markLines[2].split(INFO_SPLITTER)[1].trim());

@@ -2,14 +2,13 @@ package service.services.student;
 
 import dao.DAOService;
 import dao.DAOStudent;
-import model.Mark;
+import model.mark.Mark;
 import model.user.student.Student;
-import model.Subject;
+import model.subject.Subject;
 import model.exception.SchoolException;
 import model.user.student.SubjectWeekViewForStudent;
 import service.email.EmailSender;
 import service.helpers.auth.PasswordGenerator;
-import service.services.teacher.TeacherService;
 import service.services.teacher.TeacherServiceImpl;
 import storage.Storage;
 

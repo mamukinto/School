@@ -1,7 +1,7 @@
 package service.helpers.subject;
 
 import model.DBObject;
-import model.Subject;
+import model.subject.Subject;
 import service.helpers.DBObjectFormatHelper;
 import storage.Storage;
 

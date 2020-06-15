@@ -1,6 +1,6 @@
 package service.services.event;
 
-import model.Event;
+import model.event.Event;
 import model.exception.SchoolException;
 import model.user.student.Student;
 

@@ -1,8 +1,8 @@
 package service.helpers.classroom;
 
-import model.Classroom;
+import model.classrom.Classroom;
 import model.DBObject;
-import model.Subject;
+import model.subject.Subject;
 import model.user.teacher.Teacher;
 import service.helpers.DBObjectFormatHelper;
 import service.services.subject.SubjectService;

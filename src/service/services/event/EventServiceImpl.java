@@ -1,7 +1,7 @@
 package service.services.event;
 
 import dao.DAOEvent;
-import model.Event;
+import model.event.Event;
 import model.exception.SchoolException;
 import model.user.student.Student;
 import storage.Storage;

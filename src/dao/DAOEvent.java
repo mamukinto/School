@@ -1,10 +1,10 @@
 package dao;
 
-import model.Event;
+import model.event.Event;
 import model.exception.SchoolException;
-import model.user.student.Student;
 import service.helpers.event.EventFormatHelper;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import utils.DateFormatsUtils;
 
 import java.io.*;
 import java.time.format.DateTimeFormatter;
@@ -14,11 +14,11 @@ import java.util.List;
 
 public class DAOEvent implements DAOService<Event> {
 
-    private EventFormatHelper formatHelper = new EventFormatHelper();
+    private final EventFormatHelper formatHelper = new EventFormatHelper();
 
     @Override
     public String write(Event dbObject) throws SchoolException {
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(DateFormatsUtils.DATE_TIME_FORMAT_FOR_FILE_NAME);
         String formattedEvent = formatHelper.format(dbObject);
         String src = "database/students/" + dbObject.getStudentPersonalId() + "/events/" + dbObject.getDate().format(dateFormat);
 

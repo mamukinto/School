@@ -9,18 +9,20 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import model.Event;
+import model.event.Event;
+import utils.DateFormatsUtils;
 
 import java.time.format.DateTimeFormatter;
 
 public class EventContainer extends VBox {
+
     public EventContainer(Event event) {
         Label eventText = new Label();
         eventText.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         eventText.setMinWidth(Region.USE_PREF_SIZE);
         eventText.setText(event.getContent());
         eventText.setPadding(new Insets(10,50,0,10));
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HH-mm-ss");
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(DateFormatsUtils.DATE_TIME_FORMAT);
         String date = event.getDate().format(dateFormat);
 
         this.getChildren().addAll(eventText);

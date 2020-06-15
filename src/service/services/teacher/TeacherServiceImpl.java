@@ -2,8 +2,10 @@ package service.services.teacher;
 
 import dao.DAOService;
 import dao.DAOTeacher;
-import model.*;
+import model.classrom.Classroom;
+import model.event.Event;
 import model.exception.SchoolException;
+import model.mark.Mark;
 import model.user.student.Student;
 import model.user.student.StudentWeekView;
 import model.user.teacher.Teacher;
@@ -16,8 +18,8 @@ import service.services.event.EventServiceImpl;
 import service.services.mark.MarkService;
 import service.services.mark.MarkServiceImpl;
 import storage.Storage;
+import utils.DateFormatsUtils;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -151,8 +153,8 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     private String getContentForEvent(String teacherName, String subjectName, int markValue, LocalDate markDate) {
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return String.format("%s (%s) wrote mark %s to you for date %s",teacherName,subjectName,markValue,markDate.format(dateFormat));
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(DateFormatsUtils.DATE_FORMAT);
+        return String.format("%s(%s) wrote mark %s to you for date %s",teacherName,subjectName,markValue,markDate.format(dateFormat));
     }
 
 }

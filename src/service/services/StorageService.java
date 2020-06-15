@@ -2,9 +2,9 @@ package service.services;
 
 
 import dao.*;
-import model.Classroom;
+import model.classrom.Classroom;
 import model.user.student.Student;
-import model.Subject;
+import model.subject.Subject;
 import model.user.teacher.Teacher;
 import model.exception.SchoolException;
 import service.services.event.EventService;

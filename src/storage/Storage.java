@@ -1,8 +1,8 @@
 package storage;
 
-import model.Classroom;
+import model.classrom.Classroom;
 import model.user.student.Student;
-import model.Subject;
+import model.subject.Subject;
 import model.user.teacher.Teacher;
 
 import java.util.ArrayList;

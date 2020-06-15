@@ -1,9 +1,9 @@
 package service.services.mark;
 
 import dao.DAOMark;
-import model.Mark;
+import model.mark.Mark;
 import model.user.student.Student;
-import model.Subject;
+import model.subject.Subject;
 import model.user.teacher.Teacher;
 import model.exception.SchoolException;
 import service.services.student.StudentService;
@@ -11,7 +11,6 @@ import service.services.student.StudentServiceImpl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class MarkServiceImpl implements MarkService {

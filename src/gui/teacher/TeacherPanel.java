@@ -17,7 +17,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.Classroom;
+import model.classrom.Classroom;
 import model.user.student.StudentWeekView;
 import model.user.teacher.Teacher;
 import model.exception.SchoolException;
@@ -82,10 +82,7 @@ public class TeacherPanel {
         root.getChildren().add(tabPane);
 
         changePassword.setOnAction(click -> changePassword(stage,teacher));
-//        myInformation.setOnAction(click -> myInformation());
         logOut.setOnAction(click -> Login.login(scene,stage));
-
-
     }
 
     private static void addClassroomTabs(TabPane tabPane, Teacher teacher, Stage stage) {
@@ -123,13 +120,7 @@ public class TeacherPanel {
             markService.updateAllJournals();
         });
 
-
         hBox.getChildren().add(datePicker);
-
-
-
-
-
 
         tab.setContent(borderPane);
     }
@@ -158,7 +149,6 @@ public class TeacherPanel {
         grid.setStyle("-fx-background-color: " + Colors.MAIN + ";");
         grid.setPrefSize(500, 300);
 
-
         Label sceneTitle = new Label("Change password:");
         sceneTitle.setTextFill(Color.web(Colors.TEXT.toString()));
         sceneTitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 22));
@@ -175,7 +165,7 @@ public class TeacherPanel {
         grid.add(newPasswordLabel,0,2);
         grid.add(newPassword,1,2);
 
-        Label newPasswordLabel2 = LabelUtil.getLabel("Repear new password:");
+        Label newPasswordLabel2 = LabelUtil.getLabel("Repeat new password:");
         TextField newPassword2 = TextFieldUtil.getTextField();
         grid.add(newPasswordLabel2,0,3);
         grid.add(newPassword2,1,3);
@@ -188,8 +178,6 @@ public class TeacherPanel {
         submit.setPrefSize(60,20);
         submit.setFont(new Font(12));
         grid.add(buttonHbox,0,4,2,1);
-
-
 
         submit.setOnAction(click -> {
             if (Integer.parseInt(teacher.getPassword()) == oldPassword.getText().hashCode()) {
@@ -214,9 +202,7 @@ public class TeacherPanel {
             }
         });
 
-
         modal.setScene(scene);
         modal.show();
     }
-
 }

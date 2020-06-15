@@ -12,24 +12,18 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
-import model.Event;
 import model.exception.SchoolException;
 import model.user.student.Student;
-import model.user.teacher.Teacher;
 import service.services.student.StudentService;
 import service.services.student.StudentServiceImpl;
 import service.services.subject.SubjectService;
 import service.services.subject.SubjectServiceImpl;
 
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -150,21 +144,19 @@ public class StudentPanel {
         grid.add(newPasswordLabel,0,2);
         grid.add(newPassword,1,2);
 
-        Label newPasswordLabel2 = LabelUtil.getLabel("Repear new password:");
+        Label newPasswordLabel2 = LabelUtil.getLabel("Repeat new password:");
         TextField newPassword2 = TextFieldUtil.getTextField();
         grid.add(newPasswordLabel2,0,3);
         grid.add(newPassword2,1,3);
 
-        HBox buttonHbox = new HBox();
+        HBox buttonHBox = new HBox();
         Button submit = new Button("Submit");
-        buttonHbox.getChildren().add(submit);
-        buttonHbox.setAlignment(Pos.BASELINE_RIGHT);
+        buttonHBox.getChildren().add(submit);
+        buttonHBox.setAlignment(Pos.BASELINE_RIGHT);
         StyleButton.style(submit);
         submit.setPrefSize(60,20);
         submit.setFont(new Font(12));
-        grid.add(buttonHbox,0,4,2,1);
-
-
+        grid.add(buttonHBox,0,4,2,1);
 
         submit.setOnAction(click -> {
             if (Integer.parseInt(student.getPassword()) == oldPassword.getText().hashCode()) {
@@ -180,7 +172,7 @@ public class StudentPanel {
                     sceneTitle.setText("New passwords doesn't match");
                     sceneTitle.setTextFill(Color.web(Colors.WARNING_TEXT.toString()));
                 }
-            } else if (oldPassword.getText().equals("")){
+            } else if (oldPassword.getText().isEmpty()){
                 sceneTitle.setText("Enter old password");
                 sceneTitle.setTextFill(Color.web(Colors.WARNING_TEXT.toString()));
             } else if (Integer.parseInt(student.getPassword()) != oldPassword.getText().hashCode()) {
