@@ -48,6 +48,11 @@ public class StudentPanel {
         root.setRight(rightScrollPane);
         rightPanel.setPrefWidth(stage.getWidth() * 0.3);
 
+        mainScrollPane.setFitToHeight(true);
+        mainScrollPane.setFitToWidth(true);
+        rightScrollPane.setFitToWidth(true);
+        rightScrollPane.setFitToHeight(true);
+
         MenuBar menuBar = new MenuBar();
         Menu menu = new Menu("Options");
         menuBar.getMenus().add(menu);
@@ -58,7 +63,8 @@ public class StudentPanel {
         root.setTop(menuBar);
         Label sceneTitle = new Label("What's new?");
         sceneTitle.setPadding(new Insets(25,0,0,60));
-        sceneTitle.setFont(new Font(26));
+        sceneTitle.setFont(new Font(32));
+        sceneTitle.setTextFill(Color.web(Colors.TEXT.toString()));
         VBox feed = new VBox();
         feed.setSpacing(20);
         feed.setPadding(new Insets(20,100,20,20));
@@ -76,6 +82,7 @@ public class StudentPanel {
 
         Text rightPanelTitle = new Text(student.getFirstName() + " " + student.getLastName());
         rightPanelTitle.setFont(new Font(32));
+        rightPanelTitle.setFill(Color.web(Colors.TEXT.toString()));
         rightPanel.setSpacing(50);
         rightPanel.getChildren().add(rightPanelTitle);
         rightPanel.setPadding(new Insets(20,20,20,20));
@@ -84,6 +91,7 @@ public class StudentPanel {
         subjectService.getSubjects().forEach(subject -> {
             Label averageMarkText = new Label(subject.getName() + " average mark: " + studentService.getAverageMarkOfStudentBySubject(student,subject));
             averageMarkText.setFont(new Font(22));
+            averageMarkText.setTextFill(Color.web(Colors.TEXT.toString()));
             VBox vBox = new VBox();
             vBox.getChildren().add(averageMarkText);
             Separator separator = new Separator();
@@ -93,6 +101,7 @@ public class StudentPanel {
         });
 
         Button journalButton = new Button("More");
+        StyleButton.style(journalButton);
         rightPanel.getChildren().add(journalButton);
 
 

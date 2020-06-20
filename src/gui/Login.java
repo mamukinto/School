@@ -27,9 +27,8 @@ import service.services.student.StudentServiceImpl;
 public class Login {
     private static final AuthService auth = new AuthServiceImpl();
 
-    private static final StudentService studentService = new StudentServiceImpl();
-
     public static void login(Scene scene, Stage stage) {
+        scene.getStylesheets().removeAll(scene.getStylesheets());
         scene.getStylesheets().add(GraphicUserInterface.class.getResource("static/css/login.css").toExternalForm());
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
@@ -88,6 +87,7 @@ public class Login {
         Button button = new Button("Sign in");
         button.setStyle("-fx-background-color: " + Colors.SECONDARY + ";");
         button.setTextFill(Color.web(Colors.TEXT.toString()));
+        button.setPrefSize(70,25);
 
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
