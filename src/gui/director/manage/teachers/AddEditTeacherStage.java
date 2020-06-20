@@ -2,7 +2,9 @@ package gui.director.manage.teachers;
 
 import gui.GraphicUserInterface;
 import gui.common.*;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -67,23 +69,23 @@ public class AddEditTeacherStage extends Stage {
 
 
 
-        Label firstNameLabel = LabelUtil.getLabel("First name: ");
-        grid.add(firstNameLabel, 0, 1);
-
-        TextField firstName = TextFieldUtil.getTextField();
-        grid.add(firstName, 1, 1);
-
-        Label lastNameLabel = LabelUtil.getLabel("Last name: ");
-        grid.add(lastNameLabel, 0, 2);
-
-        TextField lastName = TextFieldUtil.getTextField();
-        grid.add(lastName, 1, 2);
-
         Label personalIdLabel = LabelUtil.getLabel("Personal id: ");
-        grid.add(personalIdLabel, 0, 3);
+        grid.add(personalIdLabel, 0, 1);
 
         TextField personalId = TextFieldUtil.getTextField();
-        grid.add(personalId, 1, 3);
+        grid.add(personalId, 1, 1);
+
+        Label firstNameLabel = LabelUtil.getLabel("First name: ");
+        grid.add(firstNameLabel, 0, 2);
+
+        TextField firstName = TextFieldUtil.getTextField();
+        grid.add(firstName, 1, 2);
+
+        Label lastNameLabel = LabelUtil.getLabel("Last name: ");
+        grid.add(lastNameLabel, 0, 3);
+
+        TextField lastName = TextFieldUtil.getTextField();
+        grid.add(lastName, 1, 3);
 
         Label emailLabel = LabelUtil.getLabel("Email: ");
         grid.add(emailLabel, 0, 4);
@@ -132,32 +134,42 @@ public class AddEditTeacherStage extends Stage {
 
 
         button.setOnAction(click -> {
-            if (modalMode == ModalMode.ADD) {
-                teacher.setFirstName(firstName.getText());
-                teacher.setLastName(lastName.getText());
-                teacher.setPersonalId(personalId.getText());
-                teacher.setEmail(email.getText());
-                teacher.setSubject(subjectService.getSubjectByName(subjectComboBox.getValue()));
-                try {
-                    teacherService.addTeacher(teacher);
-                } catch (SchoolException e) {
-                    alert("Unexpected exception", "Can't add teacher", e.getMessage());
-                }
-                this.close();
-            }
-            else if (modalMode == ModalMode.EDIT) {
+            getScene().setCursor(Cursor.WAIT);
+            Thread thread = new Thread(() -> {
                 teacher.setFirstName(firstName.getText());
                 teacher.setLastName(lastName.getText());
                 teacher.setEmail(email.getText());
                 teacher.setSubject(subjectService.getSubjectByName(subjectComboBox.getValue()));
-                close();
                 try {
-                    teacherService.editTeacher(teacher);
-                } catch (SchoolException e) {
-                    alert("Unexpected exception","Can't edit teacher",e.getMessage());
-                }
-            }
-            table.getItems().setAll(teacherService.getTeachers());
+                   if (modalMode == ModalMode.ADD) {
+                       teacher.setPersonalId(personalId.getText());
+                       try {
+                           teacherService.addTeacher(teacher);
+                       } catch (SchoolException e) {
+                           alert("Unexpected exception", "Can't add teacher", e.getMessage());
+                       }
+                   }
+                   else if (modalMode == ModalMode.EDIT) {
+                       try {
+                           teacherService.editTeacher(teacher);
+                       } catch (SchoolException e) {
+                           alert("Unexpected exception","Can't edit teacher",e.getMessage());
+                       }
+                   }
+                   table.getItems().setAll(teacherService.getTeachers());
+               } catch( Throwable th) {
+
+                   th.printStackTrace();
+
+               } finally {
+
+                   Platform.runLater( () -> {
+                       close();
+                   });
+
+               }
+            });
+           thread.start();
         });
     }
 

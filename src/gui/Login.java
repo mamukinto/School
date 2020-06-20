@@ -57,7 +57,7 @@ public class Login {
         cb.setStyle("-fx-background-color: " + Colors.SECONDARY + "; -fx-mark-color: " + Colors.SECONDARY + ";");
 
 
-        cb.setPromptText("Click to select");
+        cb.setValue("Student");
         cb.setEditable(false);
 
 

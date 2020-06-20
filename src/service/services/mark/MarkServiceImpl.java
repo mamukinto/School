@@ -22,6 +22,7 @@ public class MarkServiceImpl implements MarkService {
 
     @Override
     public void addMarkToStudent(Student student, Teacher teacher, Mark mark, LocalDate date) throws SchoolException {
+        validateMark(mark);
         mark.setDate(date);
         mark.setTeacher(teacher);
         mark.setStudent(student);
@@ -29,6 +30,7 @@ public class MarkServiceImpl implements MarkService {
         updateJournal(student);
     }
 
+    @Override
     public void updateJournal(Student student) {
         Map<Subject, ArrayList<Mark>> journal = daoService.readJournal(student);
         student.setJournal(journal);
@@ -36,6 +38,12 @@ public class MarkServiceImpl implements MarkService {
 
     @Override
     public void updateAllJournals() {
-        studentService.getStudents().forEach(student -> updateJournal(student));
+        studentService.getStudents().forEach(this::updateJournal);
+    }
+
+    private void validateMark(Mark mark) throws SchoolException {
+        if (mark.getValue() < 1 || mark.getValue() > 10) {
+            throw new SchoolException("Mark value is not in range(1-10)");
+        }
     }
 }

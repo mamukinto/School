@@ -44,7 +44,7 @@ public class Event extends DBObject implements Comparable<Event> {
     public String getInfo() {
         StringBuilder stringBuilder = new StringBuilder();
 
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(DateFormatsUtils.DATE_TIME_FORMAT_FOR_FILE_NAME);
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(DateFormatsUtils.DATE_TIME_FORMAT_FOR_DB);
         String date = getDate().format(dateFormat);
         stringBuilder.append("Date:").append(date).append(System.lineSeparator());
         stringBuilder.append("StudentPersonalId:").append(studentPersonalId).append(System.lineSeparator());

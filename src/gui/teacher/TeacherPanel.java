@@ -77,7 +77,7 @@ public class TeacherPanel {
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         tabPane.setTabMinWidth(50);
 
-        addClassroomTabs(tabPane, teacher, stage);
+        addClassroomTabs(tabPane, teacher, stage, scene);
 
         root.getChildren().add(tabPane);
 
@@ -85,7 +85,7 @@ public class TeacherPanel {
         logOut.setOnAction(click -> Login.login(scene,stage));
     }
 
-    private static void addClassroomTabs(TabPane tabPane, Teacher teacher, Stage stage) {
+    private static void addClassroomTabs(TabPane tabPane, Teacher teacher, Stage stage, Scene scene) {
         List<Classroom> classrooms = classroomsService.getClassroomsByTeacher(teacher);
         List<Tab> tabs = new ArrayList<>();
         Map<Tab, Classroom> tabClassroomMap = new HashMap<>();
@@ -95,13 +95,13 @@ public class TeacherPanel {
             tabClassroomMap.put(tempTab,classroom);
         });
         tabPane.getTabs().addAll(tabs);
-        tabClassroomMap.forEach((tab, classroom) -> mainPage(tab, classroom, teacher, stage));
+        tabClassroomMap.forEach((tab, classroom) -> mainPage(tab, classroom, teacher, stage, scene));
     }
 
-    private static void mainPage(Tab tab, Classroom classroom,Teacher teacher, Stage stage) {
+    private static void mainPage(Tab tab, Classroom classroom,Teacher teacher, Stage stage, Scene scene) {
         BorderPane borderPane = new BorderPane();
         HBox hBox = new HBox();
-        hBox.setAlignment(Pos.BASELINE_RIGHT);
+        hBox.setAlignment(Pos.BASELINE_LEFT);
         hBox.getStyleClass().add("hbox");
 
         DatePicker datePicker = new DatePicker();
@@ -110,13 +110,13 @@ public class TeacherPanel {
         datePicker.setPadding(new Insets(5,5,5,5));
 
         borderPane.setTop(hBox);
-        TableView<StudentWeekView> table = TableGenerator.getTableView(teacher, classroom, getFirstMondayFromDate(datePicker.getValue()),stage);
+        TableView<StudentWeekView> table = TableGenerator.getTableView(teacher, classroom, getFirstMondayFromDate(datePicker.getValue()),stage,scene);
         table.prefHeightProperty().bind(stage.heightProperty());
         table.prefWidthProperty().bind(stage.widthProperty());
 
         borderPane.setCenter(table);
         datePicker.setOnAction(action -> {
-            borderPane.setCenter(TableGenerator.getTableView(teacher, classroom, getFirstMondayFromDate(datePicker.getValue()), stage));
+            borderPane.setCenter(TableGenerator.getTableView(teacher, classroom, getFirstMondayFromDate(datePicker.getValue()), stage,scene));
             markService.updateAllJournals();
         });
 
@@ -141,7 +141,7 @@ public class TeacherPanel {
         modal.initModality(Modality.WINDOW_MODAL);
         GridPane grid = new GridPane();
         Scene scene = new Scene(grid);
-        scene.getStylesheets().add(GraphicUserInterface.class.getResource("static/css/login.css").toExternalForm());
+        scene.getStylesheets().add(GraphicUserInterface.class.getResource("static/css/teacherPanel.css").toExternalForm());
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);

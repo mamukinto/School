@@ -52,15 +52,15 @@
 .tab .tab-label {
     -fx-alignment: CENTER;
     -fx-text-fill: #9b9b9b;
-    -fx-font-size: 12px;
-    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-font-weight: bolder;
 }
 
 .tab:selected .tab-label {
     -fx-alignment: CENTER;
-    -fx-text-fill: #9b9b9b;
-    -fx-font-size: 12px;
-    -fx-font-weight: bold;
+    -fx-text-fill: whitesmoke;
+    -fx-font-size: 14px;
+    -fx-font-weight: bolder;
 
 }
 

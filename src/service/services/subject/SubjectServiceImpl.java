@@ -13,11 +13,6 @@ public class SubjectServiceImpl implements SubjectService {
     private final DAOService<Subject> daoService = new DAOSubject();
 
     @Override
-    public List<Subject> getStandartSubjects() {
-        return Storage.standartSubjects;
-    }
-
-    @Override
     public List<Subject> getSubjects() {
         return Storage.subjects;
     }
@@ -45,10 +40,6 @@ public class SubjectServiceImpl implements SubjectService {
         updateSubjects();
     }
 
-    @Override
-    public void addStandartSubjects() throws SchoolException {
-        daoService.writeAll(getStandartSubjects());
-    }
 
     @Override
     public void removeSubject(Subject subject) throws SchoolException {

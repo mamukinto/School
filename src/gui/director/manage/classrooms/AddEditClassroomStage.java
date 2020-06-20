@@ -100,7 +100,7 @@ public class AddEditClassroomStage extends Stage {
         if (modalMode == ModalMode.EDIT) {
             scenetitle.setText("Edit classroom:");
             classroom = table.getSelectionModel().getSelectedItem();
-            id.setText("" + classroom.getId());
+            id.setText(classroom.getId());
             id.setDisable(true);
             name.setText(classroom.getName());
             button.setText("Edit");
@@ -111,22 +111,21 @@ public class AddEditClassroomStage extends Stage {
 
 
         button.setOnAction(click -> {
+
+            classroom.setId(id.getText());
+            classroom.setName(name.getText());
+            classroom.setTeachers(teacherHashMap);
+
             if (modalMode == ModalMode.ADD) {
-                classroom.setId(Integer.parseInt(id.getText()));
-                classroom.setName(name.getText());
-                classroom.setTeachers(teacherHashMap);
                 try {
                     classroomsService.addClassroom(classroom);
                     table.getItems().setAll(classroomsService.getClassrooms());
                 } catch (SchoolException e) {
                     alert("Unexpected exception", "Can't add classroom", e.getMessage());
                 }
-                this.close();
+                close();
             }
             else if (modalMode == ModalMode.EDIT) {
-                classroom.setId(Integer.parseInt(id.getText()));
-                classroom.setName(name.getText());
-                classroom.setTeachers(teacherHashMap);
                 try {
                     classroomsService.editClassroom(classroom);
                     table.getItems().setAll(classroomsService.getClassrooms());

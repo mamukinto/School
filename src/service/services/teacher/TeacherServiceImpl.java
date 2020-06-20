@@ -113,9 +113,6 @@ public class TeacherServiceImpl implements TeacherService {
         addMarkEventForStudent(mark,student,teacher,date);
     }
 
-
-
-
     @Override
     public void removeTeacher(Teacher teacher) throws SchoolException {
         teacher.setActive(false);

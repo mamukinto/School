@@ -3,6 +3,8 @@ package gui.teacher;
 import gui.common.AlertUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Cursor;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -32,7 +34,7 @@ public class TableGenerator {
 
     private final static MarkService markService = new MarkServiceImpl();
 
-    public static TableView<StudentWeekView> getTableView(Teacher teacher, Classroom classroom, LocalDate from, Stage stage) {
+    public static TableView<StudentWeekView> getTableView(Teacher teacher, Classroom classroom, LocalDate from, Stage stage, Scene scene) {
         TableView<StudentWeekView> studentWeekViewTableView = new TableView<>();
         studentWeekViewTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         studentWeekViewTableView.setPlaceholder(new Label("No Students in this classroom yet."));
@@ -40,9 +42,9 @@ public class TableGenerator {
         studentWeekViewTableView.setEditable(true);
 
 
-        TableColumn<StudentWeekView, String> nameColumn = new TableColumn<>("Name");
-        nameColumn.setStyle("-fx-font-size:15; -fx-alignment:CENTER;");
+        TableColumn<StudentWeekView, String> nameColumn = new TableColumn<>("name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        nameColumn.setStyle("-fx-font-size:15; -fx-alignment:CENTER;");
         nameColumn.prefWidthProperty().bind(studentWeekViewTableView.widthProperty().multiply(0.25));
         nameColumn.setOnEditStart(t -> {
             try {
@@ -61,11 +63,12 @@ public class TableGenerator {
         mondayColumn.setEditable(true);
         mondayColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         mondayColumn.setOnEditCommit(t -> {
-            studentWeekViewTableView.getSelectionModel().getSelectedItem().setMondayMark(t.getNewValue());
             try {
                 teacherService.addMarkToStudent(teacher,  new Mark(Integer.parseInt(t.getNewValue())), studentService.getStudentById(studentWeekViewTableView.getSelectionModel().getSelectedItem().getPersonalId()), from);
+                studentWeekViewTableView.getSelectionModel().getSelectedItem().setMondayMark(t.getNewValue());
             } catch (SchoolException e) {
                 AlertUtil.alert("Unexpected Exception", " Can't update student marks", e.getMessage());
+                studentWeekViewTableView.refresh();
             }
         });
 
@@ -77,9 +80,9 @@ public class TableGenerator {
         tuesdayColumn.setEditable(true);
         tuesdayColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         tuesdayColumn.setOnEditCommit(t -> {
-            studentWeekViewTableView.getSelectionModel().getSelectedItem().setTuesdayMark(t.getNewValue());
             try {
                 teacherService.addMarkToStudent(teacher,  new Mark(Integer.parseInt(t.getNewValue())), studentService.getStudentById(studentWeekViewTableView.getSelectionModel().getSelectedItem().getPersonalId()), from.plusDays(1));
+                studentWeekViewTableView.getSelectionModel().getSelectedItem().setTuesdayMark(t.getNewValue());
             } catch (SchoolException e) {
                 AlertUtil.alert("Unexpected Exception", " Can't update student marks", e.getMessage());
             }
@@ -92,9 +95,9 @@ public class TableGenerator {
         wednesdayColumn.setEditable(true);
         wednesdayColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         wednesdayColumn.setOnEditCommit(t -> {
-            studentWeekViewTableView.getSelectionModel().getSelectedItem().setWednesdayMark(t.getNewValue());
             try {
                 teacherService.addMarkToStudent(teacher,  new Mark(Integer.parseInt(t.getNewValue())), studentService.getStudentById(studentWeekViewTableView.getSelectionModel().getSelectedItem().getPersonalId()), from.plusDays(2));
+                studentWeekViewTableView.getSelectionModel().getSelectedItem().setWednesdayMark(t.getNewValue());
             } catch (SchoolException e) {
                 AlertUtil.alert("Unexpected Exception", " Can't update student marks", e.getMessage());
             }
@@ -108,9 +111,9 @@ public class TableGenerator {
         thursdayColumn.setEditable(true);
         thursdayColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         thursdayColumn.setOnEditCommit(t -> {
-            studentWeekViewTableView.getSelectionModel().getSelectedItem().setThursdayMark(t.getNewValue());
             try {
                 teacherService.addMarkToStudent(teacher,  new Mark(Integer.parseInt(t.getNewValue())), studentService.getStudentById(studentWeekViewTableView.getSelectionModel().getSelectedItem().getPersonalId()), from.plusDays(3));
+                studentWeekViewTableView.getSelectionModel().getSelectedItem().setThursdayMark(t.getNewValue());
             } catch (SchoolException e) {
                 AlertUtil.alert("Unexpected Exception", " Can't update student marks", e.getMessage());
             }
@@ -123,9 +126,9 @@ public class TableGenerator {
         fridayColumn.setEditable(true);
         fridayColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         fridayColumn.setOnEditCommit(t -> {
-            studentWeekViewTableView.getSelectionModel().getSelectedItem().setFridayMark(t.getNewValue());
             try {
                 teacherService.addMarkToStudent(teacher,  new Mark(Integer.parseInt(t.getNewValue())), studentService.getStudentById(studentWeekViewTableView.getSelectionModel().getSelectedItem().getPersonalId()), from.plusDays(4));
+                studentWeekViewTableView.getSelectionModel().getSelectedItem().setFridayMark(t.getNewValue());
             } catch (SchoolException e) {
                 AlertUtil.alert("Unexpected Exception", " Can't update student marks", e.getMessage());
             }
@@ -138,7 +141,8 @@ public class TableGenerator {
         studentWeekViewTableView.getColumns().add(thursdayColumn);
         studentWeekViewTableView.getColumns().add(fridayColumn);
 
-
+        studentWeekViewTableView.setOnMouseEntered(hover -> scene.setCursor(Cursor.HAND));
+        studentWeekViewTableView.setOnMouseExited(exit -> scene.setCursor(Cursor.DEFAULT));
         studentWeekViewTableView.setItems(getStudentWeekViews(teacher, classroom, from));
 
 

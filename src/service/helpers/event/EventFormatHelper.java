@@ -14,7 +14,7 @@ public class EventFormatHelper implements DBObjectFormatHelper {
     public DBObject parse(String dBObjectString) {
         Event event = new Event();
         String[] eventLines = dBObjectString.split(LINE_SPLITTER);
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(DateFormatsUtils.DATE_TIME_FORMAT_FOR_FILE_NAME);
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(DateFormatsUtils.DATE_TIME_FORMAT_FOR_DB);
         event.setDate(LocalDateTime.parse(eventLines[0].split(INFO_SPLITTER)[1], dateFormat));
         event.setStudentPersonalId(eventLines[1].split(INFO_SPLITTER)[1].trim());
         event.setContent(eventLines[2].split(INFO_SPLITTER)[1].trim());

@@ -62,7 +62,7 @@ public class JournalPanel {
 
         BorderPane borderPane = new BorderPane();
         HBox hBox = new HBox();
-        hBox.setAlignment(Pos.BASELINE_RIGHT);
+        hBox.setAlignment(Pos.BASELINE_LEFT);
         hBox.getStyleClass().add("hbox");
 
         DatePicker datePicker = new DatePicker();

@@ -19,28 +19,37 @@ public class ClassroomsTableGenerator {
         TableColumn<Classroom, Long> idColumn = new TableColumn<>("ID");
         idColumn.setStyle("-fx-font-size:15; -fx-alignment:CENTER;");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        idColumn.prefWidthProperty().bind(classroomTableView.widthProperty().multiply(0.5));
+        idColumn.prefWidthProperty().bind(classroomTableView.widthProperty().multiply(0.33));
 
         TableColumn<Classroom, Long> nameColumn = new TableColumn<>("Name");
         nameColumn.setStyle("-fx-font-size:15; -fx-alignment:CENTER;");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        nameColumn.prefWidthProperty().bind(classroomTableView.widthProperty().multiply(0.5));
+        nameColumn.prefWidthProperty().bind(classroomTableView.widthProperty().multiply(0.33));
+
+        TableColumn<Classroom, Long> subjectTeacherColumn = new TableColumn<>("Teachers");
+        subjectTeacherColumn.setStyle("-fx-font-size:15; -fx-alignment:CENTER;");
+        subjectTeacherColumn.setCellValueFactory(new PropertyValueFactory<>("subjectTeachersString"));
+        subjectTeacherColumn.prefWidthProperty().bind(classroomTableView.widthProperty().multiply(0.33));
 
 
         classroomTableView.getColumns().add(idColumn);
         classroomTableView.getColumns().add(nameColumn);
+        classroomTableView.getColumns().add(subjectTeacherColumn);
 
-        classroomTableView.setItems(getClassrooms());
+        classroomTableView.setItems(getClassroomViews());
 
 
         return classroomTableView;
     }
 
-    private static ObservableList<Classroom> getClassrooms() {
+    private static ObservableList<Classroom> getClassroomViews() {
         ClassroomsService classroomsService = new ClassroomsServiceImpl();
 
         ObservableList<Classroom> classrooms = FXCollections.observableArrayList();
         classrooms.addAll(classroomsService.getClassrooms());
         return classrooms;
     }
+
+
+
 }

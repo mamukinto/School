@@ -22,7 +22,7 @@ public class ClassroomFormatHelper implements DBObjectFormatHelper {
         Classroom classroom = new Classroom();
         String[] classroomLines = DBObjectString.split(LINE_SPLITTER);
         classroom.setName(classroomLines[0].split(INFO_SPLITTER)[1]);
-        classroom.setId(Integer.parseInt(classroomLines[1].split(INFO_SPLITTER)[1]));
+        classroom.setId(classroomLines[1].split(INFO_SPLITTER)[1]);
         classroom.setActive(Boolean.parseBoolean(classroomLines[2].split(INFO_SPLITTER)[1].trim()));
         classroom.setTeachers(getTeachersMap(classroomLines[3]));
         return classroom;

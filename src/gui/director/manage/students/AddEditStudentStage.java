@@ -2,7 +2,9 @@ package gui.director.manage.students;
 
 import gui.GraphicUserInterface;
 import gui.common.*;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -61,24 +63,23 @@ public class AddEditStudentStage extends Stage {
         grid.add(scenetitle, 0, 0, 2, 1);
 
 
-
-        Label firstNameLabel = LabelUtil.getLabel("First name: ");
-        grid.add(firstNameLabel, 0, 1);
-
-        TextField firstName = TextFieldUtil.getTextField();
-        grid.add(firstName, 1, 1);
-
-        Label lastNameLabel = LabelUtil.getLabel("Last name: ");
-        grid.add(lastNameLabel, 0, 2);
-
-        TextField lastName = TextFieldUtil.getTextField();
-        grid.add(lastName, 1, 2);
-
         Label personalIdLabel = LabelUtil.getLabel("Personal id: ");
-        grid.add(personalIdLabel, 0, 3);
+        grid.add(personalIdLabel, 0, 1);
 
         TextField personalId = TextFieldUtil.getTextField();
-        grid.add(personalId, 1, 3);
+        grid.add(personalId, 1, 1);
+
+        Label firstNameLabel = LabelUtil.getLabel("First name: ");
+        grid.add(firstNameLabel, 0, 2);
+
+        TextField firstName = TextFieldUtil.getTextField();
+        grid.add(firstName, 1, 2);
+
+        Label lastNameLabel = LabelUtil.getLabel("Last name: ");
+        grid.add(lastNameLabel, 0, 3);
+
+        TextField lastName = TextFieldUtil.getTextField();
+        grid.add(lastName, 1, 3);
 
         Label emailLabel = LabelUtil.getLabel("Email: ");
         grid.add(emailLabel, 0, 4);
@@ -123,35 +124,55 @@ public class AddEditStudentStage extends Stage {
 
 
 
-
         button.setOnAction(click -> {
-            if (modalMode == ModalMode.ADD) {
-                student.setFirstName(firstName.getText());
-                student.setLastName(lastName.getText());
-                student.setPersonalId(personalId.getText());
-                student.setEmail(email.getText());
-                student.setClassroom(classroomsService.getClassroomByName(comboBox.getValue()));
-                try {
-                    studentService.addStudent(student);
-                } catch (SchoolException e) {
-                    alert("Unexpected exception", "Can't add student", e.getMessage());
-                }
-                this.close();
-            }
-            else if (modalMode == ModalMode.EDIT) {
+            getScene().setCursor(Cursor.WAIT);
+
+            Thread thread = new Thread(() -> {
+
                 student.setFirstName(firstName.getText());
                 student.setLastName(lastName.getText());
                 student.setEmail(email.getText());
                 student.setClassroom(classroomsService.getClassroomByName(comboBox.getValue()));
-                close();
                 try {
-                    studentService.editStudent(student);
-                } catch (SchoolException e) {
-                    alert("Unexpected exception","Can't edit student",e.getMessage());
+                    if (modalMode == ModalMode.ADD) {
+                        student.setPersonalId(personalId.getText());
+                        try {
+                            studentService.addStudent(student);
+                        } catch (SchoolException e) {
+                            alert("Unexpected exception", "Can't add student", e.getMessage());
+                        }
+
+
+                    } else if (modalMode == ModalMode.EDIT) {
+                        try {
+                            studentService.editStudent(student);
+                        } catch (SchoolException e) {
+                            alert("Unexpected exception","Can't edit student",e.getMessage());
+                        }
+                    }
+                    table.getItems().setAll(studentService.getStudents());
+
+
+                } catch( Throwable th) {
+
+                    th.printStackTrace();
+
+                } finally {
+
+                    Platform.runLater( () -> {
+                        close();
+                    });
+
                 }
-            }
-            table.getItems().setAll(studentService.getStudents());
+
+
+
+            });
+            thread.start();
+
+
         });
+
     }
 
 

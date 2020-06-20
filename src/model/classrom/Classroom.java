@@ -9,24 +9,26 @@ import service.helpers.DBObjectFormatHelper;
 
 public class Classroom extends DBObject {
 
-    private int id;
+    private String id;
 
     private String name;
 
     private HashMap<Subject, Teacher> teachers;
 
+    private String subjectTeachersString;
+
     public Classroom() {}
 
-    public Classroom(String name, int id) {
+    public Classroom(String name, String id) {
         this.name = name;
         this.id = id;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -46,6 +48,14 @@ public class Classroom extends DBObject {
         this.teachers = teachers;
     }
 
+    public String getSubjectTeachersString() {
+        return subjectTeachersString;
+    }
+
+    public void setSubjectTeachersString(String subjectTeachersString) {
+        this.subjectTeachersString = subjectTeachersString;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -60,7 +70,7 @@ public class Classroom extends DBObject {
     @Override
     public int hashCode() {
         int result = name.hashCode();
-        result = 31 * result + id;
+        result = 31 * result + id.hashCode();
         return result;
     }
 
