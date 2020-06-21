@@ -8,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -28,6 +29,7 @@ public class Login {
     private static final AuthService auth = new AuthServiceImpl();
 
     public static void login(Scene scene, Stage stage) {
+        stage.getIcons().add(new Image("file:icon.png"));
         scene.getStylesheets().removeAll(scene.getStylesheets());
         scene.getStylesheets().add(GraphicUserInterface.class.getResource("static/css/login.css").toExternalForm());
         GridPane grid = new GridPane();
