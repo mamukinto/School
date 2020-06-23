@@ -1,8 +1,8 @@
 package dao;
 
+import model.exception.SchoolException;
 import model.mark.Mark;
 import model.subject.Subject;
-import model.exception.SchoolException;
 import model.user.student.Student;
 import service.helpers.mark.MarkFormatHelper;
 import service.services.subject.SubjectService;
@@ -32,11 +32,6 @@ public class DAOMark implements DAOService<Mark> {
         }
 
         return "Successfully written mark to " + file.getPath();
-    }
-
-    @Override
-    public void writeAll(List<Mark> dbObjects) {
-        throw new NotImplementedException();
     }
 
     @Override

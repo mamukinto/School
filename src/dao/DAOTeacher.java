@@ -1,9 +1,8 @@
 package dao;
 
-import model.user.teacher.Teacher;
 import model.exception.SchoolException;
+import model.user.teacher.Teacher;
 import service.helpers.teacher.TeacherFormatHelper;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -20,22 +19,16 @@ public class DAOTeacher implements DAOService<Teacher> {
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
             bw.write(formattedTeacher);
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             throw new SchoolException(ex.getMessage());
         }
 
-        return "Succesfully writed teacher to " + file.getPath();
-    }
-
-    @Override
-    public void writeAll(List<Teacher> dbObjects) throws SchoolException {
-        throw new NotImplementedException();
+        return "Successfully writed teacher to " + file.getPath();
     }
 
     @Override
     public Teacher read(String src) throws SchoolException {
-        Teacher teacher = new Teacher();
+        Teacher teacher;
         TeacherFormatHelper teacherHelper = new TeacherFormatHelper();
         File teacherFile = new File("database/teachers/" + src);
 
@@ -66,7 +59,7 @@ public class DAOTeacher implements DAOService<Teacher> {
             List<String> namesOfFiles = new ArrayList<>();
             listOfFiles.forEach((f) -> namesOfFiles.add(f.getName()));
             for (String nameOfFile : namesOfFiles) {
-                Teacher teacher = (Teacher) read(nameOfFile);
+                Teacher teacher = read(nameOfFile);
                 if (teacher.isActive()) {
                     allTeachers.add(teacher);
                 }

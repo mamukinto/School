@@ -1,7 +1,7 @@
 package dao;
 
-import model.subject.Subject;
 import model.exception.SchoolException;
+import model.subject.Subject;
 import service.helpers.subject.SubjectFormatHelper;
 
 import java.io.*;
@@ -45,13 +45,6 @@ public class DAOSubject implements DAOService<Subject> {
         }
 
         return subject;
-    }
-
-    @Override
-    public void writeAll(List<Subject> subjects) throws SchoolException {
-        for (Subject subject : subjects) {
-            write(subject);
-        }
     }
 
     @Override

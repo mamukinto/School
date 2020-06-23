@@ -1,9 +1,8 @@
 package dao;
 
-import model.user.student.Student;
 import model.exception.SchoolException;
+import model.user.student.Student;
 import service.helpers.student.StudentFormatHelper;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -27,11 +26,6 @@ public class DAOStudent implements DAOService<Student> {
         }
 
         return "Succesfully writed student to " + file.getPath();
-    }
-
-    @Override
-    public void writeAll(List<Student> dbObjects) throws SchoolException {
-        throw new NotImplementedException();
     }
 
     @Override

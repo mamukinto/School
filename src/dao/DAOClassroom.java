@@ -48,13 +48,6 @@ public class DAOClassroom implements DAOService<Classroom> {
     }
 
     @Override
-    public void writeAll(List<Classroom> classrooms) throws SchoolException {
-        for (Classroom classroom : classrooms) {
-            write(classroom);
-        }
-    }
-
-    @Override
     public List<Classroom> readAll() throws SchoolException {
         List<Classroom> allClassrooms = new ArrayList<>();
         File folder = new File("database/classrooms/");

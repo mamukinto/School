@@ -3,7 +3,6 @@ package dao;
 import model.event.Event;
 import model.exception.SchoolException;
 import service.helpers.event.EventFormatHelper;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import utils.DateFormatsUtils;
 
 import java.io.*;
@@ -30,11 +29,6 @@ public class DAOEvent implements DAOService<Event> {
             throw new SchoolException(ex.getMessage());
         }
         return "Succesfully writed to" + file.getPath();
-    }
-
-    @Override
-    public void writeAll(List<Event> dbObjects) throws SchoolException {
-        throw new NotImplementedException();
     }
 
     @Override

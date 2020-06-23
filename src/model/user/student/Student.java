@@ -63,6 +63,4 @@ public class Student extends User {
                 "Password:" + getPassword() + System.lineSeparator() +
                 "Active:" + isActive();
     }
-
-
 }
