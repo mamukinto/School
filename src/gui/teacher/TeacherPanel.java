@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -135,6 +136,7 @@ public class TeacherPanel {
 
     private static void changePassword(Stage stage, Teacher teacher) {
         Stage modal = new Stage();
+        modal.getIcons().add(new Image("file:icon.png"));
         modal.setWidth(500);
         modal.setHeight(300);
         modal.initOwner(stage);

@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -23,6 +24,7 @@ public class StudentInfoModal {
 
     public static void show(Stage stage, Student student, Teacher teacher ) {
         Stage modal = new Stage();
+        modal.getIcons().add(new Image("file:icon.png"));
         modal.setWidth(500);
         modal.setHeight(300);
         modal.initOwner(stage);

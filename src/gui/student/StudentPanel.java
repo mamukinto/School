@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -64,6 +65,7 @@ public class StudentPanel {
         Label sceneTitle = new Label("What's new?");
         sceneTitle.setPadding(new Insets(25,0,0,60));
         sceneTitle.setFont(new Font(32));
+//        main.setAlignment(Pos.CENTER);
         sceneTitle.setTextFill(Color.web(Colors.TEXT.toString()));
         VBox feed = new VBox();
         feed.setSpacing(20);
@@ -122,6 +124,7 @@ public class StudentPanel {
 
     private static void changePassword(Stage stage, Student student) {
         Stage modal = new Stage();
+        modal.getIcons().add(new Image("file:icon.png"));
         modal.setWidth(500);
         modal.setHeight(300);
         modal.initOwner(stage);

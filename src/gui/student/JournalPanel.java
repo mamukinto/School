@@ -33,6 +33,7 @@ public class JournalPanel {
     public static void journalPanel(Student student, Stage stage, Scene scene) {
         VBox root = new VBox();
         scene.setRoot(root);
+        scene.getStylesheets().removeAll(scene.getStylesheets());
         scene.getStylesheets().add(GraphicUserInterface.class.getResource("static/css/teacherPanel.css").toExternalForm());
         GridPane header = new GridPane();
         header.getStyleClass().add("header");
@@ -67,7 +68,6 @@ public class JournalPanel {
 
         DatePicker datePicker = new DatePicker();
         datePicker.setValue(LocalDate.now());
-        datePicker.getStyleClass().add("datepicker");
         datePicker.setPadding(new Insets(5,5,5,5));
 
         borderPane.setTop(hBox);

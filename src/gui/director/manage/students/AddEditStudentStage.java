@@ -7,6 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -37,6 +38,7 @@ public class AddEditStudentStage extends Stage {
     private Student student = new Student();
 
     public AddEditStudentStage(Stage owner, TableView<Student> table, ModalMode modalMode) {
+        this.getIcons().add(new Image("file:icon.png"));
         this.setWidth(WIDTH);
         this.setHeight(HEIGHT);
         this.initOwner(owner);

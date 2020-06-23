@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -34,6 +35,7 @@ public class AddEditSubjectStage extends Stage {
     private Subject subject = new Subject();
 
     public AddEditSubjectStage(Stage owner, TableView<Subject> table, ModalMode modalMode) {
+        this.getIcons().add(new Image("file:icon.png"));
         this.setWidth(WIDTH);
         this.setHeight(HEIGHT);
         this.initOwner(owner);

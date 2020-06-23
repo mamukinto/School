@@ -5,6 +5,7 @@ import gui.common.*;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -46,6 +47,7 @@ public class AddEditClassroomStage extends Stage {
     private HashMap<Subject, Teacher> teacherHashMap = new HashMap<>();
 
     public AddEditClassroomStage(Stage owner, TableView<Classroom> table, ModalMode modalMode) {
+        this.getIcons().add(new Image("file:icon.png"));
         this.setWidth(WIDTH);
         this.setHeight(HEIGHT);
         this.initOwner(owner);
